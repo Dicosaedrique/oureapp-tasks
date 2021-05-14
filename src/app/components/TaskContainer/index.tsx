@@ -3,6 +3,7 @@
  * TaskContainer
  *
  */
+import List from '@material-ui/core/List';
 import { Task } from 'model/Task';
 import * as React from 'react';
 
@@ -18,10 +19,10 @@ interface Props {
  */
 export function TaskContainer({ tasks }: Props) {
     return (
-        <div>
+        <List>
             {tasks.map(task => (
                 <TaskComponent key={task.id} {...task} />
             ))}
-        </div>
+        </List>
     );
 }
