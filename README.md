@@ -21,8 +21,16 @@ Site should be up at [todo.dicosaedrique.fr](https://todo.dicosaedrique.fr)
 ### Features
 
 -   [x] Create simple todolist (immutable)
+-   [ ] Add task priority
+-   [ ] Add task limit date
+-   [ ] Add task categorization
+-   [ ] Add sorting system
+-   [ ] Add filtering system
 -   [ ] Add reward message on task complete
--   [ ] Add sorting options for tasks
+-   [ ] Add archivment system
+-   [ ] Add snackbars on actions
+-   [ ] Add undo / redo action system
+-   ...
 
 ### Bug / Fix
 
