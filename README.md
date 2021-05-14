@@ -16,13 +16,13 @@ Site should be up at [todo.dicosaedrique.fr](https://todo.dicosaedrique.fr)
 -   [x] Setup the project (boilerplate)
 -   [x] Integrate [Material-UI](https://material-ui.com) in the project
 -   [x] Setup Continuous Deployment with Netlify
--   [ ] Setup Gitflow (main, dev, issues)
+-   [x] Setup Gitflow (main, dev, issues)
 
 ### Features
 
--   [ ] Create simple todolist (immutable)
+-   [x] Create simple todolist (immutable)
 -   [ ] Add reward message on task complete
--   ...
+-   [ ] Add sorting options for tasks
 
 ### Bug / Fix
 
@@ -34,5 +34,5 @@ Site should be up at [todo.dicosaedrique.fr](https://todo.dicosaedrique.fr)
 
 ### Learn
 
--   [ ] Learn the template [documentation](https://cansahin.gitbook.io/react-boilerplate-cra-template/)
+-   [x] Learn the template [documentation](https://cansahin.gitbook.io/react-boilerplate-cra-template/)
 -   [ ] Learn [Redux](https://redux.js.org/tutorials/essentials/part-1-overview-concepts)

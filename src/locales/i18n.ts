@@ -3,11 +3,15 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
 import en from './en/translation.json';
+import fr from './fr/translation.json';
 import { convertLanguageJsonToObject } from './translations';
 
 export const translationsJson = {
     en: {
         translation: en,
+    },
+    fr: {
+        translation: fr,
     },
 };
 
