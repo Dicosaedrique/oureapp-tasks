@@ -1,5 +1,7 @@
 import uniqid from 'uniqid';
 
+import { DEFAULT_TASK_PRIORITY, TaskPriority } from './Priority';
+
 /**
  * possible states of a task (todo, done)
  */
@@ -16,8 +18,8 @@ export interface Task {
     title: string;
     creationDate: number;
     state: TaskState;
+    priority: TaskPriority;
 
-    priority?: number;
     limitDate?: number;
     finishedDate?: number;
 }
@@ -27,7 +29,7 @@ export interface Task {
  */
 export interface TaskInputProps {
     title: string;
-    priority?: number;
+    priority?: TaskPriority;
     limitDate?: number;
 }
 
@@ -38,7 +40,7 @@ export interface TaskInputProps {
  */
 export function createTask({
     title,
-    priority,
+    priority = DEFAULT_TASK_PRIORITY,
     limitDate,
 }: TaskInputProps): Task {
     return {

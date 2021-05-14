@@ -21,6 +21,22 @@ export const selectTasksList = createSelector(
 );
 
 /**
+ * @returns the preferences of the tasks slice
+ */
+export const selectPreferences = createSelector(
+    selectTasks,
+    tasksState => tasksState.preferences,
+);
+
+/**
+ * @returns the priority preferences of the tasks slice
+ */
+export const selectPriorityPreferences = createSelector(
+    selectPreferences,
+    preferences => preferences.priority,
+);
+
+/**
  * @returns the tasks in state "TODO" (!depracated)
  */
 export const selectTodoTasks = createSelector(selectTasksList, list =>

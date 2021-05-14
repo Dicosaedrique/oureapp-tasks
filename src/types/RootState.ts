@@ -1,4 +1,4 @@
-import { TasksState } from 'app/components/Task/slice/types';
+import { TasksSliceState } from 'app/components/Task/slice/types';
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
 /* 
@@ -6,6 +6,6 @@ import { TasksState } from 'app/components/Task/slice/types';
   You have to declare them here manually
 */
 export interface RootState {
-    tasks?: TasksState;
+    tasks?: TasksSliceState;
     // [INSERT NEW REDUCER KEY ABOVE] < Needed for generating containers seamlessly
 }
