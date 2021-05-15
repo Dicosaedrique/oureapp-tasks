@@ -5,6 +5,7 @@ import {
     TaskInputProps,
     TaskState,
 } from 'model/Task';
+import { TASK_DEMO } from 'model/Task/__test__';
 import {
     DEFAULT_TASK_PRIORITIES_COLORS,
     DEFAULT_TASK_PRIORITIES_NAMES,
@@ -16,18 +17,17 @@ import { TasksSliceState } from './types';
 
 // initial state of tasks (define a set of tasks)
 export const initialState: TasksSliceState = {
-    list: [
-        createTask({ title: 'Example 1', priority: 0 }),
-        createTask({ title: 'Example 2', priority: 1 }),
-        createTask({ title: 'Example 3', priority: 2 }),
-        createTask({ title: 'Example 4', priority: 3 }),
-        createTask({ title: 'Example 5', priority: 4 }),
-    ],
+    list: TASK_DEMO,
     preferences: {
         priority: {
             displayPriorityFullName: true,
             prioritiesNames: DEFAULT_TASK_PRIORITIES_NAMES,
             prioritiesColors: DEFAULT_TASK_PRIORITIES_COLORS,
+        },
+        limitDate: {
+            displayRelativeTime: false,
+            thresholdWarning: 60,
+            thresholdDanger: 80,
         },
     },
 };
@@ -66,6 +66,11 @@ const slice = createSlice({
             state.preferences.priority.displayPriorityFullName = !state
                 .preferences.priority.displayPriorityFullName;
         },
+
+        toggleDisplayRelativeTime(state) {
+            state.preferences.limitDate.displayRelativeTime = !state.preferences
+                .limitDate.displayRelativeTime;
+        },
     },
 });
 
@@ -76,15 +81,3 @@ export const useTasksSlice = () => {
     useInjectReducer({ key: slice.name, reducer: slice.reducer });
     return { actions: slice.actions };
 };
-
-/**
- * Example Usage:
- *
- * export function MyComponentNeedingThisSlice() {
- *  const { actions } = useTasksSlice();
- *
- *  const onButtonClick = (evt) => {
- *    dispatch(actions.someAction());
- *   };
- * }
- */

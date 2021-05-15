@@ -37,6 +37,14 @@ export const selectPriorityPreferences = createSelector(
 );
 
 /**
+ * @returns the limit date preferences of the tasks slice
+ */
+export const selectLimitDatePreferences = createSelector(
+    selectPreferences,
+    preferences => preferences.limitDate,
+);
+
+/**
  * @returns the tasks in state "TODO" (!depracated)
  */
 export const selectTodoTasks = createSelector(selectTasksList, list =>
