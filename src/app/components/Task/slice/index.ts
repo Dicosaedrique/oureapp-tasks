@@ -22,11 +22,6 @@ export const initialState: TasksSliceState = {
         createTask({ title: 'Example 3', priority: 2 }),
         createTask({ title: 'Example 4', priority: 3 }),
         createTask({ title: 'Example 5', priority: 4 }),
-        createTask({
-            title:
-                'lorem ipsum tenoros lorem ipsum tenoros lorem ipsum tenoros lorem ipsum tenoros lorem ipsum tenoros lorem ipsum tenoros lorem ipsum tenoros lorem ipsum tenoros ',
-            priority: 4,
-        }),
     ],
     preferences: {
         priority: {

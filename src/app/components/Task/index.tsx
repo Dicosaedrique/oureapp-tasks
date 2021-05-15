@@ -16,18 +16,31 @@ import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
+import { getParticleCountFromTask } from '../Reward';
+import { useRewarder } from '../Reward/context';
 import { messages } from './messages';
 import { PriorityComponent } from './Priority';
 import { useTasksSlice } from './slice';
 
-interface Props extends Task {}
+interface Props {
+    task: Task;
+}
 
 /**
  * basic component to render a task
  * @param props the task to display
  */
-export function TaskComponent({ id, title, priority, state }: Props) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function TaskComponent({ task }: Props) {
+    const rewarder = useRewarder();
+
+    const onTaskComplete = () => {
+        if (rewarder !== null) {
+            rewarder.handleFire({
+                particleCount: getParticleCountFromTask(task),
+            });
+        }
+    };
+
     const { t } = useTranslation();
 
     const { actions } = useTasksSlice();
@@ -36,18 +49,20 @@ export function TaskComponent({ id, title, priority, state }: Props) {
 
     const toggleTask = () => {
         const newState =
-            state === TaskState.TODO ? TaskState.DONE : TaskState.TODO;
+            task.state === TaskState.TODO ? TaskState.DONE : TaskState.TODO;
 
         dispatch(
             actions.setTaskState({
-                id,
+                id: task.id,
                 taskState: newState,
             }),
         );
+
+        if (newState === TaskState.DONE) onTaskComplete();
     };
 
     const deleteTask = () => {
-        dispatch(actions.removeTask(id));
+        dispatch(actions.removeTask(task.id));
     };
 
     return (
@@ -55,19 +70,19 @@ export function TaskComponent({ id, title, priority, state }: Props) {
             <ListItemIcon>
                 <Checkbox
                     edge="start"
-                    checked={state === TaskState.DONE}
+                    checked={task.state === TaskState.DONE}
                     tabIndex={-1}
                     disableRipple
-                    inputProps={{ 'aria-labelledby': id }}
+                    inputProps={{ 'aria-labelledby': task.id }}
                 />
             </ListItemIcon>
             <ListItemText
-                id={id}
+                id={task.id}
                 primary={
                     <>
-                        <span style={{ marginRight: '1em' }}>{title}</span>
-                        {priority !== TaskPriority.NONE && (
-                            <PriorityComponent priority={priority} />
+                        <span style={{ marginRight: '1em' }}>{task.title}</span>
+                        {task.priority !== TaskPriority.NONE && (
+                            <PriorityComponent priority={task.priority} />
                         )}
                     </>
                 }
