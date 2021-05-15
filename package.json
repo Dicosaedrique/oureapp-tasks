@@ -55,6 +55,7 @@
         "prettier": "2.1.1",
         "react": "16.13.1",
         "react-app-polyfill": "1.0.6",
+        "react-canvas-confetti": "^1.2.0",
         "react-dom": "16.13.1",
         "react-helmet-async": "1.0.6",
         "react-i18next": "11.7.2",

@@ -3,6 +3,8 @@ import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { Rewarder } from 'app/components/Reward';
+import { RewarderProvider } from 'app/components/Reward/context';
 import { useTasksSlice } from 'app/components/Task/slice';
 import {
     selectDoneTasks,
@@ -15,6 +17,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export function HomePage() {
     const [title, setTitle] = React.useState('');
+
+    const [rewarder, setRewarder] = React.useState<Rewarder | null>(null);
+    const rewarderRef = React.useCallback((rewarderElem: Rewarder) => {
+        setRewarder(rewarderElem);
+    }, []);
 
     const { actions } = useTasksSlice();
 
@@ -41,33 +48,36 @@ export function HomePage() {
                     content="This will be the home page of the todo app !"
                 />
             </Helmet>
-            <Container component="main">
-                <CssBaseline />
-                <Typography variant="h3" gutterBottom>
-                    Todo app !!!
-                </Typography>
-                <TextField
-                    label="Task title (temp)"
-                    type="text"
-                    value={title}
-                    onChange={handleTitleChange}
-                />
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleAddTask}
-                >
-                    Add task (temp)
-                </Button>
-                <Typography variant="h4" gutterBottom>
-                    Todo
-                </Typography>
-                <TaskContainer tasks={todoTasks} />
-                <Typography variant="h4" gutterBottom>
-                    Done
-                </Typography>
-                <TaskContainer tasks={doneTasks} />
-            </Container>
+            <RewarderProvider value={rewarder}>
+                <Container component="main">
+                    <CssBaseline />
+                    <Typography variant="h3" gutterBottom>
+                        Todo app !!!
+                    </Typography>
+                    <TextField
+                        label="Task title (temp)"
+                        type="text"
+                        value={title}
+                        onChange={handleTitleChange}
+                    />
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleAddTask}
+                    >
+                        Add task (temp)
+                    </Button>
+                    <Typography variant="h4" gutterBottom>
+                        Todo
+                    </Typography>
+                    <TaskContainer tasks={todoTasks} />
+                    <Typography variant="h4" gutterBottom>
+                        Done
+                    </Typography>
+                    <TaskContainer tasks={doneTasks} />
+                </Container>
+            </RewarderProvider>
+            <Rewarder ref={rewarderRef} />
         </>
     );
 }

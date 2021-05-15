@@ -19,10 +19,12 @@ interface Props {
  */
 export function TaskContainer({ tasks }: Props) {
     return (
-        <List>
-            {tasks.map(task => (
-                <TaskComponent key={task.id} {...task} />
-            ))}
-        </List>
+        <>
+            <List>
+                {tasks.map(task => (
+                    <TaskComponent key={task.id} task={task} />
+                ))}
+            </List>
+        </>
     );
 }
