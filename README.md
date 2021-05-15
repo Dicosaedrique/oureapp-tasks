@@ -28,7 +28,7 @@ Site should be up at [todo.dicosaedrique.fr](https://todo.dicosaedrique.fr)
 -   [ ] Add filtering system
 -   [x] Add reward message on task complete
 -   [ ] Add archivment system
--   [ ] Add snackbars on actions
+-   [ ] Add [snackbars](https://github.com/iamhosseindhv/notistack) on actions
 -   [ ] Add undo / redo action system
 -   [ ] Add Create task
 -   [ ] Add Update task
@@ -45,4 +45,4 @@ Site should be up at [todo.dicosaedrique.fr](https://todo.dicosaedrique.fr)
 ### Learn
 
 -   [x] Learn the template [documentation](https://cansahin.gitbook.io/react-boilerplate-cra-template/)
--   [ ] Learn [Redux](https://redux.js.org/tutorials/essentials/part-1-overview-concepts)
+-   [x] Learn [Redux](https://redux.js.org/tutorials/essentials/part-1-overview-concepts)

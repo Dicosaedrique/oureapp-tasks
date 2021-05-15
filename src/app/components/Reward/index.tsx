@@ -21,6 +21,7 @@ export class Rewarder extends React.Component<RewarderProps, never> {
     readonly defaultOptions: Partial<ConfettiOptions> = {
         origin: { y: 0.7 },
         particleCount: 100,
+        ticks: 150,
     };
 
     // options for the current fire
@@ -154,9 +155,6 @@ export class Rewarder extends React.Component<RewarderProps, never> {
 export function getParticleCountFromTask(task: Task): number {
     const ratio = task.priority / TaskPriority.EXTREME;
     const count = ratio * (MAX_PARTICLES - MIN_PARTICLES) + MIN_PARTICLES;
-
-    console.log(count);
-
     return count;
 }
 
