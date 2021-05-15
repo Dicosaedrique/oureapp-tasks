@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux';
 
 import { getParticleCountFromTask } from '../Reward';
 import { useRewarder } from '../Reward/context';
+import { LimitDateComponent } from './LimitDate';
 import { messages } from './messages';
 import { PriorityComponent } from './Priority';
 import { useTasksSlice } from './slice';
@@ -83,6 +84,18 @@ export function TaskComponent({ task }: Props) {
                         <span style={{ marginRight: '1em' }}>{task.title}</span>
                         {task.priority !== TaskPriority.NONE && (
                             <PriorityComponent priority={task.priority} />
+                        )}
+                        {task.limitDate !== undefined && (
+                            <LimitDateComponent
+                                nowDate={
+                                    task.state === TaskState.DONE
+                                        ? task.finishedDate || 0
+                                        : Date.now()
+                                }
+                                startDate={task.creationDate}
+                                limitDate={task.limitDate}
+                                taskState={task.state}
+                            />
                         )}
                     </>
                 }

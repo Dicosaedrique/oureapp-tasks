@@ -10,5 +10,10 @@ export interface TasksSliceState {
             prioritiesNames: Record<TaskPriority, string>;
             prioritiesColors: Record<TaskPriority, string>;
         };
+        limitDate: {
+            displayRelativeTime: boolean;
+            thresholdWarning: number;
+            thresholdDanger: number;
+        };
     };
 }
