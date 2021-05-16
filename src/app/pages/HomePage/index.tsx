@@ -1,16 +1,18 @@
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { Rewarder } from 'app/components/Reward';
 import { RewarderProvider } from 'app/components/Reward/context';
+import { CategoryContainer } from 'app/components/Task/Category';
 import { useTasksSlice } from 'app/components/Task/slice';
 import {
-    selectDoneTasks,
-    selectTodoTasks,
+    selectCategoriesPreferences,
+    selectSmartSeparatedTasks,
 } from 'app/components/Task/slice/selectors';
-import { TaskContainer } from 'app/components/TaskContainer';
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,8 +27,7 @@ export function HomePage() {
 
     const { actions } = useTasksSlice();
 
-    const todoTasks = useSelector(selectTodoTasks);
-    const doneTasks = useSelector(selectDoneTasks);
+    const categoriesContainerProps = useSelector(selectSmartSeparatedTasks);
 
     const dispatch = useDispatch();
 
@@ -37,6 +38,12 @@ export function HomePage() {
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newTitle = event.target.value as string;
         setTitle(newTitle);
+    };
+
+    // temp (to test toggle of tasks separation)
+    const categoriesPreferences = useSelector(selectCategoriesPreferences);
+    const handleToggleCategoriesSeparation = () => {
+        dispatch(actions.toggleCategoriesSeparation());
     };
 
     return (
@@ -67,14 +74,23 @@ export function HomePage() {
                     >
                         Add task (temp)
                     </Button>
-                    <Typography variant="h4" gutterBottom>
-                        Todo
-                    </Typography>
-                    <TaskContainer tasks={todoTasks} />
-                    <Typography variant="h4" gutterBottom>
-                        Done
-                    </Typography>
-                    <TaskContainer tasks={doneTasks} />
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={
+                                    categoriesPreferences.enableCategoriesSeparation
+                                }
+                                onChange={handleToggleCategoriesSeparation}
+                            />
+                        }
+                        label="Separate tasks by categories"
+                    />
+                    {categoriesContainerProps.map(categoryContainerProps => (
+                        <CategoryContainer
+                            key={categoryContainerProps.id}
+                            {...categoryContainerProps}
+                        />
+                    ))}
                 </Container>
             </RewarderProvider>
             <Rewarder ref={rewarderRef} />

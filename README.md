@@ -23,7 +23,7 @@ Site should be up at [todo.dicosaedrique.fr](https://todo.dicosaedrique.fr)
 -   [x] Create simple todolist (immutable)
 -   [x] Add task priority
 -   [x] Add task limit date
--   [ ] Add task categorization
+-   [x] Add task categorization
 -   [ ] Add sorting system
 -   [ ] Add filtering system
 -   [x] Add reward message on task complete
@@ -33,7 +33,6 @@ Site should be up at [todo.dicosaedrique.fr](https://todo.dicosaedrique.fr)
 -   [ ] Add Create task
 -   [ ] Add Update task
 -   [ ] Create achievement system
-
 -   [ ] Setup complete i18n + setup
 -   [ ] Setup Light / Dark theme
 
@@ -43,7 +42,7 @@ Site should be up at [todo.dicosaedrique.fr](https://todo.dicosaedrique.fr)
 
 ### Polish / Style
 
-...
+-   [ ] Store in local open / close state on categories
 
 ### Learn
 
