@@ -1,6 +1,7 @@
 # Todo App (frontend)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/2d0b9da6-1102-48f4-a5d1-e39f23f6016f/deploy-status)](https://app.netlify.com/sites/dico-todoapp/deploys)
+[![CodeFactor](https://www.codefactor.io/repository/github/dicosaedrique/todo-app-frontend/badge)](https://www.codefactor.io/repository/github/dicosaedrique/todo-app-frontend)
 
 This is the frontend of my todo app based on the [React Boilerplate CRA Template](https://cansahin.gitbook.io/react-boilerplate-cra-template/).
 
