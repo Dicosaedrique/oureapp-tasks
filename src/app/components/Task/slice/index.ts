@@ -1,11 +1,11 @@
 import { PayloadAction } from '@reduxjs/toolkit';
+import { CATEGORIES_DEMO, TASKS_DEMO } from 'model/demo.data';
 import {
     createTask,
     setTaskState,
     TaskInputProps,
     TaskState,
 } from 'model/Task';
-import { TASK_DEMO } from 'model/Task/__test__';
 import {
     DEFAULT_TASK_PRIORITIES_COLORS,
     DEFAULT_TASK_PRIORITIES_NAMES,
@@ -17,7 +17,8 @@ import { TasksSliceState } from './types';
 
 // initial state of tasks (define a set of tasks)
 export const initialState: TasksSliceState = {
-    list: TASK_DEMO,
+    list: TASKS_DEMO,
+    categories: CATEGORIES_DEMO,
     preferences: {
         priority: {
             displayPriorityFullName: true,
@@ -29,6 +30,9 @@ export const initialState: TasksSliceState = {
             thresholdWarning: 60,
             thresholdDanger: 80,
         },
+        categories: {
+            enableCategoriesSeparation: true,
+        },
     },
 };
 
@@ -37,10 +41,12 @@ const slice = createSlice({
     name: 'tasks',
     initialState,
     reducers: {
+        // add a task to the state (based in the tasks inputs)
         addTask(state, action: PayloadAction<TaskInputProps>) {
             state.list.push(createTask(action.payload));
         },
 
+        // remove a task from the slice (based in the task id)
         removeTask(state, action: PayloadAction<string>) {
             const taskIndex = state.list.findIndex(
                 task => task.id === action.payload,
@@ -48,6 +54,7 @@ const slice = createSlice({
             if (taskIndex !== -1) state.list.splice(taskIndex, 1);
         },
 
+        // set the task state based on the payload
         setTaskState(
             state,
             action: PayloadAction<{ id: string; taskState: TaskState }>,
@@ -62,14 +69,22 @@ const slice = createSlice({
                 );
         },
 
+        // toggle the display of priority full names (eg : "1" => "Low")
         toggleDisplayPriorityFullName(state) {
             state.preferences.priority.displayPriorityFullName = !state
                 .preferences.priority.displayPriorityFullName;
         },
 
+        // toggle the display of relative time for the tasks limit date
         toggleDisplayRelativeTime(state) {
             state.preferences.limitDate.displayRelativeTime = !state.preferences
                 .limitDate.displayRelativeTime;
+        },
+
+        // toggle the separation by categories (if not fallback to task state separation)
+        toggleCategoriesSeparation(state) {
+            state.preferences.categories.enableCategoriesSeparation = !state
+                .preferences.categories.enableCategoriesSeparation;
         },
     },
 });

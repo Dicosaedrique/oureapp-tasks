@@ -6,8 +6,8 @@ import { DEFAULT_TASK_PRIORITY, TaskPriority } from './Priority';
  * possible states of a task (todo, done)
  */
 export enum TaskState {
-    TODO,
-    DONE,
+    TODO = 10,
+    DONE = 100,
 }
 
 /**
@@ -22,6 +22,7 @@ export interface Task {
 
     limitDate?: number;
     finishedDate?: number;
+    category?: string;
 }
 
 /**
@@ -31,6 +32,7 @@ export interface TaskInputProps {
     title: string;
     priority?: TaskPriority;
     limitDate?: number;
+    category?: string;
 }
 
 /**
@@ -42,14 +44,16 @@ export function createTask({
     title,
     priority = DEFAULT_TASK_PRIORITY,
     limitDate,
+    category,
 }: TaskInputProps): Task {
     return {
         id: uniqid(),
-        title: title,
         creationDate: Date.now(),
         state: TaskState.TODO,
-        priority: priority,
-        limitDate: limitDate,
+        title,
+        priority,
+        limitDate,
+        category,
     };
 }
 
