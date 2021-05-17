@@ -72,12 +72,12 @@ export const TASKS_DEMO: Task[] = [
 //                 UTILS FUNCTIONS                     //
 /////////////////////////////////////////////////////////
 
-function createTestCategory(opt: Partial<Category>): Category {
+/*function createTestCategory(opt: Partial<Category>): Category {
     return {
         ...createCategory(`Category ${categoryIncrement++}`),
         ...opt,
     };
-}
+}*/
 
 function createTestTask(opt: Partial<Task>): Task {
     return {
@@ -97,11 +97,11 @@ function createTodoTaskWithLimitDateTest(
     });
 }
 
-function generateTasks(x: number, opt: Partial<Task>): Task[] {
+/*function generateTasks(x: number, opt: Partial<Task>): Task[] {
     const res: Task[] = [];
     for (let i = 0; i < x; i++) res.push(createTestTask(opt));
     return res;
-}
+}*/
 
 /**
  * @param days days to add or to substract to current date
