@@ -2,7 +2,7 @@
  * enum that defines possibles priority of a task
  */
 export enum TaskPriority {
-    NONE = 0,
+    NONE = -1, // must not be 0 because it'll break sorting by priority
     LOW = 1,
     MEDIUM = 2,
     HIGH = 3,

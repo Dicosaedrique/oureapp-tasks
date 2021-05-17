@@ -33,9 +33,6 @@ export function CategoryContainer({ title, tasks }: CategoryContainerProps) {
     const remainingTasks = tasks.filter(task => task.state === TaskState.TODO)
         .length;
 
-    // sort tasks by state (TODO : rework when sorting will be added)
-    tasks.sort((a, b) => a.state - b.state);
-
     return (
         <>
             <ListItem button onClick={toggleOpen} selected={open}>

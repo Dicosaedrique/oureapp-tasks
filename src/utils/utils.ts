@@ -43,3 +43,18 @@ export function diffInDays(start: Date | number, end: Date | number): number {
 export function range(value: number, min: number, max: number): number {
     return Math.min(Math.max(value, min), max);
 }
+
+/**
+ * Convert a record to an array
+ * @param record the record to convert
+ * @returns the converted array
+ */
+export function recordToArray<T>(record: Record<any, T>): T[] {
+    const array: T[] = [];
+
+    for (const key in record) {
+        array.push(record[key]);
+    }
+
+    return array;
+}

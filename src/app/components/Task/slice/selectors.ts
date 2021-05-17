@@ -1,5 +1,11 @@
 import { groupBy } from 'lodash';
-import { DEFAULT_CATEGORY, TASK_STATE_CATEGORIES } from 'model/Category';
+import {
+    DEFAULT_CATEGORY,
+    getTaskStateFromCategoryId,
+    TASK_STATE_CATEGORIES,
+} from 'model/Category';
+import { TaskState } from 'model/Task';
+import { TASKS_COMPARERS } from 'model/Task/Sort';
 import { createSelector } from 'reselect';
 import { RootState } from 'types';
 
@@ -63,6 +69,16 @@ export const selectCategoriesPreferences = createSelector(
 );
 
 /**
+ * @returns the sorting preferences of the tasks slice
+ */
+export const selectSortingPreferences = createSelector(
+    selectPreferences,
+    preferences => preferences.sorting,
+);
+
+/**
+ * TODO : THIS PROBABLY NEEDS OTPIMIZATION AS IT TAKES TOO MANY PARAMETERS AND UPDATE TOO OFTEN THE WHOLE APP !!!
+ *
  * Selector that will separate tasks by state or by category based on category preferences
  * @returns an array of "CategoryContainer" props
  */
@@ -70,7 +86,8 @@ export const selectSmartSeparatedTasks = createSelector(
     selectCategories,
     selectTasksList,
     selectCategoriesPreferences,
-    (categories, tasksList, categoriesPreferences) => {
+    selectSortingPreferences,
+    (categories, tasksList, categoriesPreferences, sortingMode) => {
         const res: CategoryContainerProps[] = [];
 
         // separate tasks by categories
@@ -94,6 +111,27 @@ export const selectSmartSeparatedTasks = createSelector(
                     });
                 }
             }
+
+            // sort arrays with the current sorting mode (and separate tasks by state putting done ones at the end)
+            if (res.length > 0) {
+                for (const category of res) {
+                    const todoSortedTasks = category.tasks
+                        .filter(task => task.state === TaskState.TODO)
+                        .sort(
+                            TASKS_COMPARERS[TaskState.TODO][sortingMode.mode](
+                                sortingMode.order,
+                            ),
+                        );
+                    const doneSortedTasks = category.tasks
+                        .filter(task => task.state === TaskState.DONE)
+                        .sort(
+                            TASKS_COMPARERS[TaskState.DONE][sortingMode.mode](
+                                sortingMode.order,
+                            ),
+                        );
+                    category.tasks = todoSortedTasks.concat(doneSortedTasks);
+                }
+            }
         }
         // separate tasks by state (todo / done)
         else {
@@ -108,6 +146,17 @@ export const selectSmartSeparatedTasks = createSelector(
                         ...TASK_STATE_CATEGORIES[taskState],
                         tasks: groupedByState[taskState],
                     });
+                }
+            }
+
+            // sort arrays with the current sorting mode
+            if (res.length > 0) {
+                for (const category of res) {
+                    category.tasks.sort(
+                        TASKS_COMPARERS[
+                            getTaskStateFromCategoryId(category.id)
+                        ][sortingMode.mode](sortingMode.order),
+                    );
                 }
             }
         }

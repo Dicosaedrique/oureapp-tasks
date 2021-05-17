@@ -6,15 +6,15 @@ import { DEFAULT_TASK_PRIORITY, TaskPriority } from './Priority';
  * possible states of a task (todo, done)
  */
 export enum TaskState {
-    TODO = 10,
-    DONE = 100,
+    TODO = 1,
+    DONE = 2,
 }
 
 /**
  * define the interface of a task
  */
 export interface Task {
-    id: string;
+    readonly id: string;
     title: string;
     creationDate: number;
     state: TaskState;
