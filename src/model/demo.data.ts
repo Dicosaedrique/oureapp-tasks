@@ -2,13 +2,13 @@
  * Contains sample data for demonstration of the app
  **/
 
-import { Category, createCategory } from './Category';
+import { Category, /*createCategory*/ } from './Category';
 import { createTask, Task } from './Task';
 import { TaskPriority } from './Task/Priority';
 
 // utils variables / constants
 let taskIncrement = 1;
-let categoryIncrement = 1;
+//let categoryIncrement = 1;
 const DAY_IN_MS = 86400000;
 
 /**
