@@ -8,6 +8,7 @@ const Badge = styled.span`
     cursor: pointer;
     user-select: none;
     margin: 0 0.3em;
+    white-space: pre;
 
     &:hover {
         opacity: 0.9;

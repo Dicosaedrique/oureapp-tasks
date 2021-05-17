@@ -3,7 +3,7 @@ import Badge from 'app/components/StyledComponents/Badge';
 import { TaskState } from 'model/Task';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { diffInDays, formatDate, range } from 'utils/utils';
+import { diffInDays, formatDate } from 'utils/utils';
 
 import { useTasksSlice } from '../slice';
 import { selectLimitDatePreferences } from '../slice/selectors';
@@ -36,10 +36,8 @@ export function LimitDateComponent({
     };
 
     // progress of the task (in percentage)
-    const progress = range(
-        Math.round(((nowDate - startDate) / (limitDate - startDate)) * 100),
-        0,
-        100,
+    const progress = Math.round(
+        ((nowDate - startDate) / (limitDate - startDate)) * 100,
     );
 
     const remainingDays = diffInDays(nowDate, limitDate);
@@ -67,7 +65,8 @@ export function LimitDateComponent({
     );
 }
 
-// TEMP !!!
+export const MemoLimitDateComponent = React.memo(LimitDateComponent);
+
 const SUCCESS_COLOR = '#45e43f';
 const WARNING_COLOR = '#ffa339';
 const DANGER_COLOR = '#ff4d4d';

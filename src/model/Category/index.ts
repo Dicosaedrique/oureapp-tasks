@@ -5,7 +5,7 @@ import uniqid from 'uniqid';
  * define the interface of a category
  */
 export interface Category {
-    id: string;
+    readonly id: string;
     title: string;
 }
 
@@ -20,8 +20,6 @@ export function createCategory(title: string): Category {
         title: title,
     };
 }
-
-// TODO : IS IT TEMP OR A GOOD WAY TO DO THAT ???
 
 /**
  * Default category for tasks that don't have a category
@@ -44,3 +42,19 @@ export const TASK_STATE_CATEGORIES: Record<TaskState, Category> = {
         id: 'category_done',
     },
 };
+
+/**
+ * Util function to transform TASK_STATE_CATEGORIES ids in their associated task state
+ * @param id the id of the category
+ * @returns task state associated with this category id (or TaskState.TODO by default)
+ */
+export function getTaskStateFromCategoryId(id: string): TaskState {
+    switch (id) {
+        case TASK_STATE_CATEGORIES[TaskState.DONE].id:
+            return TaskState.DONE;
+
+        case TASK_STATE_CATEGORIES[TaskState.TODO].id:
+        default:
+            return TaskState.TODO;
+    }
+}

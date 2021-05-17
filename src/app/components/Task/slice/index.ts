@@ -20,6 +20,10 @@ export const initialState: TasksSliceState = {
     list: TASKS_DEMO,
     categories: CATEGORIES_DEMO,
     preferences: {
+        sorting: {
+            mode: 'creationDate',
+            order: false,
+        },
         priority: {
             displayPriorityFullName: true,
             prioritiesNames: DEFAULT_TASK_PRIORITIES_NAMES,
