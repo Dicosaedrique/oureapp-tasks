@@ -14,7 +14,7 @@ import { Task, TaskState } from 'model/Task';
 import * as React from 'react';
 import styled from 'styled-components/macro';
 
-import { TaskComponent } from '../../Task';
+import { MemoTaskComponent } from '../../Task';
 
 export interface CategoryContainerProps extends Category {
     tasks: Task[];
@@ -50,7 +50,7 @@ export function CategoryContainer({ title, tasks }: CategoryContainerProps) {
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     {tasks.map(task => (
-                        <TaskComponent key={task.id} task={task} />
+                        <MemoTaskComponent key={task.id} task={task} />
                     ))}
                 </List>
             </Collapse>
@@ -63,3 +63,5 @@ const CategoryTitle = styled.span`
     font-size: 1.1em;
     margin-right: 0.4em;
 `;
+
+export const MemoCategoryContainer = React.memo(CategoryContainer);

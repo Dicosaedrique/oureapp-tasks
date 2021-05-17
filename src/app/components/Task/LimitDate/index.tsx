@@ -67,7 +67,8 @@ export function LimitDateComponent({
     );
 }
 
-// TEMP !!!
+export const MemoLimitDateComponent = React.memo(LimitDateComponent);
+
 const SUCCESS_COLOR = '#45e43f';
 const WARNING_COLOR = '#ffa339';
 const DANGER_COLOR = '#ff4d4d';

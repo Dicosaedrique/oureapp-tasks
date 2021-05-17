@@ -38,3 +38,5 @@ export function PriorityComponent({ priority }: Props) {
         </Badge>
     );
 }
+
+export const MemoPriorityComponent = React.memo(PriorityComponent);

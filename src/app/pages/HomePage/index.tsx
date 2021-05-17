@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { Rewarder } from 'app/components/Reward';
 import { RewarderProvider } from 'app/components/Reward/context';
-import { CategoryContainer } from 'app/components/Task/Category';
+import { MemoCategoryContainer } from 'app/components/Task/Category';
 import { useTasksSlice } from 'app/components/Task/slice';
 import {
     selectCategoriesPreferences,
@@ -86,7 +86,7 @@ export function HomePage() {
                         label="Separate tasks by categories"
                     />
                     {categoriesContainerProps.map(categoryContainerProps => (
-                        <CategoryContainer
+                        <MemoCategoryContainer
                             key={categoryContainerProps.id}
                             {...categoryContainerProps}
                         />

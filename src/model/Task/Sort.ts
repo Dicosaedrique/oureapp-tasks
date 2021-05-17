@@ -1,3 +1,4 @@
+import { memoize } from 'lodash';
 import { ComparerOrder, SortingOrder } from 'utils/types/types';
 
 import { Task, TaskState } from '.';
@@ -69,8 +70,6 @@ export const TASKS_COMPARERS: Record<
 //   UTILS FUNCTIONS USEFULL TO CREATE AND COMBINE COMPARERS     //
 ///////////////////////////////////////////////////////////////////
 
-// TODO : MEMOIZED THE GENERATOR !!!
-
 /**
  * Generate a "ComparerOrder" for one or more keys in a task, the priority is defined by the order of the keys (TODO : find a better name)
  * @param keys the keys to compare (in order of importance)
@@ -79,22 +78,24 @@ export const TASKS_COMPARERS: Record<
 function createTaskComparerOrder(
     ...keys: SortableTaskKeys[]
 ): ComparerOrder<Task> {
-    return (order: SortingOrder) =>
-        function (a: Task, b: Task): number {
-            let value: number = 0;
+    return memoize(
+        (order: SortingOrder) =>
+            function (a: Task, b: Task): number {
+                let value: number = 0;
 
-            // for each key to compare
-            for (const key of keys) {
-                value = compare(
-                    getValue(a[key], order),
-                    getValue(b[key], order),
-                );
-                if (!order) value = -value;
-                if (value !== 0) break; // if the two elements aren't equal with this comparer, we stop here
-            }
+                // for each key to compare
+                for (const key of keys) {
+                    value = compare(
+                        getValue(a[key], order),
+                        getValue(b[key], order),
+                    );
+                    if (!order) value = -value;
+                    if (value !== 0) break; // if the two elements aren't equal with this comparer, we stop here
+                }
 
-            return value;
-        };
+                return value;
+            },
+    );
 
     /**
      * Get the final value for comparison : if value is a string return charcode, if it is undefined

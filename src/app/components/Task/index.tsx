@@ -18,9 +18,9 @@ import { useDispatch } from 'react-redux';
 
 import { getParticleCountFromTask } from '../Reward';
 import { useRewarder } from '../Reward/context';
-import { LimitDateComponent } from './LimitDate';
+import { MemoLimitDateComponent } from './LimitDate';
 import { messages } from './messages';
-import { PriorityComponent } from './Priority';
+import { MemoPriorityComponent } from './Priority';
 import { useTasksSlice } from './slice';
 
 interface Props {
@@ -83,10 +83,10 @@ export function TaskComponent({ task }: Props) {
                     <>
                         <span style={{ marginRight: '1em' }}>{task.title}</span>
                         {task.priority !== TaskPriority.NONE && (
-                            <PriorityComponent priority={task.priority} />
+                            <MemoPriorityComponent priority={task.priority} />
                         )}
                         {task.limitDate !== undefined && (
-                            <LimitDateComponent
+                            <MemoLimitDateComponent
                                 nowDate={
                                     task.state === TaskState.DONE
                                         ? task.finishedDate || 0
@@ -114,3 +114,5 @@ export function TaskComponent({ task }: Props) {
         </ListItem>
     );
 }
+
+export const MemoTaskComponent = React.memo(TaskComponent);

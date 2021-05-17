@@ -21,8 +21,6 @@ export function createCategory(title: string): Category {
     };
 }
 
-// TODO : IS IT TEMP OR A GOOD WAY TO DO THAT ???
-
 /**
  * Default category for tasks that don't have a category
  */
