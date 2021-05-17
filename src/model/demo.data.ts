@@ -2,7 +2,7 @@
  * Contains sample data for demonstration of the app
  **/
 
-import { Category, /*createCategory*/ } from './Category';
+import { Category /*createCategory*/ } from './Category';
 import { createTask, Task } from './Task';
 import { TaskPriority } from './Task/Priority';
 
