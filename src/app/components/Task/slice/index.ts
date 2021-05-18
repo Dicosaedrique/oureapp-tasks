@@ -3,6 +3,7 @@ import { CATEGORIES_DEMO, TASKS_DEMO } from 'model/demo.data';
 import {
     createTask,
     setTaskState,
+    TaskID,
     TaskInputProps,
     TaskState,
 } from 'model/Task';
@@ -37,6 +38,12 @@ export const initialState: TasksSliceState = {
         categories: {
             enableCategoriesSeparation: true,
         },
+        filtering: {
+            state: [],
+            priority: [],
+            limitDate: [],
+            category: [],
+        },
     },
 };
 
@@ -51,7 +58,7 @@ const slice = createSlice({
         },
 
         // remove a task from the slice (based in the task id)
-        removeTask(state, action: PayloadAction<string>) {
+        removeTask(state, action: PayloadAction<TaskID>) {
             const taskIndex = state.list.findIndex(
                 task => task.id === action.payload,
             );
@@ -61,7 +68,7 @@ const slice = createSlice({
         // set the task state based on the payload
         setTaskState(
             state,
-            action: PayloadAction<{ id: string; taskState: TaskState }>,
+            action: PayloadAction<{ id: TaskID; taskState: TaskState }>,
         ) {
             const taskIndex = state.list.findIndex(
                 task => task.id === action.payload.id,

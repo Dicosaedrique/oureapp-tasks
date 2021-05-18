@@ -1,3 +1,4 @@
+import { CategoryID } from 'model/Category';
 import uniqid from 'uniqid';
 
 import { DEFAULT_TASK_PRIORITY, TaskPriority } from './Priority';
@@ -10,11 +11,13 @@ export enum TaskState {
     DONE = 2,
 }
 
+export type TaskID = string;
+
 /**
  * define the interface of a task
  */
 export interface Task {
-    readonly id: string;
+    readonly id: TaskID;
     title: string;
     creationDate: number;
     state: TaskState;
@@ -22,7 +25,7 @@ export interface Task {
 
     limitDate?: number;
     finishedDate?: number;
-    category?: string;
+    category?: CategoryID;
 }
 
 /**
