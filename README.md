@@ -27,8 +27,9 @@ Site should be up at [todo.dicosaedrique.fr](https://todo.dicosaedrique.fr)
 -   [x] Add task limit date
 -   [x] Add task categorization
 -   [x] Add sorting system
--   [ ] Add filtering system
+-   [x] Add filtering system
 -   [x] Add reward message on task complete
+-   [ ] Add filtering and sorting menus
 -   [ ] Add archivment system
 -   [ ] Add [snackbars](https://github.com/iamhosseindhv/notistack) on actions
 -   [ ] Add undo / redo action system
