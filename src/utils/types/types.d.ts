@@ -23,3 +23,5 @@ type FilteredKeys<Base extends Object, Condition> = keyof Pick<
         [Key in keyof Base]: Base[Key] extends Condition ? Key : never;
     }[keyof Base]
 >;
+
+export type Filter<T> = (t: T) => boolean;

@@ -1,11 +1,13 @@
 import { TaskState } from 'model/Task';
 import uniqid from 'uniqid';
 
+export type CategoryID = string;
+
 /**
  * define the interface of a category
  */
 export interface Category {
-    readonly id: string;
+    readonly id: CategoryID;
     title: string;
 }
 

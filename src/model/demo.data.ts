@@ -2,7 +2,6 @@
  * Contains sample data for demonstration of the app
  **/
 
-import { Category /*createCategory*/ } from './Category';
 import { createTask, Task } from './Task';
 import { TaskPriority } from './Task/Priority';
 
@@ -14,7 +13,7 @@ const DAY_IN_MS = 86400000;
 /**
  * Categories used for the demo
  */
-export const CATEGORIES_DEMO: Record<string, Category> = {
+export const CATEGORIES_DEMO = {
     title: { id: 'title', title: 'Test title sorting' },
     priority: { id: 'priority', title: 'Test priority sorting' },
     limit_date: { id: 'limit_date', title: 'Test limit date sorting' },
@@ -72,12 +71,12 @@ export const TASKS_DEMO: Task[] = [
 //                 UTILS FUNCTIONS                     //
 /////////////////////////////////////////////////////////
 
-/*function createTestCategory(opt: Partial<Category>): Category {
-    return {
-        ...createCategory(`Category ${categoryIncrement++}`),
-        ...opt,
-    };
-}*/
+// function createTestCategory(opt: Partial<Category>): Category {
+//     return {
+//         ...createCategory(`Category ${categoryIncrement++}`),
+//         ...opt,
+//     };
+// }
 
 function createTestTask(opt: Partial<Task>): Task {
     return {
@@ -97,11 +96,11 @@ function createTodoTaskWithLimitDateTest(
     });
 }
 
-/*function generateTasks(x: number, opt: Partial<Task>): Task[] {
-    const res: Task[] = [];
-    for (let i = 0; i < x; i++) res.push(createTestTask(opt));
-    return res;
-}*/
+// function generateTasks(x: number, opt: Partial<Task>): Task[] {
+//     const res: Task[] = [];
+//     for (let i = 0; i < x; i++) res.push(createTestTask(opt));
+//     return res;
+// }
 
 /**
  * @param days days to add or to substract to current date

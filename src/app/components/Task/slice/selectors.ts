@@ -5,6 +5,7 @@ import {
     TASK_STATE_CATEGORIES,
 } from 'model/Category';
 import { TaskState } from 'model/Task';
+import { getFilterFromSettings } from 'model/Task/Filter';
 import { TASKS_COMPARERS } from 'model/Task/Sort';
 import { createSelector } from 'reselect';
 import { RootState } from 'types';
@@ -77,6 +78,14 @@ export const selectSortingPreferences = createSelector(
 );
 
 /**
+ * @returns the filtering preferences of the tasks slice
+ */
+export const selectFilteringPreferences = createSelector(
+    selectPreferences,
+    preferences => preferences.filtering,
+);
+
+/**
  * TODO : THIS PROBABLY NEEDS OTPIMIZATION AS IT TAKES TOO MANY PARAMETERS AND UPDATE TOO OFTEN THE WHOLE APP !!!
  *
  * Selector that will separate tasks by state or by category based on category preferences
@@ -87,12 +96,22 @@ export const selectSmartSeparatedTasks = createSelector(
     selectTasksList,
     selectCategoriesPreferences,
     selectSortingPreferences,
-    (categories, tasksList, categoriesPreferences, sortingMode) => {
+    selectFilteringPreferences,
+    (categories, tasksList, categoriesPreferences, sortingMode, filtering) => {
         const res: CategoryContainerProps[] = [];
+
+        //////////////////////////////////////////////////////////
+        // 1 - FILTERS TASKS WITH THE FILTERING PREFERENCES
+
+        const finalFilter = getFilterFromSettings(filtering);
+        const tasks = tasksList.filter(finalFilter);
+
+        //////////////////////////////////////////////////////////
+        // 2 - SEPARATE THE TASKS (BY CATEGORY OR BY STATE)
 
         // separate tasks by categories
         if (categoriesPreferences.enableCategoriesSeparation) {
-            const groupedByCategories = groupBy(tasksList, 'category');
+            const groupedByCategories = groupBy(tasks, 'category');
 
             // for each category
             for (const category in groupedByCategories) {
@@ -111,6 +130,8 @@ export const selectSmartSeparatedTasks = createSelector(
                     });
                 }
             }
+
+            // 3 - SORT THE TASKS WITH THE SORTING PREFERENCES
 
             // sort arrays with the current sorting mode (and separate tasks by state putting done ones at the end)
             if (res.length > 0) {
@@ -136,7 +157,7 @@ export const selectSmartSeparatedTasks = createSelector(
         // separate tasks by state (todo / done)
         else {
             // group tasks by state
-            const groupedByState = groupBy(tasksList, 'state');
+            const groupedByState = groupBy(tasks, 'state');
 
             // for each state
             for (const taskState in groupedByState) {
@@ -148,6 +169,8 @@ export const selectSmartSeparatedTasks = createSelector(
                     });
                 }
             }
+
+            // 3 - SORT THE TASKS WITH THE SORTING PREFERENCES
 
             // sort arrays with the current sorting mode
             if (res.length > 0) {

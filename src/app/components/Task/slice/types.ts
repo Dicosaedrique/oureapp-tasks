@@ -1,5 +1,6 @@
-import { Category } from 'model/Category';
+import { Category, CategoryID } from 'model/Category';
 import { Task } from 'model/Task';
+import { FilteringSettings } from 'model/Task/Filter';
 import { TaskPriority } from 'model/Task/Priority';
 import { TaskSortMode } from 'model/Task/Sort';
 import { SortingOrder } from 'utils/types/types';
@@ -7,7 +8,7 @@ import { SortingOrder } from 'utils/types/types';
 /* --- STATE --- */
 export interface TasksSliceState {
     list: Array<Task>;
-    categories: Record<string, Category>;
+    categories: Record<CategoryID, Category>;
     preferences: {
         sorting: {
             mode: TaskSortMode;
@@ -26,5 +27,6 @@ export interface TasksSliceState {
         categories: {
             enableCategoriesSeparation: boolean;
         };
+        filtering: FilteringSettings;
     };
 }
