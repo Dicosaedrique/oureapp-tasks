@@ -47,11 +47,11 @@ export const TASKS_DEMO: Task[] = [
     createTodoTaskWithLimitDateTest({ category: 'limit_date' }, 90),
 
     // test creation date sorting
-    createTestTask({ category: '103', creationDate: dateDays(-10) }),
-    createTestTask({ category: '103', creationDate: dateDays(-8) }),
-    createTestTask({ category: '103', creationDate: dateDays(-6) }),
-    createTestTask({ category: '103', creationDate: dateDays(-4) }),
-    createTestTask({ category: '103', creationDate: dateDays(-2) }),
+    createTestTask({ category: 'creation_date', creationDate: dateDays(-10) }),
+    createTestTask({ category: 'creation_date', creationDate: dateDays(-8) }),
+    createTestTask({ category: 'creation_date', creationDate: dateDays(-6) }),
+    createTestTask({ category: 'creation_date', creationDate: dateDays(-4) }),
+    createTestTask({ category: 'creation_date', creationDate: dateDays(-2) }),
 
     // test limit date with different year
     createTestTask({
