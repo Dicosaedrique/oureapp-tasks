@@ -7,10 +7,12 @@ import {
     TaskInputProps,
     TaskState,
 } from 'model/Task';
+import { FilteringSettings } from 'model/Task/Filter';
 import {
     DEFAULT_TASK_PRIORITIES_COLORS,
     DEFAULT_TASK_PRIORITIES_NAMES,
 } from 'model/Task/Priority';
+import { TaskSortMode } from 'model/Task/Sort';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer } from 'utils/redux-injectors';
 
@@ -96,6 +98,43 @@ const slice = createSlice({
         toggleCategoriesSeparation(state) {
             state.preferences.categories.enableCategoriesSeparation = !state
                 .preferences.categories.enableCategoriesSeparation;
+        },
+
+        toggleFilteringPreferenceValues(
+            state,
+            action: PayloadAction<Partial<FilteringSettings>>,
+        ) {
+            const settingsToToggle = action.payload;
+
+            for (const key in settingsToToggle) {
+                if (key in state.preferences.filtering) {
+                    const currentSettings: any[] =
+                        state.preferences.filtering[key];
+
+                    for (const setting of settingsToToggle[key]) {
+                        if (setting in settingsToToggle[key]) {
+                            const index = currentSettings.indexOf(setting);
+                            if (index !== -1) currentSettings.splice(index, 1);
+                            else currentSettings.push(setting);
+                        }
+                    }
+                }
+            }
+        },
+
+        resetFilteringPreferenceValue(
+            state,
+            action: PayloadAction<keyof FilteringSettings>,
+        ) {
+            state.preferences.filtering[action.payload] = [];
+        },
+
+        setSortingMode(state, action: PayloadAction<TaskSortMode>) {
+            state.preferences.sorting.mode = action.payload;
+        },
+
+        toggleSortingOrder(state) {
+            state.preferences.sorting.order = !state.preferences.sorting.order;
         },
     },
 });

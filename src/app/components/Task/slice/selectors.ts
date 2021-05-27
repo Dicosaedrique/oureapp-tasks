@@ -86,6 +86,38 @@ export const selectFilteringPreferences = createSelector(
 );
 
 /**
+ * @returns the filtering preferences for the task state
+ */
+export const selectTaskStateFilteringPreferences = createSelector(
+    selectFilteringPreferences,
+    filtering => filtering.state,
+);
+
+/**
+ * @returns the filtering preferences for the task priority
+ */
+export const selectTaskPriorityFilteringPreferences = createSelector(
+    selectFilteringPreferences,
+    filtering => filtering.priority,
+);
+
+/**
+ * @returns the filtering preferences for the task limit date
+ */
+export const selectTaskLimitDateFilteringPreferences = createSelector(
+    selectFilteringPreferences,
+    filtering => filtering.limitDate,
+);
+
+/**
+ * @returns the filtering preferences for the task category
+ */
+export const selectTaskCategoryFilteringPreferences = createSelector(
+    selectFilteringPreferences,
+    filtering => filtering.category,
+);
+
+/**
  * TODO : THIS PROBABLY NEEDS OTPIMIZATION AS IT TAKES TOO MANY PARAMETERS AND UPDATE TOO OFTEN THE WHOLE APP !!!
  *
  * Selector that will separate tasks by state or by category based on category preferences

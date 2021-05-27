@@ -43,3 +43,12 @@ export function diffInDays(start: Date | number, end: Date | number): number {
 export function range(value: number, min: number, max: number): number {
     return Math.min(Math.max(value, min), max);
 }
+
+export function mapObject<Type extends Object, ReturnType>(
+    obj: Type,
+    mapFn: (value: Type[keyof Type], key: keyof Type) => any,
+): ReturnType[] {
+    return Object.keys(obj).map(function (key) {
+        return mapFn(obj[key], key as keyof Type);
+    });
+}

@@ -11,6 +11,14 @@ export enum TaskState {
     DONE = 2,
 }
 
+/**
+ * Mapped names of the task states
+ */
+export const TASK_STATE_NAMES = {
+    [TaskState.TODO]: 'Todo',
+    [TaskState.DONE]: 'Done',
+};
+
 export type TaskID = string;
 
 /**

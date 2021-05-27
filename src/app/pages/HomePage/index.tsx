@@ -5,6 +5,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { FilteringMenu } from 'app/components/Menus/Filtering';
+import { SortingMenu } from 'app/components/Menus/Sorting';
 import { Rewarder } from 'app/components/Reward';
 import { RewarderProvider } from 'app/components/Reward/context';
 import { MemoCategoryContainer } from 'app/components/Task/Category';
@@ -85,6 +87,9 @@ export function HomePage() {
                         }
                         label="Separate tasks by categories"
                     />
+                    <FilteringMenu />
+                    <SortingMenu />
+                    <br />
                     {categoriesContainerProps.map(categoryContainerProps => (
                         <MemoCategoryContainer
                             key={categoryContainerProps.id}
