@@ -107,12 +107,17 @@ const slice = createSlice({
             const settingsToToggle = action.payload;
 
             for (const key in settingsToToggle) {
-                const currentSettings: any[] = state.preferences.filtering[key];
+                if (key in state.preferences.filtering) {
+                    const currentSettings: any[] =
+                        state.preferences.filtering[key];
 
-                for (const setting of settingsToToggle[key]) {
-                    const index = currentSettings.indexOf(setting);
-                    if (index !== -1) currentSettings.splice(index, 1);
-                    else currentSettings.push(setting);
+                    for (const setting of settingsToToggle[key]) {
+                        if (setting in settingsToToggle[key]) {
+                            const index = currentSettings.indexOf(setting);
+                            if (index !== -1) currentSettings.splice(index, 1);
+                            else currentSettings.push(setting);
+                        }
+                    }
                 }
             }
         },
