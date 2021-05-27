@@ -12,6 +12,7 @@ import {
     DEFAULT_TASK_PRIORITIES_COLORS,
     DEFAULT_TASK_PRIORITIES_NAMES,
 } from 'model/Task/Priority';
+import { TaskSortMode } from 'model/Task/Sort';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer } from 'utils/redux-injectors';
 
@@ -121,6 +122,14 @@ const slice = createSlice({
             action: PayloadAction<keyof FilteringSettings>,
         ) {
             state.preferences.filtering[action.payload] = [];
+        },
+
+        setSortingMode(state, action: PayloadAction<TaskSortMode>) {
+            state.preferences.sorting.mode = action.payload;
+        },
+
+        toggleSortingOrder(state) {
+            state.preferences.sorting.order = !state.preferences.sorting.order;
         },
     },
 });

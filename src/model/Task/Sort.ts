@@ -13,6 +13,13 @@ export type SortableTaskKeys = keyof Omit<Task, 'id' | 'category' | 'state'>;
  */
 export type TaskSortMode = Exclude<SortableTaskKeys, 'finishedDate'>;
 
+export const SORT_MODE_NAMES: Record<TaskSortMode, string> = {
+    title: 'By title',
+    creationDate: 'By creation date',
+    priority: 'By priority',
+    limitDate: 'By limit date',
+};
+
 /**
  * Defines the order of priority when sorting tasks keys
  * ie. when sorting by a key, in case of equality, it will break down to the next one
