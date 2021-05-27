@@ -1,5 +1,6 @@
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
+import Grid from '@material-ui/core/Grid';
 import ListItemText from '@material-ui/core/ListItemText';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -17,12 +18,20 @@ import { TaskStateFilterComponent } from './TaskStateFilter';
  */
 export function FilteringMenu(props: any) {
     return (
-        <>
-            <TaskStateFilterComponent />
-            <TaskPriorityFilterComponent />
-            <TaskLimitDateFilterComponent />
-            <TaskCategoryFilterComponent />
-        </>
+        <Grid container spacing={2} justify="flex-end">
+            <Grid item>
+                <TaskStateFilterComponent />
+            </Grid>
+            <Grid item>
+                <TaskPriorityFilterComponent />
+            </Grid>
+            <Grid item>
+                <TaskLimitDateFilterComponent />
+            </Grid>
+            <Grid item>
+                <TaskCategoryFilterComponent />
+            </Grid>
+        </Grid>
     );
 }
 
@@ -74,7 +83,7 @@ export function GenericFilterComponent<Type>({
         : {};
 
     return (
-        <div>
+        <>
             <Button
                 aria-controls={id}
                 aria-haspopup="true"
@@ -124,6 +133,6 @@ export function GenericFilterComponent<Type>({
                     </MenuItem>
                 ))}
             </Menu>
-        </div>
+        </>
     );
 }
