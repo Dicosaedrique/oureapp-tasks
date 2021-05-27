@@ -112,11 +112,9 @@ const slice = createSlice({
                         state.preferences.filtering[key];
 
                     for (const setting of settingsToToggle[key]) {
-                        if (setting in settingsToToggle[key]) {
-                            const index = currentSettings.indexOf(setting);
-                            if (index !== -1) currentSettings.splice(index, 1);
-                            else currentSettings.push(setting);
-                        }
+                        const index = currentSettings.indexOf(setting);
+                        if (index !== -1) currentSettings.splice(index, 1);
+                        else currentSettings.push(setting);
                     }
                 }
             }
