@@ -6,6 +6,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import FilterListIcon from '@material-ui/icons/FilterList';
 import React from 'react';
 
 import { TaskCategoryFilterComponent } from './TaskCategoryFilter';
@@ -14,11 +15,11 @@ import { TaskPriorityFilterComponent } from './TaskPriorityFilter';
 import { TaskStateFilterComponent } from './TaskStateFilter';
 
 /**
- * Defines the menu that will filter tasks
+ * Defines the menu to change filtering preferences
  */
-export function FilteringMenu(props: any) {
+export function FilteringMenu() {
     return (
-        <Grid container spacing={2} justify="flex-end">
+        <Grid container spacing={2} justify="flex-end" alignItems="center">
             <Grid item>
                 <TaskStateFilterComponent />
             </Grid>
@@ -89,6 +90,8 @@ export function GenericFilterComponent<Type>({
                 aria-haspopup="true"
                 onClick={handleOpen}
             >
+                <FilterListIcon />
+                &nbsp;
                 {title}
                 {menuOpen ? <ExpandLess /> : <ExpandMore />}
             </Button>
