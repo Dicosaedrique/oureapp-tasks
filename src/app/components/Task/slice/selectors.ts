@@ -1,3 +1,7 @@
+import { selectCategories } from 'app/components/Category/slice/selectors';
+import { selectFiltering } from 'app/components/Menus/Filtering/slice/selectors';
+import { selectSorting } from 'app/components/Menus/Sorting/slice/selectors';
+import { selectCategoriesPreferences } from 'app/pages/HomePage/preferencesSlice/selectors';
 import { groupBy } from 'lodash';
 import {
     DEFAULT_CATEGORY,
@@ -10,7 +14,7 @@ import { TASKS_COMPARERS } from 'model/Task/Sort';
 import { createSelector } from 'reselect';
 import { RootState } from 'types';
 
-import { CategoryContainerProps } from '../Category';
+import { CategoryContainerProps } from '../../Category';
 import { initialState } from '.';
 
 const selectSlice = (state: RootState) => state.tasks || initialState;
@@ -19,10 +23,10 @@ const selectSlice = (state: RootState) => state.tasks || initialState;
  * selector for tasks
  * @returns the "tasks" slice of global state
  */
-export const selectTasks = createSelector([selectSlice], state => state);
+export const selectTasks = selectSlice;
 
 /**
- * @returns the task list (all)
+ * @returns the task list (not archived)
  */
 export const selectTasksList = createSelector(
     selectTasks,
@@ -30,105 +34,24 @@ export const selectTasksList = createSelector(
 );
 
 /**
- * @returns the category list
+ * @returns the archived task list
  */
-export const selectCategories = createSelector(
+export const selectArchivedTasks = createSelector(
     selectTasks,
-    tasksState => tasksState.categories,
-);
-
-/**
- * @returns the preferences of the tasks slice
- */
-export const selectPreferences = createSelector(
-    selectTasks,
-    tasksState => tasksState.preferences,
-);
-
-/**
- * @returns the priority preferences of the tasks slice
- */
-export const selectPriorityPreferences = createSelector(
-    selectPreferences,
-    preferences => preferences.priority,
-);
-
-/**
- * @returns the limit date preferences of the tasks slice
- */
-export const selectLimitDatePreferences = createSelector(
-    selectPreferences,
-    preferences => preferences.limitDate,
-);
-
-/**
- * @returns the categories preferences of the tasks slice
- */
-export const selectCategoriesPreferences = createSelector(
-    selectPreferences,
-    preferences => preferences.categories,
-);
-
-/**
- * @returns the sorting preferences of the tasks slice
- */
-export const selectSortingPreferences = createSelector(
-    selectPreferences,
-    preferences => preferences.sorting,
-);
-
-/**
- * @returns the filtering preferences of the tasks slice
- */
-export const selectFilteringPreferences = createSelector(
-    selectPreferences,
-    preferences => preferences.filtering,
-);
-
-/**
- * @returns the filtering preferences for the task state
- */
-export const selectTaskStateFilteringPreferences = createSelector(
-    selectFilteringPreferences,
-    filtering => filtering.state,
-);
-
-/**
- * @returns the filtering preferences for the task priority
- */
-export const selectTaskPriorityFilteringPreferences = createSelector(
-    selectFilteringPreferences,
-    filtering => filtering.priority,
-);
-
-/**
- * @returns the filtering preferences for the task limit date
- */
-export const selectTaskLimitDateFilteringPreferences = createSelector(
-    selectFilteringPreferences,
-    filtering => filtering.limitDate,
-);
-
-/**
- * @returns the filtering preferences for the task category
- */
-export const selectTaskCategoryFilteringPreferences = createSelector(
-    selectFilteringPreferences,
-    filtering => filtering.category,
+    tasksState => tasksState.archived,
 );
 
 /**
  * TODO : THIS PROBABLY NEEDS OTPIMIZATION AS IT TAKES TOO MANY PARAMETERS AND UPDATE TOO OFTEN THE WHOLE APP !!!
  *
- * Selector that will separate tasks by state or by category based on category preferences
  * @returns an array of "CategoryContainer" props
  */
 export const selectSmartSeparatedTasks = createSelector(
     selectCategories,
     selectTasksList,
     selectCategoriesPreferences,
-    selectSortingPreferences,
-    selectFilteringPreferences,
+    selectSorting,
+    selectFiltering,
     (categories, tasksList, categoriesPreferences, sortingMode, filtering) => {
         const res: CategoryContainerProps[] = [];
 

@@ -1,9 +1,9 @@
-import { useTasksSlice } from 'app/components/Task/slice';
-import { selectTaskLimitDateFilteringPreferences } from 'app/components/Task/slice/selectors';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { FilterItems, GenericFilterComponent } from '.';
+import { useFilteringSlice } from './slice';
+import { selectFilteringLimitDate } from './slice/selectors';
 
 /**
  * Items to display in the filter
@@ -15,20 +15,16 @@ const ITEMS: FilterItems<boolean> = [
 
 export function TaskLimitDateFilterComponent() {
     const dispatch = useDispatch();
-    const { actions } = useTasksSlice();
+    const { actions } = useFilteringSlice();
 
-    const taskLimitDateValues = useSelector(
-        selectTaskLimitDateFilteringPreferences,
-    );
+    const filteringLimitDateValues = useSelector(selectFilteringLimitDate);
 
     const toggleValue = (limitDate: boolean) => {
-        dispatch(
-            actions.toggleFilteringPreferenceValues({ limitDate: [limitDate] }),
-        );
+        dispatch(actions.toggleFilteringSettings({ limitDate: [limitDate] }));
     };
 
     const toggleAll = () => {
-        dispatch(actions.resetFilteringPreferenceValue('limitDate'));
+        dispatch(actions.resetFilteringSetting('limitDate'));
     };
 
     return (
@@ -37,7 +33,7 @@ export function TaskLimitDateFilterComponent() {
             title="Limit date"
             onItemClick={toggleValue}
             items={ITEMS}
-            values={taskLimitDateValues}
+            values={filteringLimitDateValues}
             onAllClick={toggleAll}
         />
     );

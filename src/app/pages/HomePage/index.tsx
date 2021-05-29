@@ -5,19 +5,19 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { MemoCategoryContainer } from 'app/components/Category';
 import { FilteringMenu } from 'app/components/Menus/Filtering';
 import { SortingMenu } from 'app/components/Menus/Sorting';
 import { Rewarder } from 'app/components/Reward';
 import { RewarderProvider } from 'app/components/Reward/context';
-import { MemoCategoryContainer } from 'app/components/Task/Category';
 import { useTasksSlice } from 'app/components/Task/slice';
-import {
-    selectCategoriesPreferences,
-    selectSmartSeparatedTasks,
-} from 'app/components/Task/slice/selectors';
+import { selectSmartSeparatedTasks } from 'app/components/Task/slice/selectors';
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { usePreferencesSlice } from './preferencesSlice';
+import { selectCategoriesPreferences } from './preferencesSlice/selectors';
 
 export function HomePage() {
     const [title, setTitle] = React.useState('');
@@ -27,14 +27,15 @@ export function HomePage() {
         setRewarder(rewarderElem);
     }, []);
 
-    const { actions } = useTasksSlice();
+    const { actions: taskActions } = useTasksSlice();
+    const { actions: preferencesActions } = usePreferencesSlice();
 
     const categoriesContainerProps = useSelector(selectSmartSeparatedTasks);
 
     const dispatch = useDispatch();
 
     const handleAddTask = () => {
-        if (title.length > 0) dispatch(actions.addTask({ title }));
+        if (title.length > 0) dispatch(taskActions.addTask({ title }));
     };
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +46,7 @@ export function HomePage() {
     // temp (to test toggle of tasks separation)
     const categoriesPreferences = useSelector(selectCategoriesPreferences);
     const handleToggleCategoriesSeparation = () => {
-        dispatch(actions.toggleCategoriesSeparation());
+        dispatch(preferencesActions.toggleCategoriesSeparation());
     };
 
     return (

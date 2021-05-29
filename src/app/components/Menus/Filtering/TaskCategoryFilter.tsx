@@ -1,21 +1,17 @@
-import { useTasksSlice } from 'app/components/Task/slice';
-import {
-    selectCategories,
-    selectTaskCategoryFilteringPreferences,
-} from 'app/components/Task/slice/selectors';
+import { selectCategories } from 'app/components/Category/slice/selectors';
 import { DEFAULT_CATEGORY } from 'model/Category';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { FilterItems, GenericFilterComponent } from '.';
+import { useFilteringSlice } from './slice';
+import { selectFilteringCategory } from './slice/selectors';
 
 export function TaskCategoryFilterComponent() {
     const dispatch = useDispatch();
-    const { actions } = useTasksSlice();
+    const { actions } = useFilteringSlice();
 
-    const taskCategoryValues = useSelector(
-        selectTaskCategoryFilteringPreferences,
-    );
+    const filteringCategoryValues = useSelector(selectFilteringCategory);
 
     const categories = useSelector(selectCategories);
 
@@ -28,13 +24,11 @@ export function TaskCategoryFilterComponent() {
     }
 
     const toggleValue = (categoryId: string | undefined) => {
-        dispatch(
-            actions.toggleFilteringPreferenceValues({ category: [categoryId] }),
-        );
+        dispatch(actions.toggleFilteringSettings({ category: [categoryId] }));
     };
 
     const toggleAll = () => {
-        dispatch(actions.resetFilteringPreferenceValue('category'));
+        dispatch(actions.resetFilteringSetting('category'));
     };
 
     return (
@@ -43,7 +37,7 @@ export function TaskCategoryFilterComponent() {
             title="Category"
             onItemClick={toggleValue}
             items={items}
-            values={taskCategoryValues}
+            values={filteringCategoryValues}
             onAllClick={toggleAll}
         />
     );
