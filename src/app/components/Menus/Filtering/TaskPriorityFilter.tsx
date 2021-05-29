@@ -1,5 +1,3 @@
-import { useTasksSlice } from 'app/components/Task/slice';
-import { selectTaskPriorityFilteringPreferences } from 'app/components/Task/slice/selectors';
 import {
     DEFAULT_TASK_PRIORITIES_NAMES,
     TaskPriority,
@@ -8,6 +6,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { FilterItems, GenericFilterComponent } from '.';
+import { useFilteringSlice } from './slice';
+import { selectFilteringPriority } from './slice/selectors';
 
 /**
  * Items to display in the filter
@@ -22,20 +22,16 @@ const ITEMS: FilterItems<TaskPriority> = [
 
 export function TaskPriorityFilterComponent() {
     const dispatch = useDispatch();
-    const { actions } = useTasksSlice();
+    const { actions } = useFilteringSlice();
 
-    const taskPriorityValues = useSelector(
-        selectTaskPriorityFilteringPreferences,
-    );
+    const filteringPriorityValues = useSelector(selectFilteringPriority);
 
     const toggleValue = (priority: TaskPriority) => {
-        dispatch(
-            actions.toggleFilteringPreferenceValues({ priority: [priority] }),
-        );
+        dispatch(actions.toggleFilteringSettings({ priority: [priority] }));
     };
 
     const toggleAll = () => {
-        dispatch(actions.resetFilteringPreferenceValue('priority'));
+        dispatch(actions.resetFilteringSetting('priority'));
     };
 
     return (
@@ -44,7 +40,7 @@ export function TaskPriorityFilterComponent() {
             title="Priority"
             onItemClick={toggleValue}
             items={ITEMS}
-            values={taskPriorityValues}
+            values={filteringPriorityValues}
             onAllClick={toggleAll}
         />
     );

@@ -7,12 +7,13 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import SortIcon from '@material-ui/icons/Sort';
-import { useTasksSlice } from 'app/components/Task/slice';
-import { selectSortingPreferences } from 'app/components/Task/slice/selectors';
 import { SORT_MODE_NAMES, TaskSortMode } from 'model/Task/Sort';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { mapObject } from 'utils/utils';
+
+import { useSortingSlice } from './slice';
+import { selectSorting } from './slice/selectors';
 
 /**
  * Defines the menu to change sorting preferences
@@ -30,9 +31,9 @@ export function SortingMenu() {
     };
 
     const dispatch = useDispatch();
-    const { actions } = useTasksSlice();
+    const { actions } = useSortingSlice();
 
-    const { mode, order } = useSelector(selectSortingPreferences);
+    const { mode, order } = useSelector(selectSorting);
 
     const handleMenuItemClick = (_, mode: TaskSortMode) => {
         dispatch(actions.setSortingMode(mode));

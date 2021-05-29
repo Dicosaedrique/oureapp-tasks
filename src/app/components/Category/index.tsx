@@ -14,7 +14,7 @@ import { Task, TaskState } from 'model/Task';
 import * as React from 'react';
 import styled from 'styled-components/macro';
 
-import { MemoTaskComponent } from '../../Task';
+import { MemoTaskComponent } from '../Task';
 
 export interface CategoryContainerProps extends Category {
     tasks: Task[];

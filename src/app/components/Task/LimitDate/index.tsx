@@ -1,12 +1,11 @@
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import Badge from 'app/components/StyledComponents/Badge';
+import { usePreferencesSlice } from 'app/pages/HomePage/preferencesSlice';
+import { selectLimitDatePreferences } from 'app/pages/HomePage/preferencesSlice/selectors';
 import { TaskState } from 'model/Task';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { diffInDays, formatDate } from 'utils/utils';
-
-import { useTasksSlice } from '../slice';
-import { selectLimitDatePreferences } from '../slice/selectors';
 
 interface Props {
     nowDate: number; // current date (if task is finished it will be the finished date)
@@ -25,7 +24,7 @@ export function LimitDateComponent({
     taskState,
 }: Props) {
     // redux hooks
-    const { actions } = useTasksSlice();
+    const { actions } = usePreferencesSlice();
     const limitDatePreferences = useSelector(selectLimitDatePreferences);
     const dispatch = useDispatch();
 

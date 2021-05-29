@@ -1,10 +1,9 @@
 import Badge from 'app/components/StyledComponents/Badge';
+import { usePreferencesSlice } from 'app/pages/HomePage/preferencesSlice';
+import { selectPriorityPreferences } from 'app/pages/HomePage/preferencesSlice/selectors';
 import { TaskPriority } from 'model/Task/Priority';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { useTasksSlice } from '../slice';
-import { selectPriorityPreferences } from '../slice/selectors';
 
 interface Props {
     priority: TaskPriority;
@@ -15,7 +14,7 @@ interface Props {
  * @param props the task priority
  */
 export function PriorityComponent({ priority }: Props) {
-    const { actions } = useTasksSlice();
+    const { actions } = usePreferencesSlice();
 
     const priorityPreferences = useSelector(selectPriorityPreferences);
     const dispatch = useDispatch();

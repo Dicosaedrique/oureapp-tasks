@@ -11,8 +11,8 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import { NotFoundPage } from './components/NotFoundPage/Loadable';
 import { HomePage } from './pages/HomePage/Loadable';
+import { NotFoundPage } from './pages/NotFoundPage/Loadable';
 
 export function App() {
     const { i18n } = useTranslation();

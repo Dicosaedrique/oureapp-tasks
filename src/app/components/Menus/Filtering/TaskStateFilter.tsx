@@ -1,10 +1,10 @@
-import { useTasksSlice } from 'app/components/Task/slice';
-import { selectTaskStateFilteringPreferences } from 'app/components/Task/slice/selectors';
 import { TASK_STATE_NAMES, TaskState } from 'model/Task';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { FilterItems, GenericFilterComponent } from '.';
+import { useFilteringSlice } from './slice';
+import { selectFilteringState } from './slice/selectors';
 
 /**
  * Items to display in the filter
@@ -16,16 +16,16 @@ const ITEMS: FilterItems<TaskState> = [
 
 export function TaskStateFilterComponent() {
     const dispatch = useDispatch();
-    const { actions } = useTasksSlice();
+    const { actions } = useFilteringSlice();
 
-    const taskStateValues = useSelector(selectTaskStateFilteringPreferences);
+    const filteringStateValues = useSelector(selectFilteringState);
 
     const toggleValue = (state: TaskState) => {
-        dispatch(actions.toggleFilteringPreferenceValues({ state: [state] }));
+        dispatch(actions.toggleFilteringSettings({ state: [state] }));
     };
 
     const toggleAll = () => {
-        dispatch(actions.resetFilteringPreferenceValue('state'));
+        dispatch(actions.resetFilteringSetting('state'));
     };
 
     return (
@@ -34,7 +34,7 @@ export function TaskStateFilterComponent() {
             title="State"
             onItemClick={toggleValue}
             items={ITEMS}
-            values={taskStateValues}
+            values={filteringStateValues}
             onAllClick={toggleAll}
         />
     );
