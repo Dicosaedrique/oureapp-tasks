@@ -30,11 +30,11 @@ Site should be up at [todo.dicosaedrique.fr](https://todo.dicosaedrique.fr)
 -   [x] Add filtering system
 -   [x] Add reward message on task complete
 -   [x] Add filtering and sorting menus
+-   [x] Add Create task
+-   [ ] Add Update task
 -   [ ] Add archivment system
 -   [ ] Add [snackbars](https://github.com/iamhosseindhv/notistack) on actions
 -   [ ] Add undo / redo action system
--   [ ] Add Create task
--   [ ] Add Update task
 -   [ ] Create achievement system
 -   [ ] Setup complete i18n + setup
 -   [ ] Setup Light / Dark theme
