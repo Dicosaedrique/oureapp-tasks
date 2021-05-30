@@ -16,7 +16,8 @@
         "lint:css": "stylelint src/**/*.css",
         "generate": "cross-env TS_NODE_PROJECT='./internals/ts-node.tsconfig.json' plop --plopfile internals/generators/plopfile.ts",
         "prettify": "prettier --write --ignore-unknown",
-        "extract-messages": "i18next-scanner --config=internals/extractMessages/i18next-scanner.config.js"
+        "extract-messages": "i18next-scanner --config=internals/extractMessages/i18next-scanner.config.js",
+        "prepare": "husky install"
     },
     "dependencies": {
         "@material-ui/core": "^4.11.4",
