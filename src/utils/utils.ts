@@ -52,3 +52,9 @@ export function mapObject<Type extends Object, ReturnType>(
         return mapFn(obj[key], key as keyof Type);
     });
 }
+
+export function recordToArray<Key extends string | number | symbol, Type>(
+    obj: Record<Key, Type>,
+): Type[] {
+    return Object.values(obj);
+}
