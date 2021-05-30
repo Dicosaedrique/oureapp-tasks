@@ -40,10 +40,7 @@ export function SortingMenu() {
         setAnchorEl(null);
     };
 
-    const toggleSortingOrder = () => {
-        dispatch(actions.toggleSortingOrder());
-        console.log('click');
-    };
+    const toggleSortingOrder = () => dispatch(actions.toggleSortingOrder());
 
     return (
         <Grid container spacing={2} justify="flex-end" alignItems="center">

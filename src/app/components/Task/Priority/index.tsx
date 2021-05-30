@@ -1,4 +1,4 @@
-import Badge from 'app/components/StyledComponents/Badge';
+import Badge from 'app/components/Utils/Badge';
 import { usePreferencesSlice } from 'app/pages/HomePage/preferencesSlice';
 import { selectPriorityPreferences } from 'app/pages/HomePage/preferencesSlice/selectors';
 import { TaskPriority } from 'model/Task/Priority';

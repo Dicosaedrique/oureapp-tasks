@@ -69,19 +69,21 @@ export const selectSmartSeparatedTasks = createSelector(
             const groupedByCategories = groupBy(tasks, 'category');
 
             // for each category
-            for (const category in groupedByCategories) {
+            for (const id in groupedByCategories) {
+                const category = categories[id];
+
                 // if associated category exists, push it in the res
-                if (category in categories) {
+                if (category !== undefined) {
                     res.push({
-                        ...categories[category],
-                        tasks: groupedByCategories[category],
+                        ...category,
+                        tasks: groupedByCategories[id],
                     });
                 }
                 // manage tasks without categories (lodash.groupby transform undefined values in string)
-                else if (category === 'undefined') {
+                else if (id === 'undefined') {
                     res.push({
                         ...DEFAULT_CATEGORY,
-                        tasks: groupedByCategories[category],
+                        tasks: groupedByCategories[id],
                     });
                 }
             }

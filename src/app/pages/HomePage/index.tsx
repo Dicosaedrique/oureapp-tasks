@@ -1,16 +1,14 @@
-import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { MemoCategoryContainer } from 'app/components/Category';
 import { FilteringMenu } from 'app/components/Menus/Filtering';
 import { SortingMenu } from 'app/components/Menus/Sorting';
+import { AddTaskMenu } from 'app/components/Menus/Task/AddTaskMenu';
 import { Rewarder } from 'app/components/Reward';
 import { RewarderProvider } from 'app/components/Reward/context';
-import { useTasksSlice } from 'app/components/Task/slice';
 import { selectSmartSeparatedTasks } from 'app/components/Task/slice/selectors';
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -20,28 +18,16 @@ import { usePreferencesSlice } from './preferencesSlice';
 import { selectCategoriesPreferences } from './preferencesSlice/selectors';
 
 export function HomePage() {
-    const [title, setTitle] = React.useState('');
-
     const [rewarder, setRewarder] = React.useState<Rewarder | null>(null);
     const rewarderRef = React.useCallback((rewarderElem: Rewarder) => {
         setRewarder(rewarderElem);
     }, []);
 
-    const { actions: taskActions } = useTasksSlice();
     const { actions: preferencesActions } = usePreferencesSlice();
 
     const categoriesContainerProps = useSelector(selectSmartSeparatedTasks);
 
     const dispatch = useDispatch();
-
-    const handleAddTask = () => {
-        if (title.length > 0) dispatch(taskActions.addTask({ title }));
-    };
-
-    const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newTitle = event.target.value as string;
-        setTitle(newTitle);
-    };
 
     // temp (to test toggle of tasks separation)
     const categoriesPreferences = useSelector(selectCategoriesPreferences);
@@ -61,36 +47,35 @@ export function HomePage() {
             <RewarderProvider value={rewarder}>
                 <Container component="main">
                     <CssBaseline />
-                    <Typography variant="h3" gutterBottom>
-                        Todo app !!!
-                    </Typography>
-                    <TextField
-                        label="Task title (temp)"
-                        type="text"
-                        value={title}
-                        onChange={handleTitleChange}
-                    />
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleAddTask}
+                    <Typography
+                        variant="h3"
+                        style={{ textAlign: 'center', margin: '1em 0' }}
                     >
-                        Add task (temp)
-                    </Button>
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                checked={
-                                    categoriesPreferences.enableCategoriesSeparation
-                                }
-                                onChange={handleToggleCategoriesSeparation}
-                            />
-                        }
-                        label="Separate tasks by categories"
-                    />
+                        What I want to do
+                    </Typography>
+                    <AddTaskMenu />
                     <FilteringMenu />
                     <SortingMenu />
-                    <br />
+                    <div
+                        style={{
+                            display: 'flex',
+                            width: '100%',
+                            justifyContent: 'flex-end',
+                            margin: '0.5em 0 1em 0',
+                        }}
+                    >
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    checked={
+                                        categoriesPreferences.enableCategoriesSeparation
+                                    }
+                                    onChange={handleToggleCategoriesSeparation}
+                                />
+                            }
+                            label="Separate by categories"
+                        />
+                    </div>
                     {categoriesContainerProps.map(categoryContainerProps => (
                         <MemoCategoryContainer
                             key={categoryContainerProps.id}

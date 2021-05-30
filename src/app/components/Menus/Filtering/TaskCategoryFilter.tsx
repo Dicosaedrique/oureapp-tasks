@@ -20,7 +20,8 @@ export function TaskCategoryFilterComponent() {
     ];
 
     for (const id in categories) {
-        if (id in categories) items.push([categories[id].title, id]);
+        const category = categories[id];
+        if (category !== undefined) items.push([category.title, id]);
     }
 
     const toggleValue = (categoryId: string | undefined) => {

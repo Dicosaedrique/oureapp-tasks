@@ -1,5 +1,5 @@
 import ScheduleIcon from '@material-ui/icons/Schedule';
-import Badge from 'app/components/StyledComponents/Badge';
+import Badge from 'app/components/Utils/Badge';
 import { usePreferencesSlice } from 'app/pages/HomePage/preferencesSlice';
 import { selectLimitDatePreferences } from 'app/pages/HomePage/preferencesSlice/selectors';
 import { TaskState } from 'model/Task';
