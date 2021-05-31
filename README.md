@@ -31,11 +31,12 @@ Site should be up at [todo.dicosaedrique.fr](https://todo.dicosaedrique.fr)
 
 ## Version 2 - Summer / Fall 2021 ⏰
 
--   ❌ Create achievement system
--   ❌ Add demo / tutorial
--   ❌ Delete a category
--   ❌ Add account and backend persistence
--   ❌ Add [snackbars](https://github.com/iamhosseindhv/notistack) on actions
--   ❌ Add undo / redo action system
--   ❌ Store in local open / close state on categories
--   ❌ Put a open all / collapse all categories button
+-   ⌛ Create achievement system
+-   ⌛ Add demo / tutorial
+-   ⌛ Delete a category
+-   ⌛ Add account and backend persistence
+-   ⌛ Add [snackbars](https://github.com/iamhosseindhv/notistack) on actions
+-   ⌛ Add undo / redo action system
+-   ⌛ Store in local open / close state on categories
+-   ⌛ Put a open all / collapse all categories button
+-   ⌛ Add task that can repeat every interval of time
