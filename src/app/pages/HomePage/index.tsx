@@ -7,7 +7,6 @@ import { MemoCategoryContainer } from 'app/components/Category';
 import { FilteringMenu } from 'app/components/Menus/Filtering';
 import { SortingMenu } from 'app/components/Menus/Sorting';
 import { AddTaskMenu } from 'app/components/Menus/Task/AddTaskMenu';
-import { Rewarder } from 'app/components/Reward';
 import { RewarderProvider } from 'app/components/Reward/context';
 import { selectSmartSeparatedTasks } from 'app/components/Task/slice/selectors';
 import * as React from 'react';
@@ -18,11 +17,6 @@ import { usePreferencesSlice } from './preferencesSlice';
 import { selectCategoriesPreferences } from './preferencesSlice/selectors';
 
 export function HomePage() {
-    const [rewarder, setRewarder] = React.useState<Rewarder | null>(null);
-    const rewarderRef = React.useCallback((rewarderElem: Rewarder) => {
-        setRewarder(rewarderElem);
-    }, []);
-
     const { actions: preferencesActions } = usePreferencesSlice();
 
     const categoriesContainerProps = useSelector(selectSmartSeparatedTasks);
@@ -44,7 +38,7 @@ export function HomePage() {
                     content="This will be the home page of the todo app !"
                 />
             </Helmet>
-            <RewarderProvider value={rewarder}>
+            <RewarderProvider>
                 <Container component="main">
                     <CssBaseline />
                     <Typography
@@ -84,7 +78,6 @@ export function HomePage() {
                     ))}
                 </Container>
             </RewarderProvider>
-            <Rewarder ref={rewarderRef} />
         </>
     );
 }
