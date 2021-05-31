@@ -81,7 +81,7 @@ export function GenericFilterComponent<Type>({
         ? { checked }
         : indeterminate
         ? { indeterminate }
-        : {};
+        : { checked: false };
 
     return (
         <>
