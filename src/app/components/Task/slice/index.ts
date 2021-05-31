@@ -41,6 +41,24 @@ const slice = createSlice({
         },
 
         /**
+         * edit task (based in the tasks inputs and id)
+         */
+        editTask(
+            state,
+            action: PayloadAction<{ id: string; props: TaskInputProps }>,
+        ) {
+            const { id, props } = action.payload;
+
+            const index = state.list.findIndex(task => task.id === id);
+
+            if (index !== -1) {
+                const updatedTask = { ...state.list[index], ...props };
+
+                state.list[index] = updatedTask;
+            }
+        },
+
+        /**
          * set the task state based on the payload
          */
         setTaskState(

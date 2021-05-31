@@ -8,18 +8,26 @@ import { Rewarder } from '.';
 export const RewarderContext = React.createContext<Rewarder | null>(null);
 
 interface Props {
-    value: Rewarder | null;
     children: React.ReactNode;
 }
 
 /**
  * Default provider for the rewarder context
  */
-export function RewarderProvider({ value, children }: Props) {
+export function RewarderProvider({ children }: Props) {
+    const [rewarder, setRewarder] = React.useState<Rewarder | null>(null);
+    const rewarderRef = React.useCallback((rewarderElem: Rewarder) => {
+        setRewarder(rewarderElem);
+    }, []);
+
     return (
-        <RewarderContext.Provider value={value}>
-            {children}
-        </RewarderContext.Provider>
+        <>
+            <RewarderContext.Provider value={rewarder}>
+                {children}
+            </RewarderContext.Provider>
+
+            <Rewarder ref={rewarderRef} />
+        </>
     );
 }
 

@@ -77,7 +77,7 @@ export function SortingMenu() {
                     onClick={toggleSortingOrder}
                     aria-label="toggle sorting order"
                 >
-                    {order ? <ArrowDownwardIcon /> : <ArrowUpwardIcon />}
+                    Order {order ? <ArrowDownwardIcon /> : <ArrowUpwardIcon />}
                 </Button>
             </Grid>
         </Grid>

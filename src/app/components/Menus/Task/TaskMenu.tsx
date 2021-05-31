@@ -31,24 +31,23 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components/macro';
 import { recordToArray } from 'utils/utils';
 
-interface Props {
-    open: boolean;
+export interface TaskMenuProps {
     id?: TaskID; // optional task id (if this is a task edition instead of a task creation)
     defaultTask?: Partial<TaskInputProps>;
     handleClose: () => void; // close or cancel
-    handleCloseSuccess: (props: TaskInputProps) => void; // close because of success
+    handleSuccess: (props: TaskInputProps, id?: string) => void; // close because of success
 }
 
 export function TaskMenu({
-    open,
     id,
     defaultTask = {},
     handleClose,
-    handleCloseSuccess,
-}: Props) {
+    handleSuccess,
+}: TaskMenuProps) {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const add = id === undefined;
+    const formId = 'task-form-id';
 
     ///////////////////////////////////////////////
     // TITLE
@@ -135,12 +134,15 @@ export function TaskMenu({
      */
     const validate = () => {
         if (title.length > 0) {
-            handleCloseSuccess({
-                title,
-                priority,
-                limitDate: hasLimitDate ? limitDate.getTime() : undefined,
-                category: category === null ? undefined : category.id,
-            });
+            handleSuccess(
+                {
+                    title,
+                    priority,
+                    limitDate: hasLimitDate ? limitDate.getTime() : undefined,
+                    category: category === null ? undefined : category.id,
+                },
+                id,
+            );
 
             reset();
         } else {
@@ -151,7 +153,7 @@ export function TaskMenu({
     return (
         <Dialog
             fullScreen={fullScreen}
-            open={open}
+            open
             fullWidth
             maxWidth="sm"
             onClose={handleClose}
@@ -160,17 +162,16 @@ export function TaskMenu({
             <DialogTitle id="create-edit-task-dialog">
                 {add
                     ? 'Add a new task to your list'
-                    : `Edit your task '${defaultTask.category}'`}
+                    : `Edit your task "${defaultTask.title}"`}
             </DialogTitle>
             <DialogContent>
-                <form>
+                <form id={formId} onSubmit={validate} onReset={reset}>
                     {/* Task title */}
                     <FormSection>
                         <TextField
                             id="task-title"
                             label="Title"
                             placeholder="Be happy !"
-                            multiline
                             fullWidth
                             value={title}
                             onChange={handleTitleChange}
@@ -251,11 +252,17 @@ export function TaskMenu({
                 </form>
             </DialogContent>
             <DialogActions>
-                <Button onClick={reset} color="secondary">
+                <Button color="secondary" form={formId} type="reset">
                     Reset
                 </Button>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={validate} color="primary" variant="contained">
+                <Button
+                    onClick={validate}
+                    color="primary"
+                    variant="contained"
+                    form={formId}
+                    type="submit"
+                >
                     {add ? 'Add' : 'Save'}
                 </Button>
             </DialogActions>

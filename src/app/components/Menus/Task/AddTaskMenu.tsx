@@ -49,11 +49,9 @@ export function AddTaskMenu() {
                     Add task
                 </Button>
             </Hidden>
-            <TaskMenu
-                open={open}
-                handleClose={closeMenu}
-                handleCloseSuccess={createTask}
-            />
+            {open && (
+                <TaskMenu handleClose={closeMenu} handleSuccess={createTask} />
+            )}
         </div>
     );
 }
