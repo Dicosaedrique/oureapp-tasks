@@ -28,7 +28,6 @@ Site should be up at [todo.dicosaedrique.fr](https://todo.dicosaedrique.fr)
 -   ❌ Setup complete i18n + setup
 -   ❌ Setup Light / Dark theme
 
-
 ## Version 2 - Summer / Fall 2021 ⏰
 
 -   ⌛ Create achievement system
@@ -40,3 +39,4 @@ Site should be up at [todo.dicosaedrique.fr](https://todo.dicosaedrique.fr)
 -   ⌛ Store in local open / close state on categories
 -   ⌛ Put a open all / collapse all categories button
 -   ⌛ Add task that can repeat every interval of time
+-   ⌛ Add planning system (I want to do this task this day and see my planning)

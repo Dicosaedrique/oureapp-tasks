@@ -74,6 +74,25 @@ const slice = createSlice({
                     action.payload.taskState,
                 );
         },
+
+        /**
+         * archive the given task (by id) if present in task list and not in archive
+         */
+        archiveTask(state, action: PayloadAction<TaskID>) {
+            const indexList = state.list.findIndex(
+                task => task.id === action.payload,
+            );
+
+            const indexArchive = state.archived.findIndex(
+                task => task.id === action.payload,
+            );
+
+            // if the task exists in the task list and don't in the archive
+            if (indexList !== -1 && indexArchive === -1) {
+                const task = state.list.splice(indexList, 1);
+                state.archived.push(...task);
+            }
+        },
     },
 });
 

@@ -11,6 +11,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import ArchiveIcon from '@material-ui/icons/Archive';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -78,14 +79,19 @@ export function TaskComponent({ task }: Props) {
         closeOptions();
     };
 
+    const archiveTask = () => {
+        dispatch(actions.archiveTask(task.id));
+        closeOptions();
+    };
+
     //////////////////
     // HANDLE EDITION
 
     const [editMenuOpen, setEditMenuOpen] = React.useState(false);
 
     const openEditMenu = () => {
-        closeOptions();
         setEditMenuOpen(true);
+        closeOptions();
     };
 
     const closeEditMenu = () => setEditMenuOpen(false);
@@ -164,10 +170,17 @@ export function TaskComponent({ task }: Props) {
                     >
                         <MenuItem
                             onClick={openEditMenu}
-                            style={{ color: 'orange' }}
+                            style={{ color: '#4e58ee' }}
                         >
                             <EditIcon />
                             &nbsp;&nbsp;Edit task
+                        </MenuItem>
+                        <MenuItem
+                            onClick={archiveTask}
+                            style={{ color: 'orange' }}
+                        >
+                            <ArchiveIcon />
+                            &nbsp;&nbsp;Archive task
                         </MenuItem>
                         <MenuItem onClick={deleteTask} style={{ color: 'red' }}>
                             <DeleteIcon />
