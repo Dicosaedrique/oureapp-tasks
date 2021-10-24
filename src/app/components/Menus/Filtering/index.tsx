@@ -76,12 +76,7 @@ export function GenericFilterComponent<Type>({
 
     // checbox state
     const checked = values.length === 0;
-    const indeterminate = values.length < items.length;
-    const checkBoxState = checked
-        ? { checked }
-        : indeterminate
-        ? { indeterminate }
-        : { checked: false };
+    const indeterminate = !checked && values.length < items.length;
 
     return (
         <>
@@ -114,7 +109,11 @@ export function GenericFilterComponent<Type>({
                             if (!checked) onAllClick();
                         }}
                     >
-                        <Checkbox {...checkBoxState} disabled={checked} />
+                        <Checkbox
+                            checked={checked}
+                            indeterminate={indeterminate}
+                            disabled={checked}
+                        />
                         <ListItemText primary={allTitle} />
                     </MenuItem>
                 )}
