@@ -1,7 +1,4 @@
-import {
-    DEFAULT_TASK_PRIORITIES_NAMES,
-    TaskPriority,
-} from 'model/Task/Priority';
+import { DEFAULT_TASK_PRIORITIES_NAMES, TaskPriority } from 'model/Task/Priority';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 

@@ -1,7 +1,4 @@
-import {
-    DEFAULT_TASK_PRIORITIES_COLORS,
-    DEFAULT_TASK_PRIORITIES_NAMES,
-} from 'model/Task/Priority';
+import { DEFAULT_TASK_PRIORITIES_COLORS, DEFAULT_TASK_PRIORITIES_NAMES } from 'model/Task/Priority';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer } from 'utils/redux-injectors';
 
@@ -35,16 +32,14 @@ const slice = createSlice({
          * toggle the display of priority full names (eg : "1" => "Low")
          */
         toggleDisplayPriorityFullName(state) {
-            state.priority.displayPriorityFullName = !state.priority
-                .displayPriorityFullName;
+            state.priority.displayPriorityFullName = !state.priority.displayPriorityFullName;
         },
 
         /**
          * toggle the display of relative time for the tasks limit date
          */
         toggleDisplayRelativeTime(state) {
-            state.limitDate.displayRelativeTime = !state.limitDate
-                .displayRelativeTime;
+            state.limitDate.displayRelativeTime = !state.limitDate.displayRelativeTime;
         },
 
         /**

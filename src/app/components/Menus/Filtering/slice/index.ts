@@ -23,10 +23,7 @@ const slice = createSlice({
         /**
          * toggles filtering settings (remove if present or add if absent)
          */
-        toggleFilteringSettings(
-            state,
-            action: PayloadAction<Partial<FilteringSettings>>,
-        ) {
+        toggleFilteringSettings(state, action: PayloadAction<Partial<FilteringSettings>>) {
             const settingsToToggle = action.payload;
 
             for (const key in settingsToToggle) {
@@ -45,10 +42,7 @@ const slice = createSlice({
         /**
          * Reset the filter setting for the given key (eg. 'taskState')
          */
-        resetFilteringSetting(
-            state,
-            action: PayloadAction<keyof FilteringSettings>,
-        ) {
+        resetFilteringSetting(state, action: PayloadAction<keyof FilteringSettings>) {
             state[action.payload] = [];
         },
     },

@@ -19,13 +19,7 @@ interface Props<Type> {
  * TODO : document this
  * Defines a component that create a menu with radio groupe to choose a value
  */
-export function RadioMenuPicker<Type>({
-    id,
-    title,
-    value,
-    onChange,
-    values,
-}: Props<Type>) {
+export function RadioMenuPicker<Type>({ id, title, value, onChange, values }: Props<Type>) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const menuOpen = Boolean(anchorEl);
 
@@ -39,11 +33,7 @@ export function RadioMenuPicker<Type>({
 
     return (
         <>
-            <Button
-                aria-controls={id}
-                aria-haspopup="true"
-                onClick={handleOpen}
-            >
+            <Button aria-controls={id} aria-haspopup="true" onClick={handleOpen}>
                 {title}
                 {menuOpen ? <ExpandLess /> : <ExpandMore />}
             </Button>

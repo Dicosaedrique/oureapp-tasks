@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { Category } from 'model/Category';
+import { Category } from 'model/TaskList';
 import { CATEGORIES_DEMO } from 'model/demo.data';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer } from 'utils/redux-injectors';

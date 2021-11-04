@@ -1,12 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { TASKS_DEMO } from 'model/demo.data';
-import {
-    createTask,
-    setTaskState,
-    TaskID,
-    TaskInputProps,
-    TaskState,
-} from 'model/Task';
+import { createTask, setTaskState, TaskID, TaskInputProps, TaskState } from 'model/Task';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer } from 'utils/redux-injectors';
 
@@ -34,19 +28,14 @@ const slice = createSlice({
          * remove a task from the slice (based in the task id)
          */
         removeTask(state, action: PayloadAction<TaskID>) {
-            const taskIndex = state.list.findIndex(
-                task => task.id === action.payload,
-            );
+            const taskIndex = state.list.findIndex(task => task.id === action.payload);
             if (taskIndex !== -1) state.list.splice(taskIndex, 1);
         },
 
         /**
          * edit task (based in the tasks inputs and id)
          */
-        editTask(
-            state,
-            action: PayloadAction<{ id: string; props: TaskInputProps }>,
-        ) {
+        editTask(state, action: PayloadAction<{ id: string; props: TaskInputProps }>) {
             const { id, props } = action.payload;
 
             const index = state.list.findIndex(task => task.id === id);
@@ -61,13 +50,8 @@ const slice = createSlice({
         /**
          * set the task state based on the payload
          */
-        setTaskState(
-            state,
-            action: PayloadAction<{ id: TaskID; taskState: TaskState }>,
-        ) {
-            const taskIndex = state.list.findIndex(
-                task => task.id === action.payload.id,
-            );
+        setTaskState(state, action: PayloadAction<{ id: TaskID; taskState: TaskState }>) {
+            const taskIndex = state.list.findIndex(task => task.id === action.payload.id);
             if (taskIndex !== -1)
                 state.list[taskIndex] = setTaskState(
                     state.list[taskIndex],
@@ -79,13 +63,9 @@ const slice = createSlice({
          * archive the given task (by id) if present in task list and not in archive
          */
         archiveTask(state, action: PayloadAction<TaskID>) {
-            const indexList = state.list.findIndex(
-                task => task.id === action.payload,
-            );
+            const indexList = state.list.findIndex(task => task.id === action.payload);
 
-            const indexArchive = state.archived.findIndex(
-                task => task.id === action.payload,
-            );
+            const indexArchive = state.archived.findIndex(task => task.id === action.payload);
 
             // if the task exists in the task list and don't in the archive
             if (indexList !== -1 && indexArchive === -1) {

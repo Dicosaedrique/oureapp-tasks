@@ -1,5 +1,5 @@
 import { selectCategories } from 'app/components/Category/slice/selectors';
-import { DEFAULT_CATEGORY } from 'model/Category';
+import { DEFAULT_CATEGORY } from 'model/TaskList';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -15,9 +15,7 @@ export function TaskCategoryFilterComponent() {
 
     const categories = useSelector(selectCategories);
 
-    const items: FilterItems<string | undefined> = [
-        [DEFAULT_CATEGORY.title, undefined],
-    ];
+    const items: FilterItems<string | undefined> = [[DEFAULT_CATEGORY.title, undefined]];
 
     for (const id in categories) {
         const category = categories[id];

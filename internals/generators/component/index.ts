@@ -2,11 +2,11 @@
  * Component Generator
  */
 
-import { Actions, PlopGeneratorConfig } from 'node-plop';
 import inquirer from 'inquirer';
+import { Actions, PlopGeneratorConfig } from 'node-plop';
 
-import { pathExists } from '../utils';
 import { baseGeneratorPath } from '../paths';
+import { pathExists } from '../utils';
 
 inquirer.registerPrompt('directory', require('inquirer-directory'));
 
@@ -52,8 +52,7 @@ export const componentGenerator: PlopGeneratorConfig = {
             type: 'confirm',
             name: ComponentProptNames.wantTranslations,
             default: false,
-            message:
-                'Do you want i18n translations (i.e. will this component use text)?',
+            message: 'Do you want i18n translations (i.e. will this component use text)?',
         },
         {
             type: 'confirm',
@@ -75,9 +74,7 @@ export const componentGenerator: PlopGeneratorConfig = {
         const actualComponentPath = `${baseGeneratorPath}/${answers.path}/${answers.componentName}`;
 
         if (pathExists(actualComponentPath)) {
-            throw new Error(
-                `Component '${answers.componentName}' already exists`,
-            );
+            throw new Error(`Component '${answers.componentName}' already exists`);
         }
         const actions: Actions = [
             {

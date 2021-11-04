@@ -1,9 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const prettierOptions = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, '.prettierrc'), 'utf8'),
-);
+const prettierOptions = JSON.parse(fs.readFileSync(path.resolve(__dirname, '.prettierrc'), 'utf8'));
 
 module.exports = {
     extends: ['react-app', 'prettier', 'prettier/react'],
@@ -13,10 +11,7 @@ module.exports = {
         'no-restricted-imports': [
             'error',
             {
-                patterns: [
-                    '@material-ui/*/*/*',
-                    '!@material-ui/core/test-utils/*',
-                ],
+                patterns: ['@material-ui/*/*/*', '!@material-ui/core/test-utils/*'],
             },
         ],
         'simple-import-sort/imports': 'error',

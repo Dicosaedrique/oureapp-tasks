@@ -9,7 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import { Category } from 'model/Category';
+import { Category } from 'model/TaskList';
 import { Task, TaskState } from 'model/Task';
 import * as React from 'react';
 import styled from 'styled-components/macro';
@@ -30,8 +30,7 @@ export function CategoryContainer({ title, tasks }: CategoryContainerProps) {
     const toggleOpen = () => setOpen(!open);
 
     // count tasks to be done (to display it next to the category title)
-    const remainingTasks = tasks.filter(task => task.state === TaskState.TODO)
-        .length;
+    const remainingTasks = tasks.filter(task => task.state === TaskState.TODO).length;
 
     return (
         <>
@@ -40,8 +39,7 @@ export function CategoryContainer({ title, tasks }: CategoryContainerProps) {
                     primary={
                         <span>
                             <CategoryTitle>{title}</CategoryTitle>
-                            {remainingTasks > 0 &&
-                                ` (${remainingTasks} remaining tasks)`}
+                            {remainingTasks > 0 && ` (${remainingTasks} remaining tasks)`}
                         </span>
                     }
                 />

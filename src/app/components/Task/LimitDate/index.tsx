@@ -17,12 +17,7 @@ interface Props {
 /**
  * basic component to render a task limit date
  */
-export function LimitDateComponent({
-    nowDate,
-    startDate,
-    limitDate,
-    taskState,
-}: Props) {
+export function LimitDateComponent({ nowDate, startDate, limitDate, taskState }: Props) {
     // redux hooks
     const { actions } = usePreferencesSlice();
     const limitDatePreferences = useSelector(selectLimitDatePreferences);
@@ -35,9 +30,7 @@ export function LimitDateComponent({
     };
 
     // progress of the task (in percentage)
-    const progress = Math.round(
-        ((nowDate - startDate) / (limitDate - startDate)) * 100,
-    );
+    const progress = Math.round(((nowDate - startDate) / (limitDate - startDate)) * 100);
 
     const remainingDays = diffInDays(nowDate, limitDate);
 
@@ -54,9 +47,7 @@ export function LimitDateComponent({
                 ),
             }}
         >
-            <ScheduleIcon
-                style={{ fontSize: 'inherit', marginRight: '0.2em' }}
-            />
+            <ScheduleIcon style={{ fontSize: 'inherit', marginRight: '0.2em' }} />
             {limitDatePreferences.displayRelativeTime
                 ? getRelativeTimeText(progress, remainingDays, taskState)
                 : formatDate(limitDate)}

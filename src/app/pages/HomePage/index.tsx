@@ -33,18 +33,12 @@ export function HomePage() {
         <>
             <Helmet>
                 <title>Hello World !</title>
-                <meta
-                    name="description"
-                    content="This will be the home page of the todo app !"
-                />
+                <meta name="description" content="This will be the home page of the todo app !" />
             </Helmet>
             <RewarderProvider>
                 <Container component="main">
                     <CssBaseline />
-                    <Typography
-                        variant="h3"
-                        style={{ textAlign: 'center', margin: '1em 0' }}
-                    >
+                    <Typography variant="h3" style={{ textAlign: 'center', margin: '1em 0' }}>
                         What I want to do
                     </Typography>
                     <AddTaskMenu />
@@ -61,9 +55,7 @@ export function HomePage() {
                         <FormControlLabel
                             control={
                                 <Switch
-                                    checked={
-                                        categoriesPreferences.enableCategoriesSeparation
-                                    }
+                                    checked={categoriesPreferences.enableCategoriesSeparation}
                                     onChange={handleToggleCategoriesSeparation}
                                 />
                             }

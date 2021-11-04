@@ -61,8 +61,7 @@ export function TaskComponent({ task }: Props) {
     const dispatch = useDispatch();
 
     const toggleTask = () => {
-        const newState =
-            task.state === TaskState.TODO ? TaskState.DONE : TaskState.TODO;
+        const newState = task.state === TaskState.TODO ? TaskState.DONE : TaskState.TODO;
 
         dispatch(
             actions.setTaskState({
@@ -104,12 +103,7 @@ export function TaskComponent({ task }: Props) {
 
     return (
         <>
-            <ListItem
-                button
-                onClick={toggleTask}
-                disableRipple
-                disableTouchRipple
-            >
+            <ListItem button onClick={toggleTask} disableRipple disableTouchRipple>
                 <ListItemIcon>
                     <Checkbox
                         edge="start"
@@ -123,13 +117,9 @@ export function TaskComponent({ task }: Props) {
                     id={task.id}
                     primary={
                         <>
-                            <span style={{ marginRight: '1em' }}>
-                                {task.title}
-                            </span>
+                            <span style={{ marginRight: '1em' }}>{task.title}</span>
                             {task.priority !== TaskPriority.NONE && (
-                                <MemoPriorityComponent
-                                    priority={task.priority}
-                                />
+                                <MemoPriorityComponent priority={task.priority} />
                             )}
                             {task.limitDate !== undefined && (
                                 <MemoLimitDateComponent
@@ -168,17 +158,11 @@ export function TaskComponent({ task }: Props) {
                             horizontal: 'center',
                         }}
                     >
-                        <MenuItem
-                            onClick={openEditMenu}
-                            style={{ color: '#4e58ee' }}
-                        >
+                        <MenuItem onClick={openEditMenu} style={{ color: '#4e58ee' }}>
                             <EditIcon />
                             &nbsp;&nbsp;Edit task
                         </MenuItem>
-                        <MenuItem
-                            onClick={archiveTask}
-                            style={{ color: 'orange' }}
-                        >
+                        <MenuItem onClick={archiveTask} style={{ color: 'orange' }}>
                             <ArchiveIcon />
                             &nbsp;&nbsp;Archive task
                         </MenuItem>

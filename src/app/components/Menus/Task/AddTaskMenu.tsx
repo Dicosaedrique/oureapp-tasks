@@ -29,11 +29,7 @@ export function AddTaskMenu() {
             {/* Create button */}
             <Hidden mdUp>
                 <FabContainer>
-                    <Fab
-                        color="primary"
-                        aria-label="add task"
-                        onClick={openMenu}
-                    >
+                    <Fab color="primary" aria-label="add task" onClick={openMenu}>
                         <AddIcon />
                     </Fab>
                 </FabContainer>
@@ -49,9 +45,7 @@ export function AddTaskMenu() {
                     Add task
                 </Button>
             </Hidden>
-            {open && (
-                <TaskMenu handleClose={closeMenu} handleSuccess={createTask} />
-            )}
+            {open && <TaskMenu handleClose={closeMenu} handleSuccess={createTask} />}
         </div>
     );
 }

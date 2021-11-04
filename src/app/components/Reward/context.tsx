@@ -22,9 +22,7 @@ export function RewarderProvider({ children }: Props) {
 
     return (
         <>
-            <RewarderContext.Provider value={rewarder}>
-                {children}
-            </RewarderContext.Provider>
+            <RewarderContext.Provider value={rewarder}>{children}</RewarderContext.Provider>
 
             <Rewarder ref={rewarderRef} />
         </>

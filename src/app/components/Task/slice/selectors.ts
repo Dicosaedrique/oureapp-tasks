@@ -7,7 +7,7 @@ import {
     DEFAULT_CATEGORY,
     getTaskStateFromCategoryId,
     TASK_STATE_CATEGORIES,
-} from 'model/Category';
+} from 'model/TaskList';
 import { TaskState } from 'model/Task';
 import { getFilterFromSettings } from 'model/Task/Filter';
 import { TASKS_COMPARERS } from 'model/Task/Sort';
@@ -28,18 +28,12 @@ export const selectTasks = selectSlice;
 /**
  * @returns the task list (not archived)
  */
-export const selectTasksList = createSelector(
-    selectTasks,
-    tasksState => tasksState.list,
-);
+export const selectTasksList = createSelector(selectTasks, tasksState => tasksState.list);
 
 /**
  * @returns the archived task list
  */
-export const selectArchivedTasks = createSelector(
-    selectTasks,
-    tasksState => tasksState.archived,
-);
+export const selectArchivedTasks = createSelector(selectTasks, tasksState => tasksState.archived);
 
 /**
  * TODO : THIS PROBABLY NEEDS OTPIMIZATION AS IT TAKES TOO MANY PARAMETERS AND UPDATE TOO OFTEN THE WHOLE APP !!!
@@ -95,18 +89,10 @@ export const selectSmartSeparatedTasks = createSelector(
                 for (const category of res) {
                     const todoSortedTasks = category.tasks
                         .filter(task => task.state === TaskState.TODO)
-                        .sort(
-                            TASKS_COMPARERS[TaskState.TODO][sortingMode.mode](
-                                sortingMode.order,
-                            ),
-                        );
+                        .sort(TASKS_COMPARERS[TaskState.TODO][sortingMode.mode](sortingMode.order));
                     const doneSortedTasks = category.tasks
                         .filter(task => task.state === TaskState.DONE)
-                        .sort(
-                            TASKS_COMPARERS[TaskState.DONE][sortingMode.mode](
-                                sortingMode.order,
-                            ),
-                        );
+                        .sort(TASKS_COMPARERS[TaskState.DONE][sortingMode.mode](sortingMode.order));
                     category.tasks = todoSortedTasks.concat(doneSortedTasks);
                 }
             }
@@ -133,9 +119,9 @@ export const selectSmartSeparatedTasks = createSelector(
             if (res.length > 0) {
                 for (const category of res) {
                     category.tasks.sort(
-                        TASKS_COMPARERS[
-                            getTaskStateFromCategoryId(category.id)
-                        ][sortingMode.mode](sortingMode.order),
+                        TASKS_COMPARERS[getTaskStateFromCategoryId(category.id)][sortingMode.mode](
+                            sortingMode.order,
+                        ),
                     );
                 }
             }

@@ -14,10 +14,7 @@ export const selectFiltering = selectSlice;
 /**
  * @returns filtering state
  */
-export const selectFilteringState = createSelector(
-    selectFiltering,
-    filtering => filtering.state,
-);
+export const selectFilteringState = createSelector(selectFiltering, filtering => filtering.state);
 
 /**
  * @returns filtering limit date

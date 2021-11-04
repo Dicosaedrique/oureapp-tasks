@@ -15,15 +15,13 @@ import { useTheme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import {
-    KeyboardDatePicker,
-    MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { selectCategories } from 'app/components/Category/slice/selectors';
-import { Category } from 'model/Category';
+import { Category } from 'model/TaskList';
 import { TaskID, TaskInputProps } from 'model/Task';
 import {
     DEFAULT_TASK_PRIORITIES_NAMES,
+    DEFAULT_TASK_PRIORITY,
     TaskPriority,
 } from 'model/Task/Priority';
 import * as React from 'react';
@@ -38,12 +36,7 @@ export interface TaskMenuProps {
     handleSuccess: (props: TaskInputProps, id?: string) => void; // close because of success
 }
 
-export function TaskMenu({
-    id,
-    defaultTask = {},
-    handleClose,
-    handleSuccess,
-}: TaskMenuProps) {
+export function TaskMenu({ id, defaultTask = {}, handleClose, handleSuccess }: TaskMenuProps) {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const add = id === undefined;
@@ -66,27 +59,18 @@ export function TaskMenu({
     ///////////////////////////////////////////////
     // PRIORITY
 
-    const [priority, setPriority] = React.useState(
-        defaultTask.priority || TaskPriority.NONE,
-    );
+    const [priority, setPriority] = React.useState(defaultTask.priority || DEFAULT_TASK_PRIORITY);
 
-    const handlePriorityChange = (
-        event: React.ChangeEvent<{ value: unknown }>,
-        _,
-    ) => {
+    const handlePriorityChange = (event: React.ChangeEvent<{ value: unknown }>, _) => {
         setPriority(event.target.value as TaskPriority);
     };
 
     ///////////////////////////////////////////////
     // LIMIT DATE
 
-    const [hasLimitDate, setHasLimitDate] = React.useState(
-        defaultTask.limitDate !== undefined,
-    );
+    const [hasLimitDate, setHasLimitDate] = React.useState(defaultTask.limitDate !== undefined);
 
-    const [limitDate, setLimitDate] = React.useState(
-        new Date(defaultTask.limitDate || Date.now()),
-    );
+    const [limitDate, setLimitDate] = React.useState(new Date(defaultTask.limitDate || Date.now()));
 
     const handleHasLimitDateChange = (_, checked: boolean) => {
         setHasLimitDate(checked);
@@ -106,9 +90,7 @@ export function TaskMenu({
     ) as Category[];
 
     const [category, setCategory] = React.useState<Category | null>(
-        categoriesOptions.find(
-            category => category.id === defaultTask.category,
-        ) || null,
+        categoriesOptions.find(category => category.id === defaultTask.category) || null,
     );
 
     const handleCategoryChange = (_1, value: Category | null, _2, _3) => {
@@ -160,9 +142,7 @@ export function TaskMenu({
             aria-labelledby="create-edit-task-dialog"
         >
             <DialogTitle id="create-edit-task-dialog">
-                {add
-                    ? 'Add a new task to your list'
-                    : `Edit your task "${defaultTask.title}"`}
+                {add ? 'Add a new task to your list' : `Edit your task "${defaultTask.title}"`}
             </DialogTitle>
             <DialogContent>
                 <form id={formId} onSubmit={validate} onReset={reset}>
@@ -185,9 +165,7 @@ export function TaskMenu({
                     {/* Task priority */}
                     <FormSection>
                         <FormControl>
-                            <InputLabel id="priority-picker">
-                                Priority
-                            </InputLabel>
+                            <InputLabel id="priority-picker">Priority</InputLabel>
                             <Select
                                 labelId="priority-picker-label"
                                 id="priority-picker"
@@ -242,10 +220,7 @@ export function TaskMenu({
                             options={categoriesOptions}
                             getOptionLabel={obj => obj.title}
                             renderInput={params => (
-                                <TextField
-                                    {...params}
-                                    label="Category (optional)"
-                                />
+                                <TextField {...params} label="Category (optional)" />
                             )}
                         />
                     </FormSection>

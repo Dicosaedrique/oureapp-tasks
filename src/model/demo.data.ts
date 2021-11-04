@@ -85,10 +85,7 @@ function createTestTask(opt: Partial<Task>): Task {
     };
 }
 
-function createTodoTaskWithLimitDateTest(
-    opt: Partial<Task>,
-    percent: number,
-): Task {
+function createTodoTaskWithLimitDateTest(opt: Partial<Task>, percent: number): Task {
     return createTestTask({
         ...opt,
         creationDate: Date.now() - DAY_IN_MS * (percent / 10),
