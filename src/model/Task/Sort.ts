@@ -1,7 +1,5 @@
-import { memoize } from 'lodash';
-import { ComparerOrder, SortingOrder } from 'utils/types/types';
-
-import { Task, TaskState } from '.';
+import { Task, TaskState } from 'model/Task';
+import { Comparer, SortingOrder } from 'utils/types/types';
 
 /**
  * Tasks properties that can be sorted in the app
@@ -9,10 +7,11 @@ import { Task, TaskState } from '.';
 export type SortableTaskKeys = keyof Omit<Task, 'id' | 'category' | 'state'>;
 
 /**
- * Tasks properties that the user can sort (exclude state because the app does it automatically)
+ * Tasks properties that the user can sort (exclude finishedDate cause done tasks are sorted automatically)
  */
 export type TaskSortMode = Exclude<SortableTaskKeys, 'finishedDate'>;
 
+// todo : export in language config
 export const SORT_MODE_NAMES: Record<TaskSortMode, string> = {
     title: 'By title',
     creationDate: 'By creation date',
@@ -21,109 +20,156 @@ export const SORT_MODE_NAMES: Record<TaskSortMode, string> = {
 };
 
 /**
- * Defines the order of priority when sorting tasks keys
- * ie. when sorting by a key, in case of equality, it will break down to the next one
+ * Defines the order of priority when sorting tasks keys meaning when sorting
+ * by a key, in case of equality, it will break down to the next one
  *
  * Absolute order is : priority > limit_date > creation_date > title
  */
-const TASK_KEY_SORTING_ORDER: Record<
-    SortableTaskKeys,
-    Partial<SortableTaskKeys>[]
-> = {
-    title: ['title', 'priority', 'limitDate', 'creationDate'],
-    creationDate: ['creationDate', 'priority', 'limitDate', 'title'],
-    priority: ['priority', 'limitDate', 'creationDate', 'title'],
-    limitDate: ['limitDate', 'priority', 'creationDate', 'title'],
-    finishedDate: [
-        'finishedDate',
-        'priority',
-        'limitDate',
-        'creationDate',
-        'title',
-    ],
+const TASK_COMPARISON_PRIORITY: Record<SortableTaskKeys, TaskComparerGenerator[]> = {
+    title: [compareByTitle],
+    creationDate: [compareByCreationDate],
+    priority: [compareByPriority, compareByLimitDate, compareByCreationDate],
+    limitDate: [compareByLimitDate, compareByPriority, compareByCreationDate],
+    finishedDate: [compareByFinishDate],
 };
 
 /**
- * Defines the comparer generator for every state and every mode (based on key priority)
- * done tasks are only primary compared with their finished date
+ * Defines the comparers generator for every state and every mode (based on key priority)
  */
-export const TASKS_COMPARERS: Record<
-    TaskState,
-    Record<TaskSortMode, ComparerOrder<Task>>
-> = {
-    [TaskState.TODO]: {
-        title: createTaskComparerOrder(...TASK_KEY_SORTING_ORDER.title),
-        creationDate: createTaskComparerOrder(
-            ...TASK_KEY_SORTING_ORDER.creationDate,
-        ),
-        priority: createTaskComparerOrder(...TASK_KEY_SORTING_ORDER.priority),
-        limitDate: createTaskComparerOrder(...TASK_KEY_SORTING_ORDER.limitDate),
-    },
-    [TaskState.DONE]: {
-        title: createTaskComparerOrder(...TASK_KEY_SORTING_ORDER.finishedDate),
-        creationDate: createTaskComparerOrder(
-            ...TASK_KEY_SORTING_ORDER.finishedDate,
-        ),
-        priority: createTaskComparerOrder(
-            ...TASK_KEY_SORTING_ORDER.finishedDate,
-        ),
-        limitDate: createTaskComparerOrder(
-            ...TASK_KEY_SORTING_ORDER.finishedDate,
-        ),
-    },
-};
+export const TASKS_COMPARERS_ASC: TaskComparers = generateTasksComparersWithSortingOrder(true);
+export const TASKS_COMPARERS_DES: TaskComparers = generateTasksComparersWithSortingOrder(false);
 
-///////////////////////////////////////////////////////////////////
-//   UTILS FUNCTIONS USEFULL TO CREATE AND COMBINE COMPARERS     //
-///////////////////////////////////////////////////////////////////
+type TaskComparers = Record<TaskState, Record<TaskSortMode, Comparer<Task>>>;
 
 /**
- * Generate a "ComparerOrder" for one or more keys in a task, the priority is defined by the order of the keys (TODO : find a better name)
- * @param keys the keys to compare (in order of importance)
- * @returns the ComparerOrder function
+ * Desfines tasks comparers for each task state based on task key priority comparison
+ * for a given sorting order
  */
-function createTaskComparerOrder(
-    ...keys: SortableTaskKeys[]
-): ComparerOrder<Task> {
-    return memoize(
-        (order: SortingOrder) =>
-            function (a: Task, b: Task): number {
-                let value: number = 0;
+function generateTasksComparersWithSortingOrder(order: SortingOrder): TaskComparers {
+    return {
+        [TaskState.TODO]: {
+            title: combineTaskComparer(
+                ...TASK_COMPARISON_PRIORITY.title.map(comparerGenerator =>
+                    comparerGenerator(order),
+                ),
+            ),
+            creationDate: combineTaskComparer(
+                ...TASK_COMPARISON_PRIORITY.creationDate.map(comparerGenerator =>
+                    comparerGenerator(order),
+                ),
+            ),
+            priority: combineTaskComparer(
+                ...TASK_COMPARISON_PRIORITY.priority.map(comparerGenerator =>
+                    comparerGenerator(order),
+                ),
+            ),
+            limitDate: combineTaskComparer(
+                ...TASK_COMPARISON_PRIORITY.limitDate.map(comparerGenerator =>
+                    comparerGenerator(order),
+                ),
+            ),
+        },
+        // done tasks are sorted by finish date exclusively
+        [TaskState.DONE]: {
+            title: combineTaskComparer(
+                ...TASK_COMPARISON_PRIORITY.finishedDate.map(comparerGenerator =>
+                    comparerGenerator(order),
+                ),
+            ),
+            creationDate: combineTaskComparer(
+                ...TASK_COMPARISON_PRIORITY.finishedDate.map(comparerGenerator =>
+                    comparerGenerator(order),
+                ),
+            ),
+            priority: combineTaskComparer(
+                ...TASK_COMPARISON_PRIORITY.finishedDate.map(comparerGenerator =>
+                    comparerGenerator(order),
+                ),
+            ),
+            limitDate: combineTaskComparer(
+                ...TASK_COMPARISON_PRIORITY.finishedDate.map(comparerGenerator =>
+                    comparerGenerator(order),
+                ),
+            ),
+        },
+    };
+}
 
-                // for each key to compare
-                for (const key of keys) {
-                    value = compare(
-                        getValue(a[key], order),
-                        getValue(b[key], order),
-                    );
-                    if (!order) value = -value;
-                    if (value !== 0) break; // if the two elements aren't equal with this comparer, we stop here
-                }
+function combineTaskComparer(...comparers: TaskComparer[]): TaskComparer {
+    return (a: Task, b: Task): number => {
+        let value = 0;
 
-                return value;
-            },
-    );
-
-    /**
-     * Get the final value for comparison : if value is a string return charcode, if it is undefined
-     * returns MAX_SAFE_INT or MIN_SAFE_INT based on if the order of the sort
-     */
-    function getValue(
-        value: Task[SortableTaskKeys],
-        order: SortingOrder,
-    ): string | number {
-        return (
-            value || (order ? Number.MAX_SAFE_INTEGER : Number.MIN_SAFE_INTEGER)
-        );
-    }
-
-    function compare(a: string | number, b: string | number): number {
-        if (a > b) {
-            return -1;
+        for (const comparer of comparers) {
+            value = comparer(a, b);
+            if (value !== 0) break; // if the two elements aren't equal with this comparer, we stop here
         }
-        if (b > a) {
-            return 1;
-        }
+
+        return value;
+    };
+}
+
+////////////////////////////////////////////////////////////////
+// DEFINES EVERY COMPARISON FUNCTIONS
+
+type TaskComparer = (a: Task, b: Task) => number;
+type TaskComparerGenerator = (order: SortingOrder) => TaskComparer;
+
+/***
+ * Returns a comparison function for task priority
+ */
+function compareByTitle(order: SortingOrder): TaskComparer {
+    return (a: Task, b: Task): number => {
+        if (a.title < b.title) return order ? -1 : 1;
+        if (a.title > b.title) return order ? 1 : -1;
         return 0;
-    }
+    };
+}
+
+/***
+ * Returns a comparison function for task priority
+ */
+function compareByPriority(order: SortingOrder): TaskComparer {
+    return (a: Task, b: Task): number => {
+        const value = a.priority - b.priority;
+        return order ? value : -value;
+    };
+}
+
+/***
+ * Returns a comparison function for task creation date
+ */
+function compareByCreationDate(order: SortingOrder): TaskComparer {
+    return (a: Task, b: Task): number => {
+        if (a.creationDate < b.creationDate) return order ? -1 : 1;
+        if (a.creationDate > b.creationDate) return order ? 1 : -1;
+        return 0;
+    };
+}
+
+/***
+ * Returns a comparison function for task limit date
+ */
+function compareByLimitDate(order: SortingOrder): TaskComparer {
+    return (a: Task, b: Task): number => {
+        if (a.limitDate === b.limitDate) return 0;
+        else if (a.limitDate === undefined && b.limitDate !== undefined) return order ? -1 : 1;
+        else if (a.limitDate !== undefined && b.limitDate === undefined) return order ? 1 : -1;
+        else if (a.limitDate! < b.limitDate!) return order ? -1 : 1;
+        else if (a.limitDate! > b.limitDate!) return order ? 1 : -1;
+        return 0; // not reacheable
+    };
+}
+
+/***
+ * Returns a comparison function for task finish date, ignores the given order
+ */
+function compareByFinishDate(order: SortingOrder): TaskComparer {
+    return (a: Task, b: Task): number => {
+        if (a.finishedDate === b.finishedDate) return 0;
+        else if (a.finishedDate === undefined && b.finishedDate !== undefined) return -1;
+        else if (a.finishedDate !== undefined && b.finishedDate === undefined) return 1;
+        else if (a.finishedDate! < b.finishedDate!) return -1;
+        else if (a.finishedDate! > b.finishedDate!) return 1;
+        return 0; // not reacheable
+    };
 }

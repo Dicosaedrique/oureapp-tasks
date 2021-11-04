@@ -1,5 +1,5 @@
 /**
- * enum that defines possibles priority of a task
+ * Enum that defines possibles priority of a task
  */
 export enum TaskPriority {
     NONE = -1, // must not be 0 because it'll break sorting by priority
@@ -15,7 +15,7 @@ export enum TaskPriority {
 export const DEFAULT_TASK_PRIORITY = TaskPriority.NONE;
 
 /**
- * Default task priorities names
+ * Default task priorities names : todo put that in a language config file
  */
 export const DEFAULT_TASK_PRIORITIES_NAMES: Record<TaskPriority, string> = {
     [TaskPriority.NONE]: 'None',
