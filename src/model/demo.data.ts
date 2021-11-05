@@ -2,81 +2,97 @@
  * Contains sample data for demonstration of the app
  **/
 
-import { createTask, Task } from './Task';
-import { TaskPriority } from './Task/Priority';
+import { createTask, Task, TaskState } from 'model/Task';
+import { TaskPriority } from 'model/Task/Priority';
+import TaskList, { createTaskList, DEFAULT_LIST } from 'model/TaskList';
+import { Dictionnary, ID } from 'utils/types/types';
 
 // utils variables / constants
 let taskIncrement = 1;
-//let categoryIncrement = 1;
 const DAY_IN_MS = 86400000;
 
-/**
- * Categories used for the demo
- */
-export const CATEGORIES_DEMO = {
-    title: { id: 'title', title: 'Test title sorting' },
-    priority: { id: 'priority', title: 'Test priority sorting' },
-    limit_date: { id: 'limit_date', title: 'Test limit date sorting' },
-    creation_date: { id: 'creation_date', title: 'Test creation date sorting' },
-    stress_test: { id: 'stress_test', title: 'Test HUGE task count' },
+const taskListTitle = { ...createTaskList('Test title sorting'), id: 'title' };
+const taskListPriority = { ...createTaskList('Test priority sorting'), id: 'priority' };
+const taskListLimitDate = { ...createTaskList('Test limit date sorting'), id: 'limit_date' };
+const taskListCreationDate = {
+    ...createTaskList('Test creation date sorting'),
+    id: 'creation_date',
 };
+const taskListStress = { ...createTaskList('Test HUGE task count'), id: 'stress_test' };
 
 /**
- * Tasks used for the demo
+ * Generate tasks for each category
  */
-export const TASKS_DEMO: Task[] = [
-    // test title sorting
-    createTestTask({ category: 'title', title: 'A task' }),
-    createTestTask({ category: 'title', title: 'B task' }),
-    createTestTask({ category: 'title', title: 'C task' }),
-    createTestTask({ category: 'title', title: 'D task' }),
-    createTestTask({ category: 'title', title: 'E task' }),
 
-    // test priority sorting
-    createTestTask({ category: 'priority', priority: TaskPriority.NONE }),
-    createTestTask({ category: 'priority', priority: TaskPriority.LOW }),
-    createTestTask({ category: 'priority', priority: TaskPriority.MEDIUM }),
-    createTestTask({ category: 'priority', priority: TaskPriority.HIGH }),
-    createTestTask({ category: 'priority', priority: TaskPriority.EXTREME }),
+// test title sorting
+taskListTitle.tasks[TaskState.TODO].push(
+    createTestTask({ title: 'A task' }),
+    createTestTask({ title: 'B task' }),
+    createTestTask({ title: 'C task' }),
+    createTestTask({ title: 'D task' }),
+    createTestTask({ title: 'E task' }),
+);
 
-    // test limit date sorting
-    createTodoTaskWithLimitDateTest({ category: 'limit_date' }, 10),
-    createTodoTaskWithLimitDateTest({ category: 'limit_date' }, 30),
-    createTodoTaskWithLimitDateTest({ category: 'limit_date' }, 50),
-    createTodoTaskWithLimitDateTest({ category: 'limit_date' }, 70),
-    createTodoTaskWithLimitDateTest({ category: 'limit_date' }, 90),
+// test priority sorting
+taskListPriority.tasks[TaskState.TODO].push(
+    createTestTask({ priority: TaskPriority.NONE }),
+    createTestTask({ priority: TaskPriority.LOW }),
+    createTestTask({ priority: TaskPriority.MEDIUM }),
+    createTestTask({ priority: TaskPriority.HIGH }),
+    createTestTask({ priority: TaskPriority.EXTREME }),
+);
 
-    // test creation date sorting
-    createTestTask({ category: 'creation_date', creationDate: dateDays(-10) }),
-    createTestTask({ category: 'creation_date', creationDate: dateDays(-8) }),
-    createTestTask({ category: 'creation_date', creationDate: dateDays(-6) }),
-    createTestTask({ category: 'creation_date', creationDate: dateDays(-4) }),
-    createTestTask({ category: 'creation_date', creationDate: dateDays(-2) }),
+// test limit date sorting
+taskListLimitDate.tasks[TaskState.TODO].push(
+    createTodoTaskWithLimitDateTest({}, 10),
+    createTodoTaskWithLimitDateTest({}, 30),
+    createTodoTaskWithLimitDateTest({}, 50),
+    createTodoTaskWithLimitDateTest({}, 70),
+    createTodoTaskWithLimitDateTest({}, 90),
+);
 
+// test creation date sorting
+taskListCreationDate.tasks[TaskState.TODO].push(
+    createTestTask({ creationDate: dateDays(-10) }),
+    createTestTask({ creationDate: dateDays(-8) }),
+    createTestTask({ creationDate: dateDays(-6) }),
+    createTestTask({ creationDate: dateDays(-4) }),
+    createTestTask({ creationDate: dateDays(-2) }),
+);
+
+// add default list tasks
+DEFAULT_LIST.tasks[TaskState.TODO].push(
     // test limit date with different year
     createTestTask({
         title: 'Limit date next year',
         priority: TaskPriority.HIGH,
         limitDate: dateDays(365),
     }),
-
     // test past due limit date
     createTodoTaskWithLimitDateTest({ title: 'Past due limite date' }, 300),
+);
 
-    // pseudo stress test
-    // ...generateTasks(100, { category: 'stress_test' }),
-];
+// pseudo stress test
+// taskListStress.tasks[TaskState.TODO].push(...generateTasks(100, {}));
+
+export const TASKS_DEMO: Task[] = [];
+
+/**
+ * TaskLists used for the demo
+ */
+const TASK_LISTS_DEMO: Dictionnary<ID, TaskList> = {
+    title: taskListTitle,
+    priority: taskListPriority,
+    limit_date: taskListLimitDate,
+    creation_date: taskListCreationDate,
+    stress_test: taskListStress,
+};
+
+export default TASK_LISTS_DEMO;
 
 /////////////////////////////////////////////////////////
 //                 UTILS FUNCTIONS                     //
 /////////////////////////////////////////////////////////
-
-// function createTestCategory(opt: Partial<Category>): Category {
-//     return {
-//         ...createCategory(`Category ${categoryIncrement++}`),
-//         ...opt,
-//     };
-// }
 
 function createTestTask(opt: Partial<Task>): Task {
     return {
@@ -88,8 +104,8 @@ function createTestTask(opt: Partial<Task>): Task {
 function createTodoTaskWithLimitDateTest(opt: Partial<Task>, percent: number): Task {
     return createTestTask({
         ...opt,
-        creationDate: Date.now() - DAY_IN_MS * (percent / 10),
-        limitDate: Date.now() + DAY_IN_MS * ((100 - percent) / 10),
+        creationDate: new Date(Date.now() - DAY_IN_MS * (percent / 10)),
+        limitDate: new Date(Date.now() + DAY_IN_MS * ((100 - percent) / 10)),
     });
 }
 
@@ -101,8 +117,8 @@ function createTodoTaskWithLimitDateTest(opt: Partial<Task>, percent: number): T
 
 /**
  * @param days days to add or to substract to current date
- * @returns now -/+ days
+ * @returns date from now -/+ days
  */
-function dateDays(days: number) {
-    return Date.now() + DAY_IN_MS * days;
+function dateDays(days: number): Date {
+    return new Date(Date.now() + DAY_IN_MS * days);
 }
