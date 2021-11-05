@@ -1,16 +1,16 @@
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import Badge from 'app/components/Utils/Badge';
-import { usePreferencesSlice } from 'app/pages/HomePage/preferencesSlice';
-import { selectLimitDatePreferences } from 'app/pages/HomePage/preferencesSlice/selectors';
 import { TaskState } from 'model/Task';
-import * as React from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { diffInDays, formatDate } from 'utils/utils';
+import { usePreferencesSlice } from 'store/slices/preferences';
+import { selectLimitDatePreferences } from 'store/slices/preferences/selectors';
+import { diffInDays, formatDate } from 'utils';
 
 interface Props {
-    nowDate: number; // current date (if task is finished it will be the finished date)
-    startDate: number;
-    limitDate: number;
+    nowDate: Date; // current date (if task is finished it will be the finished date)
+    startDate: Date;
+    limitDate: Date;
     taskState: TaskState;
 }
 
@@ -30,7 +30,10 @@ export function LimitDateComponent({ nowDate, startDate, limitDate, taskState }:
     };
 
     // progress of the task (in percentage)
-    const progress = Math.round(((nowDate - startDate) / (limitDate - startDate)) * 100);
+    const progress = Math.round(
+        ((nowDate.getTime() - startDate.getTime()) / (limitDate.getTime() - startDate.getTime())) *
+            100,
+    );
 
     const remainingDays = diffInDays(nowDate, limitDate);
 

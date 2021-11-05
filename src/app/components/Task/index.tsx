@@ -1,8 +1,3 @@
-/**
- *
- * Task
- *
- */
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
@@ -13,29 +8,26 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ArchiveIcon from '@material-ui/icons/Archive';
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+// import EditIcon from '@material-ui/icons/Edit';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Task, TaskInputProps, TaskState } from 'model/Task';
+import { getParticleCountFromTask } from 'app/components/Reward';
+import { useRewarder } from 'app/components/Reward/context';
+import { MemoLimitDateComponent } from 'app/components/Task/LimitDate';
+import { MemoPriorityComponent } from 'app/components/Task/Priority';
+import { Task, TaskState } from 'model/Task';
 import { TaskPriority } from 'model/Task/Priority';
-import * as React from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useTaskListsSlice } from 'store/slices/taskLists';
+import { getDateNow } from 'utils';
+import { ID } from 'utils/types';
 
-import { TaskMenu } from '../Menus/Task/TaskMenu';
-import { getParticleCountFromTask } from '../Reward';
-import { useRewarder } from '../Reward/context';
-import { MemoLimitDateComponent } from './LimitDate';
-import { MemoPriorityComponent } from './Priority';
-import { useTasksSlice } from './slice';
-
-interface Props {
+interface TaskProps {
+    taskListID: ID;
     task: Task;
 }
 
-/**
- * basic component to render a task
- * @param props the task to display
- */
-export function TaskComponent({ task }: Props) {
+export function TaskComponent({ task, taskListID }: TaskProps) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const openOptions = (event: React.MouseEvent<HTMLElement>) => {
@@ -56,7 +48,7 @@ export function TaskComponent({ task }: Props) {
         }
     };
 
-    const { actions } = useTasksSlice();
+    const { actions } = useTaskListsSlice();
 
     const dispatch = useDispatch();
 
@@ -65,8 +57,10 @@ export function TaskComponent({ task }: Props) {
 
         dispatch(
             actions.setTaskState({
-                id: task.id,
-                taskState: newState,
+                taskListID,
+                taskID: task.id,
+                taskState: task.state,
+                newTaskState: newState,
             }),
         );
 
@@ -74,32 +68,45 @@ export function TaskComponent({ task }: Props) {
     };
 
     const deleteTask = () => {
-        dispatch(actions.removeTask(task.id));
+        dispatch(
+            actions.removeTask({
+                taskListID,
+                taskID: task.id,
+                taskState: task.state,
+            }),
+        );
         closeOptions();
     };
 
     const archiveTask = () => {
-        dispatch(actions.archiveTask(task.id));
+        alert(`Archive task ${task.title}`);
+        dispatch(
+            actions.archiveTask({
+                taskListID,
+                taskID: task.id,
+                taskState: task.state,
+            }),
+        );
         closeOptions();
     };
 
     //////////////////
     // HANDLE EDITION
 
-    const [editMenuOpen, setEditMenuOpen] = React.useState(false);
+    // const [editMenuOpen, setEditMenuOpen] = React.useState(false);
 
-    const openEditMenu = () => {
-        setEditMenuOpen(true);
-        closeOptions();
-    };
+    // const openEditMenu = () => {
+    //     setEditMenuOpen(true);
+    //     closeOptions();
+    // };
 
-    const closeEditMenu = () => setEditMenuOpen(false);
+    // const closeEditMenu = () => setEditMenuOpen(false);
 
-    const editTask = (inputProps: TaskInputProps, id?: string) => {
-        closeEditMenu();
-        if (!id) return;
-        dispatch(actions.editTask({ id, props: inputProps }));
-    };
+    // const editTask = (inputProps: TaskInputProps, id?: string) => {
+    //     closeEditMenu();
+    //     if (!id) return;
+    //     dispatch(actions.editTask({ id, props: inputProps }));
+    // };
 
     return (
         <>
@@ -125,8 +132,8 @@ export function TaskComponent({ task }: Props) {
                                 <MemoLimitDateComponent
                                     nowDate={
                                         task.state === TaskState.DONE
-                                            ? task.finishedDate || 0
-                                            : Date.now()
+                                            ? task.finishedDate!
+                                            : getDateNow()
                                     }
                                     startDate={task.creationDate}
                                     limitDate={task.limitDate}
@@ -158,10 +165,10 @@ export function TaskComponent({ task }: Props) {
                             horizontal: 'center',
                         }}
                     >
-                        <MenuItem onClick={openEditMenu} style={{ color: '#4e58ee' }}>
+                        {/* <MenuItem onClick={openEditMenu} style={{ color: '#4e58ee' }}>
                             <EditIcon />
                             &nbsp;&nbsp;Edit task
-                        </MenuItem>
+                        </MenuItem> */}
                         <MenuItem onClick={archiveTask} style={{ color: 'orange' }}>
                             <ArchiveIcon />
                             &nbsp;&nbsp;Archive task
@@ -173,14 +180,14 @@ export function TaskComponent({ task }: Props) {
                     </Menu>
                 </ListItemSecondaryAction>
             </ListItem>
-            {editMenuOpen && (
+            {/* {editMenuOpen && (
                 <TaskMenu
                     handleClose={closeEditMenu}
                     handleSuccess={editTask}
                     id={task.id}
                     defaultTask={task}
                 />
-            )}
+            )} */}
         </>
     );
 }

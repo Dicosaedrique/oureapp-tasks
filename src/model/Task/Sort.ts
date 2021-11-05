@@ -1,10 +1,11 @@
 import { Task, TaskState } from 'model/Task';
-import { Comparer, SortingOrder } from 'utils/types/types';
+import { ASCENDING, DESENDING } from 'utils/constants';
+import { Comparer, SortingOrder } from 'utils/types';
 
 /**
  * Tasks properties that can be sorted in the app
  */
-export type SortableTaskKeys = keyof Omit<Task, 'id' | 'category' | 'state'>;
+export type SortableTaskKeys = keyof Omit<Task, 'id' | 'state'>;
 
 /**
  * Tasks properties that the user can sort (exclude finishedDate cause done tasks are sorted automatically)
@@ -36,10 +37,11 @@ const TASK_COMPARISON_PRIORITY: Record<SortableTaskKeys, TaskComparerGenerator[]
 /**
  * Defines the comparers generator for every state and every mode (based on key priority)
  */
-export const TASKS_COMPARERS_ASC: TaskComparers = generateTasksComparersWithSortingOrder(true);
-export const TASKS_COMPARERS_DES: TaskComparers = generateTasksComparersWithSortingOrder(false);
+export const TASKS_COMPARERS_ASC: TaskComparers = generateTasksComparersWithSortingOrder(ASCENDING);
+export const TASKS_COMPARERS_DES: TaskComparers = generateTasksComparersWithSortingOrder(DESENDING);
 
-type TaskComparers = Record<TaskState, Record<TaskSortMode, Comparer<Task>>>;
+export type TaskComparers = Record<TaskState, Record<TaskSortMode, Comparer<Task>>>;
+export type TaskStateComparers = Record<TaskState, Comparer<Task>>;
 
 /**
  * Desfines tasks comparers for each task state based on task key priority comparison

@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Radio from '@material-ui/core/Radio';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import * as React from 'react';
+import React from 'react';
 
 interface Props<Type> {
     id: string;
@@ -16,7 +16,6 @@ interface Props<Type> {
 }
 
 /**
- * TODO : document this
  * Defines a component that create a menu with radio groupe to choose a value
  */
 export function RadioMenuPicker<Type>({ id, title, value, onChange, values }: Props<Type>) {

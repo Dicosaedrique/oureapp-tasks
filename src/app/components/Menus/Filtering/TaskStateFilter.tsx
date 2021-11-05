@@ -1,10 +1,9 @@
+import { FilterItems, GenericFilterComponent } from 'app/components/Menus/Filtering';
 import { TASK_STATE_NAMES, TaskState } from 'model/Task';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { FilterItems, GenericFilterComponent } from '.';
-import { useFilteringSlice } from './slice';
-import { selectFilteringState } from './slice/selectors';
+import { useFilteringSlice } from 'store/slices/taskFiltering';
+import { selectFilteringState } from 'store/slices/taskFiltering/selectors';
 
 /**
  * Items to display in the filter

@@ -7,12 +7,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import { TaskLimitDateFilterComponent } from 'app/components/Menus/Filtering/TaskLimitDateFilter';
+import { TaskPriorityFilterComponent } from 'app/components/Menus/Filtering/TaskPriorityFilter';
+import { TaskStateFilterComponent } from 'app/components/Menus/Filtering/TaskStateFilter';
 import React from 'react';
-
-import { TaskCategoryFilterComponent } from './TaskCategoryFilter';
-import { TaskLimitDateFilterComponent } from './TaskLimitDateFilter';
-import { TaskPriorityFilterComponent } from './TaskPriorityFilter';
-import { TaskStateFilterComponent } from './TaskStateFilter';
 
 /**
  * Defines the menu to change filtering preferences
@@ -28,9 +26,6 @@ export function FilteringMenu() {
             </Grid>
             <Grid item>
                 <TaskLimitDateFilterComponent />
-            </Grid>
-            <Grid item>
-                <TaskCategoryFilterComponent />
             </Grid>
         </Grid>
     );

@@ -1,6 +1,6 @@
 import { generateId } from 'model/IElementID';
-import { ID } from 'utils/types/types';
-import { getDateNow } from 'utils/utils';
+import { getDateNow } from 'utils';
+import { ID } from 'utils/types';
 
 import { DEFAULT_TASK_PRIORITY, TaskPriority } from './Priority';
 
@@ -41,7 +41,6 @@ export interface TaskInputProps {
     title: string;
     priority?: TaskPriority;
     limitDate?: Date;
-    category?: string;
 }
 
 /**
@@ -53,7 +52,6 @@ export function createTask({
     title,
     priority = DEFAULT_TASK_PRIORITY,
     limitDate,
-    category,
 }: TaskInputProps): Task {
     return {
         id: generateId(),

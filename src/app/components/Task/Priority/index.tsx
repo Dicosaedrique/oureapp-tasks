@@ -1,9 +1,9 @@
 import Badge from 'app/components/Utils/Badge';
-import { usePreferencesSlice } from 'app/pages/HomePage/preferencesSlice';
-import { selectPriorityPreferences } from 'app/pages/HomePage/preferencesSlice/selectors';
 import { TaskPriority } from 'model/Task/Priority';
-import * as React from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { usePreferencesSlice } from 'store/slices/preferences';
+import { selectPriorityPreferences } from 'store/slices/preferences/selectors';
 
 interface Props {
     priority: TaskPriority;

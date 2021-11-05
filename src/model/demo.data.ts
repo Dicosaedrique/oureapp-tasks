@@ -4,8 +4,8 @@
 
 import { createTask, Task, TaskState } from 'model/Task';
 import { TaskPriority } from 'model/Task/Priority';
-import TaskList, { createTaskList, DEFAULT_LIST } from 'model/TaskList';
-import { Dictionnary, ID } from 'utils/types/types';
+import TaskList, { createTaskList, DEFAULT_LIST, DEFAULT_LIST_ID } from 'model/TaskList';
+import { Dictionary, ID } from 'utils/types';
 
 // utils variables / constants
 let taskIncrement = 1;
@@ -21,7 +21,7 @@ const taskListCreationDate = {
 const taskListStress = { ...createTaskList('Test HUGE task count'), id: 'stress_test' };
 
 /**
- * Generate tasks for each category
+ * Generate tasks for each task list
  */
 
 // test title sorting
@@ -75,12 +75,11 @@ DEFAULT_LIST.tasks[TaskState.TODO].push(
 // pseudo stress test
 // taskListStress.tasks[TaskState.TODO].push(...generateTasks(100, {}));
 
-export const TASKS_DEMO: Task[] = [];
-
 /**
  * TaskLists used for the demo
  */
-const TASK_LISTS_DEMO: Dictionnary<ID, TaskList> = {
+const TASK_LISTS_DEMO: Dictionary<ID, TaskList> = {
+    [DEFAULT_LIST_ID]: DEFAULT_LIST,
     title: taskListTitle,
     priority: taskListPriority,
     limit_date: taskListLimitDate,

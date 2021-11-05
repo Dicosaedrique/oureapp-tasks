@@ -1,5 +1,5 @@
 import uniqid from 'uniqid';
-import { ID } from 'utils/types/types';
+import { ID } from 'utils/types';
 
 export default interface IElementID {
     readonly id: ID;

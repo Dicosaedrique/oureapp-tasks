@@ -1,11 +1,11 @@
 import { memoize } from 'lodash';
-import { Filter } from 'utils/types/types';
+import { Filter } from 'utils/types';
 
 import { Task, TaskState } from '.';
 import { TaskPriority } from './Priority';
 
 /**
- * Defines settings to filter tasks (by state, priority, limit date and category).
+ * Defines settings to filter tasks (by state, priority, limit date).
  * Filters logic is based on array of values to exclude, if array is empty, all values are accepted.
  */
 export interface FilteringSettings {
