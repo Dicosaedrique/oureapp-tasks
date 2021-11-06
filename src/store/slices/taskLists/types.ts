@@ -1,13 +1,13 @@
 import { TaskState } from 'model/Task';
 import TaskList from 'model/TaskList';
-import { Dictionary, ID } from 'utils/types';
+import { Dictionary, Id } from 'utils/types';
 
 /* --- STATE --- */
-export type TaskListsSliceState = Dictionary<ID, TaskList>;
+export type TaskListsSliceState = Dictionary<Id, TaskList>;
 
 export interface PayloadTaskList {
-    taskListID: ID;
-    taskID: ID;
+    taskListId: Id;
+    taskId: Id;
 }
 
 export interface PayloadRemoveTask extends PayloadTaskList {}

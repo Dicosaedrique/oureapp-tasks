@@ -7,12 +7,12 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import { Task, TaskState } from 'model/Task';
 import React from 'react';
 import styled from 'styled-components/macro';
-import { ID } from 'utils/types';
+import { Id } from 'utils/types';
 
 import { MemoTaskComponent } from '../Task';
 
 export interface TaskCollapsableListProps {
-    listId: ID;
+    listId: Id;
     title: string;
     tasks: Task[];
 }
@@ -41,7 +41,7 @@ export default function TaskCollapsableList({ listId, title, tasks }: TaskCollap
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     {tasks.map(task => (
-                        <MemoTaskComponent key={task.id} taskListID={listId} task={task} />
+                        <MemoTaskComponent key={task.id} taskListId={listId} task={task} />
                     ))}
                 </List>
             </Collapse>

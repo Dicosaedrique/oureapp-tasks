@@ -1,4 +1,4 @@
-import IElementID, { generateId } from 'model/IElementID';
+import IElementId, { generateId } from 'model/IElementId';
 import { getDateNow } from 'utils';
 
 import { DEFAULT_TASK_PRIORITY, TaskPriority } from './Priority';
@@ -6,7 +6,7 @@ import { DEFAULT_TASK_PRIORITY, TaskPriority } from './Priority';
 /**
  * Defines the interface of a task
  */
-export interface Task extends IElementID {
+export interface Task extends IElementId {
     readonly creationDate: Date;
     title: string;
     state: TaskState;

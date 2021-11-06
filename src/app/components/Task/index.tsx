@@ -20,14 +20,14 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useTaskListsSlice } from 'store/slices/taskLists';
 import { getDateNow } from 'utils';
-import { ID } from 'utils/types';
+import { Id } from 'utils/types';
 
 interface TaskProps {
-    taskListID: ID;
+    taskListId: Id;
     task: Task;
 }
 
-export function TaskComponent({ task, taskListID }: TaskProps) {
+export function TaskComponent({ task, taskListId }: TaskProps) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const openOptions = (event: React.MouseEvent<HTMLElement>) => {
@@ -57,8 +57,8 @@ export function TaskComponent({ task, taskListID }: TaskProps) {
 
         dispatch(
             actions.setTaskState({
-                taskListID,
-                taskID: task.id,
+                taskListId,
+                taskId: task.id,
                 newTaskState: newState,
             }),
         );
@@ -69,8 +69,8 @@ export function TaskComponent({ task, taskListID }: TaskProps) {
     const deleteTask = () => {
         dispatch(
             actions.removeTask({
-                taskListID,
-                taskID: task.id,
+                taskListId,
+                taskId: task.id,
             }),
         );
         closeOptions();
@@ -79,8 +79,8 @@ export function TaskComponent({ task, taskListID }: TaskProps) {
     const archiveTask = () => {
         dispatch(
             actions.archiveTask({
-                taskListID,
-                taskID: task.id,
+                taskListId,
+                taskId: task.id,
             }),
         );
         closeOptions();

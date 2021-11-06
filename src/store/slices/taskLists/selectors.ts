@@ -7,7 +7,7 @@ import { initialState } from 'store/slices/taskLists';
 import { selectTaskStateComparers } from 'store/slices/taskSorting/selectors';
 import { RootState } from 'store/StoreRootState';
 import { recordToArray } from 'utils';
-import { ID } from 'utils/types';
+import { Id } from 'utils/types';
 
 const selectSlice = (state: RootState) => state?.taskLists || initialState;
 
@@ -16,7 +16,7 @@ export const selectTaskLists = selectSlice;
 export const selectTaskListsBaseOrderedByCreationDate = createSelector(
     selectTaskLists,
     taskLists =>
-        recordToArray(taskLists as Record<ID, TaskList>).sort((a, b) => {
+        recordToArray(taskLists as Record<Id, TaskList>).sort((a, b) => {
             if (a.creationDate < b.creationDate) return -1;
             if (a.creationDate > b.creationDate) return 1;
             return 0;
@@ -28,22 +28,22 @@ export const selectDefaultTaskListBase = createSelector(
     taskLists => taskLists[DEFAULT_LIST_ID] as TaskListBase,
 );
 
-export const selectTaskListBaseByID = createSelector(
+export const selectTaskListBaseById = createSelector(
     selectTaskLists,
-    (_, id: ID) => id,
+    (_, id: Id) => id,
     (taskLists, id) => taskLists[id] as TaskListBase,
 );
 
-export const selectTaskListByID = createSelector(
+export const selectTaskListById = createSelector(
     selectTaskLists,
-    (_, id: ID) => id,
+    (_, id: Id) => id,
     (taskLists, id) => taskLists[id],
 );
 
-export const selectTasksByListID = createSelector(selectTaskListByID, res => res?.tasks);
+export const selectTasksByListId = createSelector(selectTaskListById, res => res?.tasks);
 
-export const selectSmartTasksByListID = createSelector(
-    selectTasksByListID,
+export const selectSmartTasksByListId = createSelector(
+    selectTasksByListId,
     selectFilteringSettings,
     selectTaskStateComparers,
     (tasks, filteringSettings, taskStateComparers) => {

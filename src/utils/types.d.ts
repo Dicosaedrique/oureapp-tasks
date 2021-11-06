@@ -1,7 +1,7 @@
 /**
- * Defines IDs as string in the application
+ * Defines Ids as string in the application
  */
-export type ID = string;
+export type Id = string;
 
 /**
  * Defines the order of sorting (true = ascending and false = descending)

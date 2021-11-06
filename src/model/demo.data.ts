@@ -5,7 +5,7 @@
 import { createTask, Task } from 'model/Task';
 import { TaskPriority } from 'model/Task/Priority';
 import TaskList, { createTaskList, DEFAULT_LIST, DEFAULT_LIST_ID } from 'model/TaskList';
-import { Dictionary, ID } from 'utils/types';
+import { Dictionary, Id } from 'utils/types';
 
 // utils variables / constants
 let taskIncrement = 1;
@@ -78,7 +78,7 @@ DEFAULT_LIST.tasks.push(
 /**
  * TaskLists used for the demo
  */
-const TASK_LISTS_DEMO: Dictionary<ID, TaskList> = {
+const TASK_LISTS_DEMO: Dictionary<Id, TaskList> = {
     [DEFAULT_LIST_ID]: DEFAULT_LIST,
     title: taskListTitle,
     priority: taskListPriority,

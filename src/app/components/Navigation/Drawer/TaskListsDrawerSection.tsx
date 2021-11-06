@@ -19,7 +19,7 @@ import {
     selectDefaultTaskListBase,
     selectTaskListsBaseOrderedByCreationDate,
 } from 'store/slices/taskLists/selectors';
-import { ID } from 'utils/types';
+import { Id } from 'utils/types';
 
 /**
  * Displays the navigation's drawer section relative to tasks lists
@@ -35,7 +35,7 @@ export default function TaskListsDrawerSection() {
     );
 
     const history = useHistory();
-    const createTaskListNavigationHandler = (id: ID) => () => history.push(`/tasks/${id}/`);
+    const createTaskListNavigationHandler = (id: Id) => () => history.push(`/tasks/${id}/`);
     const defaultTaskListNavigationHandler = () => history.push(`/tasks/`);
 
     return (

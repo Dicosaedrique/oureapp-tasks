@@ -23,10 +23,10 @@ const slice = createSlice({
         //     state.list.push(createTask(action.payload));
         // },
         removeTask(state, { payload }: PayloadAction<PayloadRemoveTask>) {
-            const taskList = state[payload.taskListID];
+            const taskList = state[payload.taskListId];
 
             if (taskList !== undefined) {
-                const taskIndex = taskList.tasks.findIndex(task => task.id === payload.taskID);
+                const taskIndex = taskList.tasks.findIndex(task => task.id === payload.taskId);
                 if (taskIndex !== -1) taskList.tasks.splice(taskIndex, 1);
             }
         },
@@ -42,10 +42,10 @@ const slice = createSlice({
         //     }
         // },
         setTaskState(state, { payload }: PayloadAction<PayloadUpdateTaskState>) {
-            const taskList = state[payload.taskListID];
+            const taskList = state[payload.taskListId];
 
             if (taskList !== undefined) {
-                const taskIndex = taskList.tasks.findIndex(task => task.id === payload.taskID);
+                const taskIndex = taskList.tasks.findIndex(task => task.id === payload.taskId);
                 if (taskIndex !== -1) {
                     taskList.tasks[taskIndex] = setTaskState(
                         taskList.tasks[taskIndex],
@@ -55,10 +55,10 @@ const slice = createSlice({
             }
         },
         archiveTask(state, { payload }: PayloadAction<PayloadArchiveTask>) {
-            const taskList = state[payload.taskListID];
+            const taskList = state[payload.taskListId];
 
             if (taskList !== undefined) {
-                const taskIndex = taskList.tasks.findIndex(task => task.id === payload.taskID);
+                const taskIndex = taskList.tasks.findIndex(task => task.id === payload.taskId);
                 if (taskIndex !== -1) {
                     const [taskToArchive] = taskList.tasks.splice(taskIndex, 1);
                     taskList.archivedTasks.push(taskToArchive);

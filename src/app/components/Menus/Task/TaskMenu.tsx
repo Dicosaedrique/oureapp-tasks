@@ -31,7 +31,7 @@ export {};
 // import { recordToArray } from 'utils';
 
 // export interface TaskMenuProps {
-//     id?: TaskID; // optional task id (if this is a task edition instead of a task creation)
+//     id?: Id; // optional task id (if this is a task edition instead of a task creation)
 //     defaultTask?: Partial<TaskInputProps>;
 //     handleClose: () => void; // close or cancel
 //     handleSuccess: (props: TaskInputProps, id?: string) => void; // close because of success

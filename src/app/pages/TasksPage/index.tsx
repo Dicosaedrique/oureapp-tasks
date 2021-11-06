@@ -11,12 +11,12 @@ import { DEFAULT_LIST_ID } from 'model/TaskList';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { selectSmartTasksByListID, selectTaskListBaseByID } from 'store/slices/taskLists/selectors';
+import { selectSmartTasksByListId, selectTaskListBaseById } from 'store/slices/taskLists/selectors';
 import { mapObject } from 'utils';
-import { ID } from 'utils/types';
+import { Id } from 'utils/types';
 
 export interface TasksPagePathParams {
-    taskListId: ID;
+    taskListId: Id;
 }
 
 export default function TasksPage() {
@@ -25,8 +25,8 @@ export default function TasksPage() {
     let { taskListId } = useParams<TasksPagePathParams>();
     if (taskListId === undefined) taskListId = DEFAULT_LIST_ID;
 
-    const taskListBase = useSelector(state => selectTaskListBaseByID(state, taskListId));
-    const tasks = useSelector(state => selectSmartTasksByListID(state, taskListId));
+    const taskListBase = useSelector(state => selectTaskListBaseById(state, taskListId));
+    const tasks = useSelector(state => selectSmartTasksByListId(state, taskListId));
 
     if (taskListBase === undefined || tasks === undefined) return <NotFoundPage />; // todo : fix this with error handling
 
