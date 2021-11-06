@@ -1,9 +1,10 @@
-import { FilterItems, GenericFilterComponent } from 'app/components/Menus/Filtering';
 import { DEFAULT_TASK_PRIORITIES_NAMES, TaskPriority } from 'model/Task/Priority';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFilteringSlice } from 'store/slices/taskFiltering';
 import { selectFilteringPriority } from 'store/slices/taskFiltering/selectors';
+
+import { FilterItems, GenericFilterComponent } from '.';
 
 /**
  * Items to display in the filter

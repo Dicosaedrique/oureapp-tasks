@@ -1,4 +1,4 @@
-import { MONTH_NAMES_SHORT } from 'utils/constants';
+import { MONTH_NAMES_SHORT } from './constants';
 
 /**
  * format the given date

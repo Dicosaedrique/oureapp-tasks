@@ -8,8 +8,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { MemoTaskListsDrawerSection } from 'app/components/Navigation/Drawer/TaskListsDrawerSection';
 import React from 'react';
+
+import { MemoTaskListsDrawerSection } from './TaskListsDrawerSection';
 
 export interface NavigationDrawerProps {
     open: boolean;

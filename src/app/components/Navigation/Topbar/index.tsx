@@ -4,10 +4,9 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
+import { DRAWER_WIDTH } from 'app/components/Navigation/Drawer';
 import clsx from 'clsx';
 import React from 'react';
-
-import { DRAWER_WIDTH } from '../Drawer';
 
 export interface TopBarProps {
     title: string;
