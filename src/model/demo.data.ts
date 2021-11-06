@@ -2,7 +2,7 @@
  * Contains sample data for demonstration of the app
  **/
 
-import { createTask, Task, TaskState } from 'model/Task';
+import { createTask, Task } from 'model/Task';
 import { TaskPriority } from 'model/Task/Priority';
 import TaskList, { createTaskList, DEFAULT_LIST, DEFAULT_LIST_ID } from 'model/TaskList';
 import { Dictionary, ID } from 'utils/types';
@@ -18,14 +18,14 @@ const taskListCreationDate = {
     ...createTaskList('Test creation date sorting'),
     id: 'creation_date',
 };
-const taskListStress = { ...createTaskList('Test HUGE task count'), id: 'stress_test' };
+// const taskListStress = { ...createTaskList('Test HUGE task count'), id: 'stress_test' };
 
 /**
  * Generate tasks for each task list
  */
 
 // test title sorting
-taskListTitle.tasks[TaskState.TODO].push(
+taskListTitle.tasks.push(
     createTestTask({ title: 'A task' }),
     createTestTask({ title: 'B task' }),
     createTestTask({ title: 'C task' }),
@@ -34,7 +34,7 @@ taskListTitle.tasks[TaskState.TODO].push(
 );
 
 // test priority sorting
-taskListPriority.tasks[TaskState.TODO].push(
+taskListPriority.tasks.push(
     createTestTask({ priority: TaskPriority.NONE }),
     createTestTask({ priority: TaskPriority.LOW }),
     createTestTask({ priority: TaskPriority.MEDIUM }),
@@ -43,7 +43,7 @@ taskListPriority.tasks[TaskState.TODO].push(
 );
 
 // test limit date sorting
-taskListLimitDate.tasks[TaskState.TODO].push(
+taskListLimitDate.tasks.push(
     createTodoTaskWithLimitDateTest({}, 10),
     createTodoTaskWithLimitDateTest({}, 30),
     createTodoTaskWithLimitDateTest({}, 50),
@@ -52,7 +52,7 @@ taskListLimitDate.tasks[TaskState.TODO].push(
 );
 
 // test creation date sorting
-taskListCreationDate.tasks[TaskState.TODO].push(
+taskListCreationDate.tasks.push(
     createTestTask({ creationDate: dateDays(-10) }),
     createTestTask({ creationDate: dateDays(-8) }),
     createTestTask({ creationDate: dateDays(-6) }),
@@ -61,7 +61,7 @@ taskListCreationDate.tasks[TaskState.TODO].push(
 );
 
 // add default list tasks
-DEFAULT_LIST.tasks[TaskState.TODO].push(
+DEFAULT_LIST.tasks.push(
     // test limit date with different year
     createTestTask({
         title: 'Limit date next year',
@@ -73,7 +73,7 @@ DEFAULT_LIST.tasks[TaskState.TODO].push(
 );
 
 // pseudo stress test
-// taskListStress.tasks[TaskState.TODO].push(...generateTasks(100, {}));
+// taskListStress.tasks.push(...generateTasks(100, {}));
 
 /**
  * TaskLists used for the demo
@@ -84,7 +84,7 @@ const TASK_LISTS_DEMO: Dictionary<ID, TaskList> = {
     priority: taskListPriority,
     limit_date: taskListLimitDate,
     creation_date: taskListCreationDate,
-    stress_test: taskListStress,
+    // stress_test: taskListStress,
 };
 
 export default TASK_LISTS_DEMO;

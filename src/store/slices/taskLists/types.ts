@@ -5,15 +5,14 @@ import { Dictionary, ID } from 'utils/types';
 /* --- STATE --- */
 export type TaskListsSliceState = Dictionary<ID, TaskList>;
 
-export interface PayloadTask {
+export interface PayloadTaskList {
     taskListID: ID;
     taskID: ID;
-    taskState: TaskState;
 }
 
-export interface PayloadRemoveTask extends PayloadTask {}
-export interface PayloadArchiveTask extends PayloadTask {}
+export interface PayloadRemoveTask extends PayloadTaskList {}
+export interface PayloadArchiveTask extends PayloadTaskList {}
 
-export interface PayloadUpdateTaskState extends PayloadTask {
+export interface PayloadUpdateTaskState extends PayloadTaskList {
     newTaskState: TaskState;
 }

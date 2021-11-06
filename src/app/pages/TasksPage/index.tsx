@@ -11,7 +11,7 @@ import { DEFAULT_LIST_ID } from 'model/TaskList';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { selectSmartTaskListByID } from 'store/slices/taskLists/selectors';
+import { selectSmartTasksByListID, selectTaskListBaseByID } from 'store/slices/taskLists/selectors';
 import { mapObject } from 'utils';
 import { ID } from 'utils/types';
 
@@ -25,21 +25,22 @@ export default function TasksPage() {
     let { taskListId } = useParams<TasksPagePathParams>();
     if (taskListId === undefined) taskListId = DEFAULT_LIST_ID;
 
-    const taskList = useSelector(state => selectSmartTaskListByID(state, taskListId));
+    const taskListBase = useSelector(state => selectTaskListBaseByID(state, taskListId));
+    const tasks = useSelector(state => selectSmartTasksByListID(state, taskListId));
 
-    if (taskList === undefined) return <NotFoundPage />; // todo : fix this with error handling
+    if (taskListBase === undefined || tasks === undefined) return <NotFoundPage />; // todo : fix this with error handling
 
     return (
-        <BasePage title={taskList.title}>
+        <BasePage title={taskListBase.title}>
             <RewarderProvider>
                 <div className={classes.toolbar} />
                 {/* <AddTaskMenu /> */}
                 <FilteringMenu />
                 <SortingMenu />
-                {mapObject(taskList.tasks, (tasks, taskState) => (
+                {mapObject(tasks, (tasks, taskState) => (
                     <MemoTaskCollapsableList
                         key={taskState}
-                        listId={taskList.id}
+                        listId={taskListBase.id}
                         title={TASK_STATE_NAMES[taskState]}
                         tasks={tasks}
                     />

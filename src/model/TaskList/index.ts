@@ -14,8 +14,8 @@ export interface TaskListBase extends IElementID {
  * Defines a task list
  */
 export default interface TaskList extends TaskListBase {
-    tasks: TaskStateDictionnary<Task[]>;
-    // todo probably add archived tasks here
+    tasks: Task[];
+    archivedTasks: Task[];
 }
 
 /**
@@ -26,10 +26,8 @@ export function createTaskList(title: string): TaskList {
         id: generateId(),
         creationDate: getDateNow(),
         title,
-        tasks: {
-            [TaskState.TODO]: [],
-            [TaskState.DONE]: [],
-        },
+        tasks: [],
+        archivedTasks: [],
     };
 }
 

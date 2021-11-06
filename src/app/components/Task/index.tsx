@@ -59,7 +59,6 @@ export function TaskComponent({ task, taskListID }: TaskProps) {
             actions.setTaskState({
                 taskListID,
                 taskID: task.id,
-                taskState: task.state,
                 newTaskState: newState,
             }),
         );
@@ -72,19 +71,16 @@ export function TaskComponent({ task, taskListID }: TaskProps) {
             actions.removeTask({
                 taskListID,
                 taskID: task.id,
-                taskState: task.state,
             }),
         );
         closeOptions();
     };
 
     const archiveTask = () => {
-        alert(`Archive task ${task.title}`);
         dispatch(
             actions.archiveTask({
                 taskListID,
                 taskID: task.id,
-                taskState: task.state,
             }),
         );
         closeOptions();

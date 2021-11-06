@@ -22,16 +22,13 @@ const slice = createSlice({
         // addTask(state, action: PayloadAction<TaskInputProps>) {
         //     state.list.push(createTask(action.payload));
         // },
-        removeTask(
-            state,
-            { payload: { taskID, taskState, taskListID } }: PayloadAction<PayloadRemoveTask>,
-        ) {
-            if (state[taskListID] === undefined) return;
+        removeTask(state, { payload }: PayloadAction<PayloadRemoveTask>) {
+            const taskList = state[payload.taskListID];
 
-            const taskIndex = state[taskListID]!.tasks[taskState].findIndex(
-                task => task.id === taskID,
-            );
-            if (taskIndex !== -1) state[taskListID]!.tasks[taskState].splice(taskIndex, 1);
+            if (taskList !== undefined) {
+                const taskIndex = taskList.tasks.findIndex(task => task.id === payload.taskID);
+                if (taskIndex !== -1) taskList.tasks.splice(taskIndex, 1);
+            }
         },
         // /**
         //  * edit task (based in the tasks inputs and id)
@@ -44,41 +41,28 @@ const slice = createSlice({
         //         state.list[index] = updatedTask;
         //     }
         // },
-        setTaskState(
-            state,
-            {
-                payload: { taskID, taskState, newTaskState, taskListID },
-            }: PayloadAction<PayloadUpdateTaskState>,
-        ) {
-            if (state[taskListID] === undefined) return;
+        setTaskState(state, { payload }: PayloadAction<PayloadUpdateTaskState>) {
+            const taskList = state[payload.taskListID];
 
-            const taskIndex = state[taskListID]!.tasks[taskState].findIndex(
-                task => task.id === taskID,
-            );
-
-            if (
-                taskIndex !== -1 &&
-                state[taskListID]!.tasks[taskState][taskIndex].state !== newTaskState
-            ) {
-                const [taskToUpdate] = state[taskListID]!.tasks[taskState].splice(taskIndex, 1);
-                state[taskListID]!.tasks[newTaskState].push(
-                    setTaskState(taskToUpdate, newTaskState),
-                );
+            if (taskList !== undefined) {
+                const taskIndex = taskList.tasks.findIndex(task => task.id === payload.taskID);
+                if (taskIndex !== -1) {
+                    taskList.tasks[taskIndex] = setTaskState(
+                        taskList.tasks[taskIndex],
+                        payload.newTaskState,
+                    );
+                }
             }
         },
-        archiveTask(
-            state,
-            { payload: { taskID, taskState, taskListID } }: PayloadAction<PayloadArchiveTask>,
-        ) {
-            if (state[taskListID] === undefined) return;
+        archiveTask(state, { payload }: PayloadAction<PayloadArchiveTask>) {
+            const taskList = state[payload.taskListID];
 
-            const taskIndex = state[taskListID]!.tasks[taskState].findIndex(
-                task => task.id === taskID,
-            );
-            if (taskIndex !== -1) {
-                const [taskToArchive] = state[taskListID]!.tasks[taskState].splice(taskIndex, 1);
-                // todo : archive the task
-                console.log(`Archive task ${taskID}`);
+            if (taskList !== undefined) {
+                const taskIndex = taskList.tasks.findIndex(task => task.id === payload.taskID);
+                if (taskIndex !== -1) {
+                    const [taskToArchive] = taskList.tasks.splice(taskIndex, 1);
+                    taskList.archivedTasks.push(taskToArchive);
+                }
             }
         },
     },
