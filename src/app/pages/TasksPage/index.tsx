@@ -37,14 +37,18 @@ export default function TasksPage() {
                 {/* <AddTaskMenu /> */}
                 <FilteringMenu />
                 <SortingMenu />
-                {mapObject(tasks, (tasks, taskState) => (
-                    <MemoTaskCollapsableList
-                        key={taskState}
-                        listId={taskListBase.id}
-                        title={TASK_STATE_NAMES[taskState]}
-                        tasks={tasks}
-                    />
-                ))}
+                {mapObject(tasks, (tasks, taskState) => {
+                    if (tasks.length === 0) return null;
+                    else
+                        return (
+                            <MemoTaskCollapsableList
+                                key={taskState}
+                                listId={taskListBase.id}
+                                title={TASK_STATE_NAMES[taskState]}
+                                tasks={tasks}
+                            />
+                        );
+                })}
             </RewarderProvider>
         </BasePage>
     );
