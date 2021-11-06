@@ -1,5 +1,4 @@
 import IElementId, { generateId } from 'model/IElementId';
-import { getDateNow } from 'utils';
 
 import { DEFAULT_TASK_PRIORITY, TaskPriority } from './Priority';
 
@@ -7,13 +6,13 @@ import { DEFAULT_TASK_PRIORITY, TaskPriority } from './Priority';
  * Defines the interface of a task
  */
 export interface Task extends IElementId {
-    readonly creationDate: Date;
+    readonly creationDate: number;
     title: string;
     state: TaskState;
     priority: TaskPriority;
 
-    limitDate?: Date;
-    finishedDate?: Date;
+    limitDate?: number;
+    finishedDate?: number;
 }
 
 /**
@@ -38,7 +37,7 @@ export const TASK_STATE_NAMES = {
 export interface TaskInputProps {
     title: string;
     priority?: TaskPriority;
-    limitDate?: Date;
+    limitDate?: number;
 }
 
 /**
@@ -53,7 +52,7 @@ export function createTask({
 }: TaskInputProps): Task {
     return {
         id: generateId(),
-        creationDate: getDateNow(),
+        creationDate: Date.now(),
         state: TaskState.TODO,
         title,
         priority,
@@ -78,7 +77,7 @@ export function setTaskState(task: Task, newState: TaskState) {
             break;
 
         case TaskState.DONE:
-            task.finishedDate = getDateNow();
+            task.finishedDate = Date.now();
             break;
     }
 

@@ -103,8 +103,8 @@ function createTestTask(opt: Partial<Task>): Task {
 function createTodoTaskWithLimitDateTest(opt: Partial<Task>, percent: number): Task {
     return createTestTask({
         ...opt,
-        creationDate: new Date(Date.now() - DAY_IN_MS * (percent / 10)),
-        limitDate: new Date(Date.now() + DAY_IN_MS * ((100 - percent) / 10)),
+        creationDate: Date.now() - DAY_IN_MS * (percent / 10),
+        limitDate: Date.now() + DAY_IN_MS * ((100 - percent) / 10),
     });
 }
 
@@ -118,6 +118,6 @@ function createTodoTaskWithLimitDateTest(opt: Partial<Task>, percent: number): T
  * @param days days to add or to substract to current date
  * @returns date from now -/+ days
  */
-function dateDays(days: number): Date {
-    return new Date(Date.now() + DAY_IN_MS * days);
+function dateDays(days: number): number {
+    return Date.now() + DAY_IN_MS * days;
 }

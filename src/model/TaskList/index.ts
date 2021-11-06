@@ -1,13 +1,12 @@
 import IElementId, { generateId } from 'model/IElementId';
 import { Task, TaskState } from 'model/Task';
-import { getDateNow } from 'utils';
 import { EnumDictionnary } from 'utils/types';
 
 export type TaskStateDictionnary<Type> = EnumDictionnary<TaskState, Type>;
 
 export interface TaskListBase extends IElementId {
     title: string;
-    readonly creationDate: Date;
+    readonly creationDate: number;
 }
 
 /**
@@ -24,7 +23,7 @@ export default interface TaskList extends TaskListBase {
 export function createTaskList(title: string): TaskList {
     return {
         id: generateId(),
-        creationDate: getDateNow(),
+        creationDate: Date.now(),
         title,
         tasks: [],
         archivedTasks: [],

@@ -44,5 +44,3 @@ export function recordToArray<Key extends string | number | symbol, Type>(
 ): Type[] {
     return Object.values(obj);
 }
-
-export const getDateNow: () => Date = () => new Date(Date.now());

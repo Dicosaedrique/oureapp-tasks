@@ -8,9 +8,9 @@ import { selectLimitDatePreferences } from 'store/slices/preferences/selectors';
 import { diffInDays, formatDate } from 'utils';
 
 interface Props {
-    nowDate: Date; // current date (if task is finished it will be the finished date)
-    startDate: Date;
-    limitDate: Date;
+    nowDate: number; // current date (if task is finished it will be the finished date)
+    startDate: number;
+    limitDate: number;
     taskState: TaskState;
 }
 
@@ -30,10 +30,7 @@ export function LimitDateComponent({ nowDate, startDate, limitDate, taskState }:
     };
 
     // progress of the task (in percentage)
-    const progress = Math.round(
-        ((nowDate.getTime() - startDate.getTime()) / (limitDate.getTime() - startDate.getTime())) *
-            100,
-    );
+    const progress = Math.round(((nowDate - startDate) / (limitDate - startDate)) * 100);
 
     const remainingDays = diffInDays(nowDate, limitDate);
 

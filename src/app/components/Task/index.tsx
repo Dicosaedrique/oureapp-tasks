@@ -19,7 +19,6 @@ import { TaskPriority } from 'model/Task/Priority';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useTaskListsSlice } from 'store/slices/taskLists';
-import { getDateNow } from 'utils';
 import { Id } from 'utils/types';
 
 interface TaskProps {
@@ -129,7 +128,7 @@ export function TaskComponent({ task, taskListId }: TaskProps) {
                                     nowDate={
                                         task.state === TaskState.DONE
                                             ? task.finishedDate!
-                                            : getDateNow()
+                                            : Date.now()
                                     }
                                     startDate={task.creationDate}
                                     limitDate={task.limitDate}
