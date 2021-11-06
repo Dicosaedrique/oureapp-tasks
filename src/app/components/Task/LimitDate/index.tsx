@@ -14,9 +14,6 @@ interface Props {
     taskState: TaskState;
 }
 
-/**
- * basic component to render a task limit date
- */
 export function LimitDateComponent({ nowDate, startDate, limitDate, taskState }: Props) {
     // redux hooks
     const { actions } = usePreferencesSlice();

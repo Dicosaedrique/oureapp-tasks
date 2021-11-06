@@ -36,7 +36,6 @@ export default function BasePage({ title, description, children }: BasePageProps
                         [classes.contentShift]: drawerOpen,
                     })}
                 >
-                    {/* <div className={classes.drawerHeader} /> */}
                     {children}
                 </main>
             </div>

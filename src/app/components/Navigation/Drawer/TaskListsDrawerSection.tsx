@@ -1,9 +1,3 @@
-/**
- *
- * defines the task list drawer section (to navigate in the app)
- *
- */
-
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -21,9 +15,6 @@ import {
 } from 'store/slices/taskLists/selectors';
 import { Id } from 'utils/types';
 
-/**
- * Displays the navigation's drawer section relative to tasks lists
- */
 export default function TaskListsDrawerSection() {
     let current = useParams<TasksPagePathParams>().taskListId;
     if (current === undefined) current = DEFAULT_LIST_ID;

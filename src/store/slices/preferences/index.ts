@@ -41,7 +41,6 @@ const slice = createSlice({
     },
 });
 
-// create the slice hook for component
 export const usePreferencesSlice = () => {
     useInjectReducer({ key: slice.name, reducer: slice.reducer });
     return { actions: slice.actions };

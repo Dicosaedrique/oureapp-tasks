@@ -1,6 +1,3 @@
-/**
- * Enum that defines possibles priority of a task
- */
 export enum TaskPriority {
     NONE = -1, // must not be 0 because it'll break sorting by priority
     LOW = 1,
@@ -9,14 +6,9 @@ export enum TaskPriority {
     EXTREME = 4,
 }
 
-/**
- * Default task priority
- */
 export const DEFAULT_TASK_PRIORITY = TaskPriority.NONE;
 
-/**
- * Default task priorities names : todo put that in a language config file
- */
+// todo put that in a language config file
 export const DEFAULT_TASK_PRIORITIES_NAMES: Record<TaskPriority, string> = {
     [TaskPriority.NONE]: 'None',
     [TaskPriority.LOW]: 'Low',
@@ -25,9 +17,7 @@ export const DEFAULT_TASK_PRIORITIES_NAMES: Record<TaskPriority, string> = {
     [TaskPriority.EXTREME]: 'Extreme',
 };
 
-/**
- * Default tasks priorities colors
- */
+// todo : make that customizable
 export const DEFAULT_TASK_PRIORITIES_COLORS: Record<TaskPriority, string> = {
     [TaskPriority.NONE]: '#d4d4d4',
     [TaskPriority.LOW]: '#fff349',

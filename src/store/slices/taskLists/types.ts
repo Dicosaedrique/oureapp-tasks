@@ -2,7 +2,6 @@ import { TaskState } from 'model/Task';
 import TaskList from 'model/TaskList';
 import { Dictionary, Id } from 'utils/types';
 
-/* --- STATE --- */
 export type TaskListsSliceState = Dictionary<Id, TaskList>;
 
 export interface PayloadTaskList {

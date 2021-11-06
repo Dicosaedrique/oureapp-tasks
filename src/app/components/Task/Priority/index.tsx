@@ -9,10 +9,6 @@ interface Props {
     priority: TaskPriority;
 }
 
-/**
- * basic component to render a task priority
- * @param props the task priority
- */
 export function PriorityComponent({ priority }: Props) {
     const { actions } = usePreferencesSlice();
 

@@ -1,7 +1,3 @@
-/**
- * Asynchronously loads the component for Tasks Page
- */
-
 import { lazyLoad } from 'utils/loadable';
 
 export default lazyLoad(

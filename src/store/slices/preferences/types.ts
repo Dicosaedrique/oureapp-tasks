@@ -1,6 +1,5 @@
 import { TaskPriority } from 'model/Task/Priority';
 
-/* --- STATE --- */
 export interface PreferencesSliceState {
     priority: {
         displayPriorityFullName: boolean;

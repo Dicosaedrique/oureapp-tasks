@@ -9,17 +9,11 @@ export interface TaskListBase extends IElementId {
     readonly creationDate: number;
 }
 
-/**
- * Defines a task list
- */
 export default interface TaskList extends TaskListBase {
     tasks: Task[];
     archivedTasks: Task[];
 }
 
-/**
- * Creates a task list
- */
 export function createTaskList(title: string): TaskList {
     return {
         id: generateId(),

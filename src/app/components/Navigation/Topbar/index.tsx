@@ -15,9 +15,6 @@ export interface TopBarProps {
     handleDrawerOpen: () => void;
 }
 
-/**
- * Displays the navigation drawer
- */
 export function TopBar({ title, drawerOpen, handleDrawerOpen }: TopBarProps) {
     const classes = useStyles();
 

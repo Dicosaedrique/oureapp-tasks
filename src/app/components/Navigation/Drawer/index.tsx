@@ -1,9 +1,3 @@
-/**
- *
- * defines the general navigation drawer for the whole application
- *
- */
-
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
@@ -22,9 +16,6 @@ export interface NavigationDrawerProps {
     handleClose: () => void;
 }
 
-/**
- * Displays the navigation drawer
- */
 export function NavigationDrawer({ open, handleClose }: NavigationDrawerProps) {
     const classes = useStyles();
 

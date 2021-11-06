@@ -46,7 +46,6 @@ const slice = createSlice({
     },
 });
 
-// create the slice hook for component
 export const useFilteringSlice = () => {
     useInjectReducer({ key: slice.name, reducer: slice.reducer });
     return { actions: slice.actions };

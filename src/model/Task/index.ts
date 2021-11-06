@@ -2,9 +2,6 @@ import IElementId, { generateId } from 'model/IElementId';
 
 import { DEFAULT_TASK_PRIORITY, TaskPriority } from './Priority';
 
-/**
- * Defines the interface of a task
- */
 export interface Task extends IElementId {
     readonly creationDate: number;
     title: string;
@@ -15,17 +12,12 @@ export interface Task extends IElementId {
     finishedDate?: number;
 }
 
-/**
- * possible states of a task
- */
 export enum TaskState {
     TODO = 1,
     DONE = 2,
 }
 
-/**
- * Mapped names of the task states : todo replace in language json file
- */
+// todo replace in language json file
 export const TASK_STATE_NAMES = {
     [TaskState.TODO]: 'Todo',
     [TaskState.DONE]: 'Done',

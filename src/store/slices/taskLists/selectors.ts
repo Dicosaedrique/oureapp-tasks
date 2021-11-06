@@ -42,6 +42,7 @@ export const selectTaskListById = createSelector(
 
 export const selectTasksByListId = createSelector(selectTaskListById, res => res?.tasks);
 
+// returns tasks from the task list Id, sorted and filtered by the right settings
 export const selectSmartTasksByListId = createSelector(
     selectTasksByListId,
     selectFilteringSettings,
