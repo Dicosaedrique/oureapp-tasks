@@ -9,8 +9,8 @@ export interface PayloadTaskList {
     taskId: Id;
 }
 
-export interface PayloadRemoveTask extends PayloadTaskList {}
-export interface PayloadArchiveTask extends PayloadTaskList {}
+export type PayloadRemoveTask = PayloadTaskList;
+export type PayloadArchiveTask = PayloadTaskList;
 
 export interface PayloadUpdateTaskState extends PayloadTaskList {
     newTaskState: TaskState;

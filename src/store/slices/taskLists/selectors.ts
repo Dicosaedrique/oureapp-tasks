@@ -54,7 +54,10 @@ export const selectSmartTasksByListId = createSelector(
         const finalFilter = getFilterFromSettings(filteringSettings);
 
         for (const taskState in res) {
-            res[taskState] = res[taskState].filter(finalFilter).sort(taskStateComparers[taskState]);
+            if (res[taskState] !== undefined)
+                res[taskState] = res[taskState]
+                    .filter(finalFilter)
+                    .sort(taskStateComparers[taskState]);
         }
 
         return res;
