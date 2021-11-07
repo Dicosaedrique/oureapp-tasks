@@ -6,11 +6,9 @@
 
 This is the frontend of my todo app based on the [React Boilerplate CRA Template](https://cansahin.gitbook.io/react-boilerplate-cra-template/).
 
-This repository is automatically deployed with Netlify CD and use a flow based on [Gitlab Flow](https://docs.gitlab.com/ee/topics/gitlab_flow.html) by creating issues for every new feature / bug fix / etc.
+This repository use a flow based on [Gitlab Flow](https://docs.gitlab.com/ee/topics/gitlab_flow.html) by creating issues for every new feature / bug fix / etc.
 
-Site should be up at [todo.dicosaedrique.fr](https://todo.dicosaedrique.fr)
-
-## 🚧 Version 1 (MVP) - June 2021 🚧
+## 🚧 Version 1 🚧
 
 -   ✔️ Create todolist
 -   ✔️ Add task priority
@@ -20,20 +18,19 @@ Site should be up at [todo.dicosaedrique.fr](https://todo.dicosaedrique.fr)
 -   ✔️ Add filtering system
 -   ✔️ Add reward message on task complete
 -   ✔️ Add filtering and sorting menus
--   ✔️ Add Create task
--   ✔️ Add Update task
+-   ❌ Add Create task
+-   ❌ Add Update task
 -   ❌ Add archivment system
 -   ❌ Create a category
--   ❌ Local storage for state persistence
--   ❌ Setup complete i18n + setup
--   ❌ Setup Light / Dark theme
 
-## Version 2 - Summer / Fall 2021 ⏰
+## Version 2 ⏰
 
+-   ⌛ Add account and backend persistence
+-   ⌛ Setup complete i18n
+-   ⌛ Setup Light / Dark theme
 -   ⌛ Create achievement system
 -   ⌛ Add demo / tutorial
 -   ⌛ Delete a category
--   ⌛ Add account and backend persistence
 -   ⌛ Add [snackbars](https://github.com/iamhosseindhv/notistack) on actions
 -   ⌛ Add undo / redo action system
 -   ⌛ Store in local open / close state on categories
