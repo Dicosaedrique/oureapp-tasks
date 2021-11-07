@@ -1,13 +1,10 @@
-import {
-    DEFAULT_TASK_PRIORITIES_NAMES,
-    TaskPriority,
-} from 'model/Task/Priority';
+import { DEFAULT_TASK_PRIORITIES_NAMES, TaskPriority } from 'model/Task/Priority';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useFilteringSlice } from 'store/slices/taskFiltering';
+import { selectFilteringPriority } from 'store/slices/taskFiltering/selectors';
 
 import { FilterItems, GenericFilterComponent } from '.';
-import { useFilteringSlice } from './slice';
-import { selectFilteringPriority } from './slice/selectors';
 
 /**
  * Items to display in the filter

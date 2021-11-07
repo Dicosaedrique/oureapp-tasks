@@ -9,7 +9,6 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import React from 'react';
 
-import { TaskCategoryFilterComponent } from './TaskCategoryFilter';
 import { TaskLimitDateFilterComponent } from './TaskLimitDateFilter';
 import { TaskPriorityFilterComponent } from './TaskPriorityFilter';
 import { TaskStateFilterComponent } from './TaskStateFilter';
@@ -28,9 +27,6 @@ export function FilteringMenu() {
             </Grid>
             <Grid item>
                 <TaskLimitDateFilterComponent />
-            </Grid>
-            <Grid item>
-                <TaskCategoryFilterComponent />
             </Grid>
         </Grid>
     );
@@ -80,11 +76,7 @@ export function GenericFilterComponent<Type>({
 
     return (
         <>
-            <Button
-                aria-controls={id}
-                aria-haspopup="true"
-                onClick={handleOpen}
-            >
+            <Button aria-controls={id} aria-haspopup="true" onClick={handleOpen}>
                 <FilterListIcon />
                 &nbsp;
                 {title}
@@ -125,12 +117,7 @@ export function GenericFilterComponent<Type>({
                             onItemClick(value);
                         }}
                     >
-                        <Checkbox
-                            checked={
-                                values.length === 0 ||
-                                values.indexOf(value) === -1
-                            }
-                        />
+                        <Checkbox checked={values.length === 0 || values.indexOf(value) === -1} />
                         <ListItemText primary={name} />
                     </MenuItem>
                 ))}

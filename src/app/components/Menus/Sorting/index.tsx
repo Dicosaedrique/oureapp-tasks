@@ -10,10 +10,9 @@ import SortIcon from '@material-ui/icons/Sort';
 import { SORT_MODE_NAMES, TaskSortMode } from 'model/Task/Sort';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { mapObject } from 'utils/utils';
-
-import { useSortingSlice } from './slice';
-import { selectSorting } from './slice/selectors';
+import { useSortingSlice } from 'store/slices/taskSorting';
+import { selectSorting } from 'store/slices/taskSorting/selectors';
+import { mapObject } from 'utils';
 
 /**
  * Defines the menu to change sorting preferences
@@ -73,10 +72,7 @@ export function SortingMenu() {
                 </Menu>
             </Grid>
             <Grid item>
-                <Button
-                    onClick={toggleSortingOrder}
-                    aria-label="toggle sorting order"
-                >
+                <Button onClick={toggleSortingOrder} aria-label="toggle sorting order">
                     Order {order ? <ArrowDownwardIcon /> : <ArrowUpwardIcon />}
                 </Button>
             </Grid>

@@ -1,53 +1,39 @@
-import { CategoryID } from 'model/Category';
-import uniqid from 'uniqid';
+import IElementId, { generateId } from 'model/IElementId';
 
 import { DEFAULT_TASK_PRIORITY, TaskPriority } from './Priority';
 
-/**
- * possible states of a task (todo, done)
- */
-export enum TaskState {
-    TODO = 1,
-    DONE = 2,
-}
-
-/**
- * Mapped names of the task states
- */
-export const TASK_STATE_NAMES = {
-    [TaskState.TODO]: 'Todo',
-    [TaskState.DONE]: 'Done',
-};
-
-export type TaskID = string;
-
-/**
- * define the interface of a task
- */
-export interface Task {
-    readonly id: TaskID;
+export interface Task extends IElementId {
+    readonly creationDate: number;
     title: string;
-    creationDate: number;
     state: TaskState;
     priority: TaskPriority;
 
     limitDate?: number;
     finishedDate?: number;
-    category?: CategoryID;
 }
 
+export enum TaskState {
+    TODO = 1,
+    DONE = 2,
+}
+
+// todo replace in language json file
+export const TASK_STATE_NAMES = {
+    [TaskState.TODO]: 'Todo',
+    [TaskState.DONE]: 'Done',
+};
+
 /**
- * parameters needed to create a task
+ * Parameters needed to create a task
  */
 export interface TaskInputProps {
     title: string;
     priority?: TaskPriority;
     limitDate?: number;
-    category?: string;
 }
 
 /**
- * build a task and returns it
+ * Creates a task and returns it
  * @param inputs TaskInputProps object to create the task
  * @returns the created task
  */
@@ -55,21 +41,19 @@ export function createTask({
     title,
     priority = DEFAULT_TASK_PRIORITY,
     limitDate,
-    category,
 }: TaskInputProps): Task {
     return {
-        id: uniqid(),
+        id: generateId(),
         creationDate: Date.now(),
         state: TaskState.TODO,
         title,
         priority,
         limitDate,
-        category,
     };
 }
 
 /**
- * update the task state and manage the logic behind it
+ * Updates the task state and manages the logic behind it
  * @param task the task to update
  * @param newState the new state of the task
  * @returns the updated task

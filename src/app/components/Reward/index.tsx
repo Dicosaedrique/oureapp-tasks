@@ -1,7 +1,4 @@
-import {
-    CreateTypes as ConfettiType,
-    Options as ConfettiOptions,
-} from 'canvas-confetti';
+import { CreateTypes as ConfettiType, Options as ConfettiOptions } from 'canvas-confetti';
 import { Task } from 'model/Task';
 import { TaskPriority } from 'model/Task/Priority';
 import React from 'react';
@@ -35,10 +32,7 @@ export class Rewarder extends React.Component<RewarderProps, never> {
         this.confetti = instance;
     };
 
-    private makeShot(
-        particleRatio: number,
-        opts: Partial<ConfettiOptions>,
-    ): Promise<null> {
+    private makeShot(particleRatio: number, opts: Partial<ConfettiOptions>): Promise<null> {
         // compute final particle count
         const finalParticleCount = Math.min(
             Rewarder.MAX_PARTICLES,
@@ -109,10 +103,7 @@ export class Rewarder extends React.Component<RewarderProps, never> {
      * @param options Optional options to parameter the current fire (confetti count, ...)
      * @param callback Optionnal callback that will be fired at the end of the fire
      */
-    handleFire = (
-        options: Partial<ConfettiOptions> = {},
-        callback?: CallbackSuccess,
-    ) => {
+    handleFire = (options: Partial<ConfettiOptions> = {}, callback?: CallbackSuccess) => {
         this.currentFireOptions = options;
         if (this.confetti !== null && !this.running) {
             this.running = true;

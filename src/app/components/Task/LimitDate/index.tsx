@@ -1,11 +1,11 @@
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import Badge from 'app/components/Utils/Badge';
-import { usePreferencesSlice } from 'app/pages/HomePage/preferencesSlice';
-import { selectLimitDatePreferences } from 'app/pages/HomePage/preferencesSlice/selectors';
 import { TaskState } from 'model/Task';
-import * as React from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { diffInDays, formatDate } from 'utils/utils';
+import { usePreferencesSlice } from 'store/slices/preferences';
+import { selectLimitDatePreferences } from 'store/slices/preferences/selectors';
+import { diffInDays, formatDate } from 'utils';
 
 interface Props {
     nowDate: number; // current date (if task is finished it will be the finished date)
@@ -14,15 +14,7 @@ interface Props {
     taskState: TaskState;
 }
 
-/**
- * basic component to render a task limit date
- */
-export function LimitDateComponent({
-    nowDate,
-    startDate,
-    limitDate,
-    taskState,
-}: Props) {
+export function LimitDateComponent({ nowDate, startDate, limitDate, taskState }: Props) {
     // redux hooks
     const { actions } = usePreferencesSlice();
     const limitDatePreferences = useSelector(selectLimitDatePreferences);
@@ -35,9 +27,7 @@ export function LimitDateComponent({
     };
 
     // progress of the task (in percentage)
-    const progress = Math.round(
-        ((nowDate - startDate) / (limitDate - startDate)) * 100,
-    );
+    const progress = Math.round(((nowDate - startDate) / (limitDate - startDate)) * 100);
 
     const remainingDays = diffInDays(nowDate, limitDate);
 
@@ -54,9 +44,7 @@ export function LimitDateComponent({
                 ),
             }}
         >
-            <ScheduleIcon
-                style={{ fontSize: 'inherit', marginRight: '0.2em' }}
-            />
+            <ScheduleIcon style={{ fontSize: 'inherit', marginRight: '0.2em' }} />
             {limitDatePreferences.displayRelativeTime
                 ? getRelativeTimeText(progress, remainingDays, taskState)
                 : formatDate(limitDate)}

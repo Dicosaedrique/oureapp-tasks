@@ -19,10 +19,7 @@ export enum SliceProptNames {
 
 type Answers = { [P in SliceProptNames]: string };
 
-export const rootStatePath = path.join(
-    __dirname,
-    '../../../src/types/RootState.ts',
-);
+export const rootStatePath = path.join(__dirname, '../../../src/types/RootState.ts');
 
 export const sliceGenerator: PlopGeneratorConfig = {
     description: 'Add a redux toolkit slice',
@@ -30,8 +27,7 @@ export const sliceGenerator: PlopGeneratorConfig = {
         {
             type: 'input',
             name: SliceProptNames.sliceName,
-            message:
-                'What should it be called (automatically adds ...Slice postfix)',
+            message: 'What should it be called (automatically adds ...Slice postfix)',
         },
         {
             type: 'directory',
@@ -43,8 +39,7 @@ export const sliceGenerator: PlopGeneratorConfig = {
             type: 'confirm',
             name: SliceProptNames.wantSaga,
             default: true,
-            message:
-                'Do you want sagas for asynchronous flows? (e.g. fetching data)',
+            message: 'Do you want sagas for asynchronous flows? (e.g. fetching data)',
         },
     ],
     actions: data => {
@@ -78,9 +73,7 @@ export const sliceGenerator: PlopGeneratorConfig = {
         actions.push({
             type: 'modify',
             path: `${rootStatePath}`,
-            pattern: new RegExp(
-                /.*\/\/.*\[IMPORT NEW CONTAINERSTATE ABOVE\].+\n/,
-            ),
+            pattern: new RegExp(/.*\/\/.*\[IMPORT NEW CONTAINERSTATE ABOVE\].+\n/),
             templateFile: './slice/importContainerState.hbs',
             abortOnFail: true,
         });

@@ -1,8 +1,3 @@
-/**
- *
- * Task
- *
- */
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
@@ -13,29 +8,25 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ArchiveIcon from '@material-ui/icons/Archive';
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+// import EditIcon from '@material-ui/icons/Edit';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Task, TaskInputProps, TaskState } from 'model/Task';
+import { getParticleCountFromTask } from 'app/components/Reward';
+import { useRewarder } from 'app/components/Reward/context';
+import { MemoLimitDateComponent } from 'app/components/Task/LimitDate';
+import { MemoPriorityComponent } from 'app/components/Task/Priority';
+import { Task, TaskState } from 'model/Task';
 import { TaskPriority } from 'model/Task/Priority';
-import * as React from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useTaskListsSlice } from 'store/slices/taskLists';
+import { Id } from 'utils/types';
 
-import { TaskMenu } from '../Menus/Task/TaskMenu';
-import { getParticleCountFromTask } from '../Reward';
-import { useRewarder } from '../Reward/context';
-import { MemoLimitDateComponent } from './LimitDate';
-import { MemoPriorityComponent } from './Priority';
-import { useTasksSlice } from './slice';
-
-interface Props {
+interface TaskProps {
+    taskListId: Id;
     task: Task;
 }
 
-/**
- * basic component to render a task
- * @param props the task to display
- */
-export function TaskComponent({ task }: Props) {
+export function TaskComponent({ task, taskListId }: TaskProps) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const openOptions = (event: React.MouseEvent<HTMLElement>) => {
@@ -56,18 +47,18 @@ export function TaskComponent({ task }: Props) {
         }
     };
 
-    const { actions } = useTasksSlice();
+    const { actions } = useTaskListsSlice();
 
     const dispatch = useDispatch();
 
     const toggleTask = () => {
-        const newState =
-            task.state === TaskState.TODO ? TaskState.DONE : TaskState.TODO;
+        const newState = task.state === TaskState.TODO ? TaskState.DONE : TaskState.TODO;
 
         dispatch(
             actions.setTaskState({
-                id: task.id,
-                taskState: newState,
+                taskListId,
+                taskId: task.id,
+                newTaskState: newState,
             }),
         );
 
@@ -75,41 +66,46 @@ export function TaskComponent({ task }: Props) {
     };
 
     const deleteTask = () => {
-        dispatch(actions.removeTask(task.id));
+        dispatch(
+            actions.removeTask({
+                taskListId,
+                taskId: task.id,
+            }),
+        );
         closeOptions();
     };
 
     const archiveTask = () => {
-        dispatch(actions.archiveTask(task.id));
+        dispatch(
+            actions.archiveTask({
+                taskListId,
+                taskId: task.id,
+            }),
+        );
         closeOptions();
     };
 
     //////////////////
     // HANDLE EDITION
 
-    const [editMenuOpen, setEditMenuOpen] = React.useState(false);
+    // const [editMenuOpen, setEditMenuOpen] = React.useState(false);
 
-    const openEditMenu = () => {
-        setEditMenuOpen(true);
-        closeOptions();
-    };
+    // const openEditMenu = () => {
+    //     setEditMenuOpen(true);
+    //     closeOptions();
+    // };
 
-    const closeEditMenu = () => setEditMenuOpen(false);
+    // const closeEditMenu = () => setEditMenuOpen(false);
 
-    const editTask = (inputProps: TaskInputProps, id?: string) => {
-        closeEditMenu();
-        if (!id) return;
-        dispatch(actions.editTask({ id, props: inputProps }));
-    };
+    // const editTask = (inputProps: TaskInputProps, id?: string) => {
+    //     closeEditMenu();
+    //     if (!id) return;
+    //     dispatch(actions.editTask({ id, props: inputProps }));
+    // };
 
     return (
         <>
-            <ListItem
-                button
-                onClick={toggleTask}
-                disableRipple
-                disableTouchRipple
-            >
+            <ListItem button onClick={toggleTask} disableRipple disableTouchRipple>
                 <ListItemIcon>
                     <Checkbox
                         edge="start"
@@ -123,19 +119,15 @@ export function TaskComponent({ task }: Props) {
                     id={task.id}
                     primary={
                         <>
-                            <span style={{ marginRight: '1em' }}>
-                                {task.title}
-                            </span>
+                            <span style={{ marginRight: '1em' }}>{task.title}</span>
                             {task.priority !== TaskPriority.NONE && (
-                                <MemoPriorityComponent
-                                    priority={task.priority}
-                                />
+                                <MemoPriorityComponent priority={task.priority} />
                             )}
                             {task.limitDate !== undefined && (
                                 <MemoLimitDateComponent
                                     nowDate={
                                         task.state === TaskState.DONE
-                                            ? task.finishedDate || 0
+                                            ? task.finishedDate!
                                             : Date.now()
                                     }
                                     startDate={task.creationDate}
@@ -168,17 +160,11 @@ export function TaskComponent({ task }: Props) {
                             horizontal: 'center',
                         }}
                     >
-                        <MenuItem
-                            onClick={openEditMenu}
-                            style={{ color: '#4e58ee' }}
-                        >
+                        {/* <MenuItem onClick={openEditMenu} style={{ color: '#4e58ee' }}>
                             <EditIcon />
                             &nbsp;&nbsp;Edit task
-                        </MenuItem>
-                        <MenuItem
-                            onClick={archiveTask}
-                            style={{ color: 'orange' }}
-                        >
+                        </MenuItem> */}
+                        <MenuItem onClick={archiveTask} style={{ color: 'orange' }}>
                             <ArchiveIcon />
                             &nbsp;&nbsp;Archive task
                         </MenuItem>
@@ -189,14 +175,14 @@ export function TaskComponent({ task }: Props) {
                     </Menu>
                 </ListItemSecondaryAction>
             </ListItem>
-            {editMenuOpen && (
+            {/* {editMenuOpen && (
                 <TaskMenu
                     handleClose={closeEditMenu}
                     handleSuccess={editTask}
                     id={task.id}
                     defaultTask={task}
                 />
-            )}
+            )} */}
         </>
     );
 }
