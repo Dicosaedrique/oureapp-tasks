@@ -3,33 +3,28 @@ on:
   release:
     types: [published]
 
-env:
-  NODE_VERSION: '16'
-  RUNS_ON: 'ubuntu-latest'
-  PREPROD_ID: 'preprod'
-
 jobs:
   setup:
     name: Setup Pipeline
-    runs-on: ${{ env.RUNS_ON}}
+    runs-on: 'ubuntu-latest'
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: '16'
           cache: 'yarn'
       - run: yarn install
           
   build:
     name: Build frontend
-    runs-on: ${{ env.RUNS_ON}}
+    runs-on: 'ubuntu-latest'
     needs: setup
     steps:
       - run: yarn build
 
   test:
     name: Test frontend
-    runs-on: ${{ env.RUNS_ON}}
+    runs-on: 'ubuntu-latest'
     needs: [setup, build]
     steps:
       - run: yarn test
@@ -37,7 +32,7 @@ jobs:
 
   preview:
     name: Deploy to Firebase Hosting preview (Preprod)
-    runs-on: ${{ env.RUNS_ON}}
+    runs-on: 'ubuntu-latest'
     needs: [setup, build, test]
     steps:
       - uses: FirebaseExtended/action-hosting-deploy@v0
@@ -45,5 +40,5 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TASKS_OUREAPP }}'
           projectId: '${{ secrets.FIREBASE_ID }}'
-          channelId: ${{ env.PREPROD_ID }}
+          channelId: 'preprod'
           expires: 100d
