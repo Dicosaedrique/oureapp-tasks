@@ -1,0 +1,48 @@
+name: Build, Test, Deploy QA
+on:
+  pull_request:
+    types:
+      - synchronize
+
+env:
+  NODE_VERSION: '16'
+  RUNS_ON: 'ubuntu-latest'
+
+jobs:
+  setup:
+    name: Setup Pipeline
+    runs-on: ${{ env.RUNS_ON}}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+      - run: yarn install
+          
+  build:
+    name: Build frontend
+    runs-on: ${{ env.RUNS_ON}}
+    needs: setup
+    steps:
+      - run: yarn build
+
+  test:
+    name: Test frontend
+    runs-on: ${{ env.RUNS_ON}}
+    needs: [setup, build]
+    steps:
+      - run: yarn test
+      # todo : add code coverage reports
+
+  preview:
+    name: Deploy to Firebase Hosting preview (QA)
+    runs-on: ${{ env.RUNS_ON}}
+    needs: [setup, build, test]
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}' # exclude PR from forks
+    steps:
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TASKS_OUREAPP }}'
+          projectId: '${{ secrets.FIREBASE_ID }}'
