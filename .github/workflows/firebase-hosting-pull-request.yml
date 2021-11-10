@@ -1,12 +1,12 @@
 name: Build, Test, Deploy QA
 on:
   pull_request:
-    types:
-      - synchronize
+    types: [synchronize]
 
 env:
   NODE_VERSION: '16'
   RUNS_ON: 'ubuntu-latest'
+  QA_ID: 'pull-request-${{ github.event.pull_request.number }}'
 
 jobs:
   setup:
@@ -46,3 +46,4 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TASKS_OUREAPP }}'
           projectId: '${{ secrets.FIREBASE_ID }}'
+          channelId: ${{ env.QA_ID }}

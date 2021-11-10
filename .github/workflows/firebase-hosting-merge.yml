@@ -1,12 +1,12 @@
 name: Build, Test, Deploy Preprod
 on:
   release:
-    types:
-      - published
+    types: [published]
 
 env:
   NODE_VERSION: '16'
   RUNS_ON: 'ubuntu-latest'
+  PREPROD_ID: 'preprod'
 
 jobs:
   setup:
@@ -44,6 +44,6 @@ jobs:
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TASKS_OUREAPP }}'
-          channelId: preprod
-          expires: 30d
           projectId: '${{ secrets.FIREBASE_ID }}'
+          channelId: ${{ env.PREPROD_ID }}
+          expires: 100d

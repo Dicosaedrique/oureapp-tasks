@@ -1,12 +1,12 @@
 name: Build, Test, Deploy Prod
 on:
   release:
-    types:
-      - published
+    types: [published]
 
 env:
   NODE_VERSION: '16'
   RUNS_ON: 'ubuntu-latest'
+  PREPROD_ID: 'preprod'
 
 jobs:
   setup:
@@ -40,9 +40,8 @@ jobs:
     runs-on: ${{ env.RUNS_ON}}
     needs: [setup, build, test]
     steps:
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - uses: w9jds/firebase-action@master
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TASKS_OUREAPP }}'
-          channelId: live
-          projectId: '${{ secrets.FIREBASE_ID }}'
+          args: hosting:clone ${{ secrets.FIREBASE_ID }}:${{ env.PREPROD_ID }} ${{ secrets.FIREBASE_ID }}:live
+        env:
+          FIREBASE_TOKEN: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TASKS_OUREAPP }}'
