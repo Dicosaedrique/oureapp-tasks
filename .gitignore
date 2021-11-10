@@ -19,6 +19,3 @@ yarn-error.log*
 # boilerplate internals
 generated-cra-app
 .cra-template-rb
-
-# perso
-src-old/
