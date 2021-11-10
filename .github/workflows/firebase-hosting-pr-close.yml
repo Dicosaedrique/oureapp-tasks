@@ -3,17 +3,13 @@ on:
   pull_request:
     types: [closed]
 
-env:
-  RUNS_ON: 'ubuntu-latest'
-  QA_ID: 'pull-request-${{ github.event.pull_request.number }}'
-
 jobs:
   delete_qa:
     name: Delete Firebase Hosting preview (QA) for this PR
-    runs-on: ${{ env.RUNS_ON}}
+    runs-on: 'ubuntu-latest'
     steps:
       - uses: w9jds/firebase-action@master
         with:
-          args: hosting:channel:delete ${{ env.QA_ID}}
+          args: hosting:channel:delete 'pull-request-${{ github.event.pull_request.number }}'
         env:
           FIREBASE_TOKEN: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TASKS_OUREAPP }}'
