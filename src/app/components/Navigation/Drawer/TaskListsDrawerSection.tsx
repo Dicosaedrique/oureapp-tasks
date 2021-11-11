@@ -26,8 +26,8 @@ export default function TaskListsDrawerSection() {
     );
 
     const history = useHistory();
-    const createTaskListNavigationHandler = (id: Id) => () => history.push(`/tasks/${id}/`);
-    const defaultTaskListNavigationHandler = () => history.push(`/tasks/`);
+    const createTaskListNavigationHandler = (id: Id) => () => history.push(`/tasks/${id}`);
+    const defaultTaskListNavigationHandler = () => history.push(`/tasks`);
 
     return (
         <>

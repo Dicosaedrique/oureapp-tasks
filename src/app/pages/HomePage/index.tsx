@@ -2,6 +2,7 @@ import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export function HomePage() {
     return (
@@ -11,6 +12,7 @@ export function HomePage() {
                 Welcome to the todo app !
             </Typography>
             <p>This page is a work in progress</p>
+            <Link to={'/tasks'}>Go to tasks !</Link>
         </Container>
     );
 }
