@@ -53,7 +53,6 @@ jobs:
     name: Deploy to Firebase Hosting live (Prod)
     runs-on: 'ubuntu-latest'
     needs: [build, test]
-    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}' # exclude PR from forks
     steps:
       - name: Checkout branch
         uses: actions/checkout@v2
@@ -72,4 +71,4 @@ jobs:
       - name: Deploy to Prod
         run:  |
           npm install -g firebase-tools
-          firebase hosting:clone ${{ secrets.FIREBASE_ID }}:preprod ${{ secrets.FIREBASE_ID }}:live -m '${{ github.event.release.tag_name }} - ${{ github.event.release.name }}'  --token '${{ secrets.FIREBASE_CI_TOKEN }}'
+          firebase hosting:clone ${{ secrets.FIREBASE_ID }}:preprod ${{ secrets.FIREBASE_ID }}:live -m '${{ github.event.release.tag_name }} - ${{ github.event.release.name }}' --token '${{ secrets.FIREBASE_CI_TOKEN }}'
