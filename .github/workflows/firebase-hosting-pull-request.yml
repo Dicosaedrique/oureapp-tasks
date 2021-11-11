@@ -55,6 +55,9 @@ jobs:
     needs: [build, test]
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}' # exclude PR from forks
     steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
+        
       - name: Download build
         uses: actions/download-artifact@v2
         with:
