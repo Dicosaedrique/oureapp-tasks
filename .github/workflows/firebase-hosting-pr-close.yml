@@ -5,10 +5,9 @@ on:
 
 jobs:
   delete_qa:
-    name: Delete Firebase Hosting preview (QA) for this PR
+    name: Delete Firebase Hosting preview (QA)
     runs-on: 'ubuntu-latest'
     steps:
-      - uses: actions/checkout@v2
       - uses: w9jds/firebase-action@master
         with:
           args: hosting:channel:delete 'pull-request-${{ github.event.pull_request.number }}'
