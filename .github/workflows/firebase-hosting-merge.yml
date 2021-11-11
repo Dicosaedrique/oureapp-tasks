@@ -44,7 +44,7 @@ jobs:
         run: yarn install
 
       - name: Test app
-      - run: yarn test
+        run: yarn test
       # todo : add code coverage reports
 
   deploy_preprod:
