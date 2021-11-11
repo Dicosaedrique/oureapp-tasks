@@ -69,4 +69,4 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TASKS_OUREAPP }}'
           projectId: '${{ secrets.FIREBASE_ID }}'
           channelId: 'preprod'
-          expires: 100d
+          expires: 30d
