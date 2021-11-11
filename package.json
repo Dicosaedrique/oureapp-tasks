@@ -5,7 +5,7 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "echo nothing to see there YET !!!",
+        "test": "echo nothing to see there",
         "start:prod": "yarn run build && serve -s build",
         "ts": "tsc --noEmit",
         "lint": "eslint --ext js,ts,tsx src",
