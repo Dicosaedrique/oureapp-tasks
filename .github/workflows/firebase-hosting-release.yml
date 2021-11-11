@@ -70,4 +70,6 @@ jobs:
           node-version: '16'
           
       - name: Deploy to Prod
-        run: npx firebase hosting:clone ${{ secrets.FIREBASE_ID }}:preprod ${{ secrets.FIREBASE_ID }}:live --token '${{ secrets.FIREBASE_CI_TOKEN }}'
+        run:  |
+          npm install -g firebase-tools
+          firebase hosting:clone ${{ secrets.FIREBASE_ID }}:preprod ${{ secrets.FIREBASE_ID }}:live --token '${{ secrets.FIREBASE_CI_TOKEN }}'
