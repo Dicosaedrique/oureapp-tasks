@@ -8,7 +8,8 @@ jobs:
     name: Build frontend
     runs-on: 'ubuntu-latest'
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout branch
+        uses: actions/checkout@v2
 
       - name: Setup Yarn
         uses: actions/setup-node@v2
@@ -32,7 +33,8 @@ jobs:
     name: Test frontend
     runs-on: 'ubuntu-latest'
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout branch
+        uses: actions/checkout@v2
 
       - name: Setup Yarn
         uses: actions/setup-node@v2
@@ -53,13 +55,13 @@ jobs:
     needs: [build, test]
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}' # exclude PR from forks
     steps:
-      - uses: actions/download-artifact@v2
-        name: Download build
+      - name: Download Build
+        uses: actions/download-artifact@v2
         with:
           name: frontend-preprod
 
-      - uses: w9jds/firebase-action@master
-        name: Deploy to Prod
+      - name: Deploy to Prod
+        uses: w9jds/firebase-action@master
         with:
           args: hosting:clone ${{ secrets.FIREBASE_ID }}:preprod ${{ secrets.FIREBASE_ID }}:live
         env:

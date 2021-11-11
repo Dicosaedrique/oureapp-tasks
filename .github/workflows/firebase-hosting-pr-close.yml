@@ -8,6 +8,7 @@ jobs:
     name: Delete Firebase Hosting preview (QA)
     runs-on: 'ubuntu-latest'
     steps:
+      - name: Delete Firebase Hosting channel
       - uses: w9jds/firebase-action@master
         with:
           args: hosting:channel:delete 'pull-request-${{ github.event.pull_request.number }}'

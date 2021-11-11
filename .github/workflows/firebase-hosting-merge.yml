@@ -8,7 +8,8 @@ jobs:
     name: Build frontend
     runs-on: 'ubuntu-latest'
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout branch
+        uses: actions/checkout@v2
 
       - name: Setup Yarn
         uses: actions/setup-node@v2
@@ -32,7 +33,8 @@ jobs:
     name: Test frontend
     runs-on: 'ubuntu-latest'
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout branch
+        uses: actions/checkout@v2
 
       - name: Setup Yarn
         uses: actions/setup-node@v2
@@ -52,13 +54,13 @@ jobs:
     runs-on: 'ubuntu-latest'
     needs: [build, test]
     steps:
-      - uses: actions/download-artifact@v2
-        name: Download build
+      - name: Download build
+        uses: actions/download-artifact@v2
         with:
           name: frontend-preprod
 
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        name: Deploy to preprod
+      - name: Deploy to preprod
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TASKS_OUREAPP }}'
