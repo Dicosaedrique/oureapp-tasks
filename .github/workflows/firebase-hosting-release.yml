@@ -72,4 +72,4 @@ jobs:
       - name: Deploy to Prod
         run:  |
           npm install -g firebase-tools
-          firebase hosting:clone ${{ secrets.FIREBASE_ID }}:preprod ${{ secrets.FIREBASE_ID }}:live --token '${{ secrets.FIREBASE_CI_TOKEN }}'
+          firebase hosting:clone ${{ secrets.FIREBASE_ID }}:preprod ${{ secrets.FIREBASE_ID }}:live -m '${{ github.event.release.tag_name }} - ${{ github.event.release.name }}'  --token '${{ secrets.FIREBASE_CI_TOKEN }}'

@@ -17,6 +17,7 @@ export function HomePage() {
             </Typography>
             <p>This page is a work in progress</p>
             <Link to={'/tasks'}>Go to tasks !</Link>
+            <p>Made By Dicosaedrique</p>
         </Container>
     );
 }
