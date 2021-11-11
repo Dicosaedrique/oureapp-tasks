@@ -1,7 +1,7 @@
 name: Build, Test & Deploy QA
 on:
   pull_request:
-    types: [synchronize]
+    types: [opened, reopened, edited, synchronize]
 
 jobs:
   build:
