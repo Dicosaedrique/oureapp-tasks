@@ -64,9 +64,10 @@ jobs:
           name: frontend-preprod
           path: build
 
-      - name: Deploy to Prod
-        uses: w9jds/firebase-action@master
+      - name: Setup Node
+        uses: actions/setup-node@v2
         with:
-          args: hosting:clone ${{ secrets.FIREBASE_ID }}:preprod ${{ secrets.FIREBASE_ID }}:live
-        env:
-          FIREBASE_TOKEN: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TASKS_OUREAPP }}'
+          node-version: '16'
+          
+      - name: Deploy to Prod
+        run: npx firebase hosting:clone ${{ secrets.FIREBASE_ID }}:preprod ${{ secrets.FIREBASE_ID }}:live --token '${{ secrets.FIREBASE_CI_TOKEN }}'
