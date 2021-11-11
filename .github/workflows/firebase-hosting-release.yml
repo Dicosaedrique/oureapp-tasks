@@ -62,6 +62,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: frontend-preprod
+          path: build
 
       - name: Deploy to Prod
         uses: w9jds/firebase-action@master
