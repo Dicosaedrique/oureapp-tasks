@@ -19,5 +19,5 @@ jobs:
       - name: Delete Firebase Hosting channel
         run: |
           npm install -g firebase-tools
-          firebase hosting:channel:delete 'pull-request-${{ github.event.pull_request.number }}' --token '${{ secrets.FIREBASE_CI_TOKEN }}'
+          firebase hosting:channel:delete 'pull-request-${{ github.event.pull_request.number }}' -f --token '${{ secrets.FIREBASE_CI_TOKEN }}'
         
