@@ -54,3 +54,12 @@ This is the frontend of my todo app based on the [React Boilerplate CRA Template
 -   ⌛ Put a open all / collapse all categories button
 -   ⌛ Add task that can repeat every interval of time
 -   ⌛ Add planning system (I want to do this task this day and see my planning)
+
+## Other ideas
+
+-   move a task from a list to another
+-   create a custom order for task list and tasks with drag'n drop
+-   import/export lists and tasks with json format
+-   add a list to favorite
+-   archive a task list
+-
