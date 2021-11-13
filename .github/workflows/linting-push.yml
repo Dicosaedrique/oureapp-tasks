@@ -1,0 +1,24 @@
+name: Linting on push
+on:
+  push:
+    branches-ignore: [main]
+
+jobs:
+  build:
+    name: Lint code
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
+
+      - name: Setup Yarn
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Lint code
+        run: yarn lint
