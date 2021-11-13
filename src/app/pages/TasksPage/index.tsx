@@ -1,8 +1,7 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { FilteringMenu } from 'app/components/Menus/Filtering';
 import { SortingMenu } from 'app/components/Menus/Sorting';
-import { QuickAddTaskMenu } from 'app/components/Menus/Task/QuickAddTaskMenu';
-// import { AddTaskMenu } from 'app/components/Menus/Task/AddTaskMenu';
+import { AddTaskMenu } from 'app/components/Menus/Task/AddTaskMenu';
 import { RewarderProvider } from 'app/components/Reward/context';
 import { MemoTaskCollapsableList } from 'app/components/TaskCollapsableList';
 import NotFoundPage from 'app/pages/NotFoundPage/Loadable';
@@ -35,7 +34,6 @@ export default function TasksPage() {
         <BasePage title={taskListBase.title}>
             <RewarderProvider>
                 <div className={classes.toolbar} />
-                {/* <AddTaskMenu /> */}
                 <FilteringMenu />
                 <SortingMenu />
                 {mapObject(tasks, (tasks, taskState) => {
@@ -51,7 +49,7 @@ export default function TasksPage() {
                         );
                 })}
                 <div style={{ margin: '1em auto' }}>
-                    <QuickAddTaskMenu taskListId={taskListBase.id} />
+                    <AddTaskMenu taskListId={taskListBase.id} />
                 </div>
             </RewarderProvider>
         </BasePage>

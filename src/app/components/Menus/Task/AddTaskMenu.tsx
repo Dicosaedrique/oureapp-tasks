@@ -1,60 +1,69 @@
-export {};
+import IconButton from '@material-ui/core/IconButton';
+import TextField from '@material-ui/core/TextField';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import React, { ChangeEvent, KeyboardEvent } from 'react';
+import { useDispatch } from 'react-redux';
+import { useTaskListsSlice } from 'store/slices/taskLists';
+import { Id } from 'utils/types';
 
-// import Button from '@material-ui/core/Button';
-// import Fab from '@material-ui/core/Fab';
-// import Hidden from '@material-ui/core/Hidden';
-// import AddIcon from '@material-ui/icons/Add';
-// import { TaskInputProps } from 'model/Task';
-// import React from 'react';
-// import { useDispatch } from 'react-redux';
-// import { useTasksSlice } from 'store/slices/tasks';
-// import styled from 'styled-components/macro';
+export interface QuickAddTaskMenuProps {
+    taskListId: Id;
+}
 
-// import { TaskMenu } from './TaskMenu';
+export function AddTaskMenu({ taskListId }: QuickAddTaskMenuProps) {
+    const [title, setTitle] = React.useState('');
 
-// export function AddTaskMenu() {
-//     const [open, setOpen] = React.useState(false);
+    const { actions } = useTaskListsSlice();
+    const dispatch = useDispatch();
 
-//     const { actions } = useTasksSlice();
-//     const dispatch = useDispatch();
+    const onTitleChange = (event: ChangeEvent<HTMLInputElement>) => setTitle(event.target.value);
 
-//     const openMenu = () => setOpen(true);
-//     const closeMenu = () => setOpen(false);
+    const createTask = () => {
+        const finalTitle = title.trim();
 
-//     const createTask = (inputProps: TaskInputProps) => {
-//         setOpen(false);
-//         dispatch(actions.addTask(inputProps));
-//     };
+        if (finalTitle.length > 0) {
+            setTitle('');
+            dispatch(
+                actions.addTask({
+                    taskListId,
+                    taskProps: {
+                        title: finalTitle,
+                    },
+                }),
+            );
+        }
+    };
 
-//     return (
-//         <div>
-//             {/* Create button */}
-//             <Hidden mdUp>
-//                 <FabContainer>
-//                     <Fab color="primary" aria-label="add task" onClick={openMenu}>
-//                         <AddIcon />
-//                     </Fab>
-//                 </FabContainer>
-//             </Hidden>
-//             <Hidden smDown>
-//                 <Button
-//                     color="primary"
-//                     aria-label="add task"
-//                     variant="contained"
-//                     onClick={openMenu}
-//                     startIcon={<AddIcon />}
-//                 >
-//                     Add task
-//                 </Button>
-//             </Hidden>
-//             {open && <TaskMenu handleClose={closeMenu} handleSuccess={createTask} />}
-//         </div>
-//     );
-// }
+    const onKeyPressed = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            createTask();
+        }
+    };
 
-// const FabContainer = styled.div`
-//     position: fixed;
-//     bottom: 2em;
-//     right: 2em;
-//     z-index: 1050;
-// `;
+    return (
+        <TextField
+            label="Add task"
+            variant="outlined"
+            value={title}
+            onChange={onTitleChange}
+            onKeyPress={onKeyPressed}
+            fullWidth
+            InputProps={
+                title.length > 0
+                    ? {
+                          endAdornment: (
+                              <IconButton
+                                  color="primary"
+                                  aria-label="Add task"
+                                  component="span"
+                                  onClick={createTask}
+                              >
+                                  <AddCircleIcon />
+                              </IconButton>
+                          ),
+                      }
+                    : {}
+            }
+        />
+    );
+}
