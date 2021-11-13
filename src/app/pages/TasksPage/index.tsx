@@ -1,6 +1,7 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { FilteringMenu } from 'app/components/Menus/Filtering';
 import { SortingMenu } from 'app/components/Menus/Sorting';
+import { QuickAddTaskMenu } from 'app/components/Menus/Task/QuickAddTaskMenu';
 // import { AddTaskMenu } from 'app/components/Menus/Task/AddTaskMenu';
 import { RewarderProvider } from 'app/components/Reward/context';
 import { MemoTaskCollapsableList } from 'app/components/TaskCollapsableList';
@@ -49,6 +50,9 @@ export default function TasksPage() {
                             />
                         );
                 })}
+                <div style={{ margin: '1em auto' }}>
+                    <QuickAddTaskMenu taskListId={taskListBase.id} />
+                </div>
             </RewarderProvider>
         </BasePage>
     );

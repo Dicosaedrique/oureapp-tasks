@@ -1,8 +1,9 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import TASK_LISTS_DEMO from 'model/demo.data';
-import { setTaskState } from 'model/Task';
+import { createTask, setTaskState } from 'model/Task';
 import {
     PayloadArchiveTask,
+    PayloadCreateTask,
     PayloadRemoveTask,
     PayloadUpdateTaskState,
     TaskListsSliceState,
@@ -16,9 +17,13 @@ const slice = createSlice({
     name: 'taskLists',
     initialState,
     reducers: {
-        // addTask(state, action: PayloadAction<TaskInputProps>) {
-        //     state.list.push(createTask(action.payload));
-        // },
+        addTask(state, { payload }: PayloadAction<PayloadCreateTask>) {
+            const taskList = state[payload.taskListId];
+
+            if (taskList !== undefined) {
+                taskList.tasks.push(createTask(payload.taskProps));
+            }
+        },
         removeTask(state, { payload }: PayloadAction<PayloadRemoveTask>) {
             const taskList = state[payload.taskListId];
 
@@ -35,6 +40,7 @@ const slice = createSlice({
         //         state.list[index] = updatedTask;
         //     }
         // },
+
         setTaskState(state, { payload }: PayloadAction<PayloadUpdateTaskState>) {
             const taskList = state[payload.taskListId];
 
@@ -48,6 +54,7 @@ const slice = createSlice({
                 }
             }
         },
+
         archiveTask(state, { payload }: PayloadAction<PayloadArchiveTask>) {
             const taskList = state[payload.taskListId];
 
