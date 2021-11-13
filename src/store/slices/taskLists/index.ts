@@ -1,8 +1,10 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import TASK_LISTS_DEMO from 'model/demo.data';
-import { setTaskState } from 'model/Task';
+import { createTask, setTaskState } from 'model/Task';
 import {
     PayloadArchiveTask,
+    PayloadCreateTask,
+    PayloadEditTask,
     PayloadRemoveTask,
     PayloadUpdateTaskState,
     TaskListsSliceState,
@@ -16,27 +18,39 @@ const slice = createSlice({
     name: 'taskLists',
     initialState,
     reducers: {
-        // addTask(state, action: PayloadAction<TaskInputProps>) {
-        //     state.list.push(createTask(action.payload));
-        // },
+        addTask(state, { payload }: PayloadAction<PayloadCreateTask>) {
+            const taskList = state[payload.listId];
+
+            if (taskList !== undefined) {
+                taskList.tasks.push(createTask(payload.taskProps));
+            }
+        },
+
+        editTask(state, { payload }: PayloadAction<PayloadEditTask>) {
+            const taskList = state[payload.listId];
+
+            if (taskList !== undefined) {
+                const taskIndex = taskList.tasks.findIndex(task => task.id === payload.taskId);
+                if (taskIndex !== -1) {
+                    taskList.tasks[taskIndex] = {
+                        ...taskList.tasks[taskIndex],
+                        ...payload.taskProps,
+                    };
+                }
+            }
+        },
+
         removeTask(state, { payload }: PayloadAction<PayloadRemoveTask>) {
-            const taskList = state[payload.taskListId];
+            const taskList = state[payload.listId];
 
             if (taskList !== undefined) {
                 const taskIndex = taskList.tasks.findIndex(task => task.id === payload.taskId);
                 if (taskIndex !== -1) taskList.tasks.splice(taskIndex, 1);
             }
         },
-        // editTask(state, action: PayloadAction<{ id: string; props: TaskInputProps }>) {
-        //     const { id, props } = action.payload;
-        //     const index = state.list.findIndex(task => task.id === id);
-        //     if (index !== -1) {
-        //         const updatedTask = { ...state.list[index], ...props };
-        //         state.list[index] = updatedTask;
-        //     }
-        // },
+
         setTaskState(state, { payload }: PayloadAction<PayloadUpdateTaskState>) {
-            const taskList = state[payload.taskListId];
+            const taskList = state[payload.listId];
 
             if (taskList !== undefined) {
                 const taskIndex = taskList.tasks.findIndex(task => task.id === payload.taskId);
@@ -48,8 +62,9 @@ const slice = createSlice({
                 }
             }
         },
+
         archiveTask(state, { payload }: PayloadAction<PayloadArchiveTask>) {
-            const taskList = state[payload.taskListId];
+            const taskList = state[payload.listId];
 
             if (taskList !== undefined) {
                 const taskIndex = taskList.tasks.findIndex(task => task.id === payload.taskId);

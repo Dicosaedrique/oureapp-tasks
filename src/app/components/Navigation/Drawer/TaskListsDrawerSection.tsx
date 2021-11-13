@@ -16,7 +16,7 @@ import {
 import { Id } from 'utils/types';
 
 export default function TaskListsDrawerSection() {
-    let current = useParams<TasksPagePathParams>().taskListId;
+    let current = useParams<TasksPagePathParams>().listId;
     if (current === undefined) current = DEFAULT_LIST_ID;
 
     const defaultList = useSelector(selectDefaultTaskListBase);

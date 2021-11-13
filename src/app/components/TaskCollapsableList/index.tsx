@@ -41,7 +41,7 @@ export default function TaskCollapsableList({ listId, title, tasks }: TaskCollap
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     {tasks.map(task => (
-                        <MemoTaskComponent key={task.id} taskListId={listId} task={task} />
+                        <MemoTaskComponent key={task.id} listId={listId} task={task} />
                     ))}
                 </List>
             </Collapse>

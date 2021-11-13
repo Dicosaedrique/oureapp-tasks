@@ -1,7 +1,7 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { FilteringMenu } from 'app/components/Menus/Filtering';
 import { SortingMenu } from 'app/components/Menus/Sorting';
-// import { AddTaskMenu } from 'app/components/Menus/Task/AddTaskMenu';
+import { AddTaskMenu } from 'app/components/Menus/Task/AddTaskMenu';
 import { RewarderProvider } from 'app/components/Reward/context';
 import { MemoTaskCollapsableList } from 'app/components/TaskCollapsableList';
 import NotFoundPage from 'app/pages/NotFoundPage/Loadable';
@@ -16,17 +16,17 @@ import { mapObject } from 'utils';
 import { Id } from 'utils/types';
 
 export interface TasksPagePathParams {
-    taskListId: Id;
+    listId: Id;
 }
 
 export default function TasksPage() {
     const classes = useStyles();
 
-    let { taskListId } = useParams<TasksPagePathParams>();
-    if (taskListId === undefined) taskListId = DEFAULT_LIST_ID;
+    let { listId } = useParams<TasksPagePathParams>();
+    if (listId === undefined) listId = DEFAULT_LIST_ID;
 
-    const taskListBase = useSelector(state => selectTaskListBaseById(state, taskListId));
-    const tasks = useSelector(state => selectSmartTasksByListId(state, taskListId));
+    const taskListBase = useSelector(state => selectTaskListBaseById(state, listId));
+    const tasks = useSelector(state => selectSmartTasksByListId(state, listId));
 
     if (taskListBase === undefined || tasks === undefined) return <NotFoundPage />; // todo : fix this with error handling
 
@@ -34,7 +34,6 @@ export default function TasksPage() {
         <BasePage title={taskListBase.title}>
             <RewarderProvider>
                 <div className={classes.toolbar} />
-                {/* <AddTaskMenu /> */}
                 <FilteringMenu />
                 <SortingMenu />
                 {mapObject(tasks, (tasks, taskState) => {
@@ -49,6 +48,9 @@ export default function TasksPage() {
                             />
                         );
                 })}
+                <div style={{ margin: '1em auto' }}>
+                    <AddTaskMenu listId={taskListBase.id} />
+                </div>
             </RewarderProvider>
         </BasePage>
     );
