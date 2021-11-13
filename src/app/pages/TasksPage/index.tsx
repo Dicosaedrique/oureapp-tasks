@@ -1,7 +1,7 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { FilteringMenu } from 'app/components/Menus/Filtering';
 import { SortingMenu } from 'app/components/Menus/Sorting';
-import { AddTaskMenu } from 'app/components/Menus/Task/AddTaskMenu';
+import { CreateTaskMenu } from 'app/components/Menus/Task/CreateTaskMenu';
 import { RewarderProvider } from 'app/components/Reward/context';
 import { MemoTaskCollapsableList } from 'app/components/TaskCollapsableList';
 import NotFoundPage from 'app/pages/NotFoundPage/Loadable';
@@ -49,7 +49,7 @@ export default function TasksPage() {
                         );
                 })}
                 <div style={{ margin: '1em auto' }}>
-                    <AddTaskMenu listId={taskListBase.id} />
+                    <CreateTaskMenu listId={taskListBase.id} />
                 </div>
             </RewarderProvider>
         </BasePage>

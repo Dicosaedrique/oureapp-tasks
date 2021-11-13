@@ -6,11 +6,11 @@ import { useDispatch } from 'react-redux';
 import { useTaskListsSlice } from 'store/slices/taskLists';
 import { Id } from 'utils/types';
 
-export interface QuickAddTaskMenuProps {
+export interface CreateTaskMenuProps {
     listId: Id;
 }
 
-export function AddTaskMenu({ listId }: QuickAddTaskMenuProps) {
+export function CreateTaskMenu({ listId }: CreateTaskMenuProps) {
     const [title, setTitle] = React.useState('');
 
     const { actions } = useTaskListsSlice();
