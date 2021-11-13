@@ -7,10 +7,10 @@ import { useTaskListsSlice } from 'store/slices/taskLists';
 import { Id } from 'utils/types';
 
 export interface QuickAddTaskMenuProps {
-    taskListId: Id;
+    listId: Id;
 }
 
-export function AddTaskMenu({ taskListId }: QuickAddTaskMenuProps) {
+export function AddTaskMenu({ listId }: QuickAddTaskMenuProps) {
     const [title, setTitle] = React.useState('');
 
     const { actions } = useTaskListsSlice();
@@ -25,7 +25,7 @@ export function AddTaskMenu({ taskListId }: QuickAddTaskMenuProps) {
             setTitle('');
             dispatch(
                 actions.addTask({
-                    taskListId,
+                    listId,
                     taskProps: {
                         title: finalTitle,
                     },

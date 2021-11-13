@@ -9,7 +9,7 @@ export function App() {
         <BrowserRouter>
             <Switch>
                 <Route exact path="/" component={HomePage} />
-                <Route path="/tasks/:taskListId?" component={TaskPage} />
+                <Route path="/tasks/:listId?" component={TaskPage} />
                 <Route component={NotFoundPage} />
             </Switch>
         </BrowserRouter>

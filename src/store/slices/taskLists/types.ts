@@ -5,14 +5,19 @@ import { Dictionary, Id } from 'utils/types';
 export type TaskListsSliceState = Dictionary<Id, TaskList>;
 
 export interface PayloadTaskList {
-    taskListId: Id;
+    listId: Id;
     taskId: Id;
 }
 
 export interface PayloadCreateTask {
-    taskListId: Id;
+    listId: Id;
     taskProps: TaskInputProps;
 }
+
+export interface PayloadEditTask extends PayloadTaskList {
+    taskProps: TaskInputProps;
+}
+
 export type PayloadRemoveTask = PayloadTaskList;
 export type PayloadArchiveTask = PayloadTaskList;
 

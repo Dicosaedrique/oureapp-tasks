@@ -8,13 +8,14 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ArchiveIcon from '@material-ui/icons/Archive';
 import DeleteIcon from '@material-ui/icons/Delete';
-// import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from '@material-ui/icons/Edit';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { EditTaskMenu } from 'app/components/Menus/Task/EditTaskMenu';
 import { getParticleCountFromTask } from 'app/components/Reward';
 import { useRewarder } from 'app/components/Reward/context';
 import { MemoLimitDateComponent } from 'app/components/Task/LimitDate';
 import { MemoPriorityComponent } from 'app/components/Task/Priority';
-import { Task, TaskState } from 'model/Task';
+import { Task, TaskInputProps, TaskState } from 'model/Task';
 import { TaskPriority } from 'model/Task/Priority';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -22,11 +23,11 @@ import { useTaskListsSlice } from 'store/slices/taskLists';
 import { Id } from 'utils/types';
 
 interface TaskProps {
-    taskListId: Id;
+    listId: Id;
     task: Task;
 }
 
-export function TaskComponent({ task, taskListId }: TaskProps) {
+export function TaskComponent({ task, listId }: TaskProps) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const openOptions = (event: React.MouseEvent<HTMLElement>) => {
@@ -56,7 +57,7 @@ export function TaskComponent({ task, taskListId }: TaskProps) {
 
         dispatch(
             actions.setTaskState({
-                taskListId,
+                listId,
                 taskId: task.id,
                 newTaskState: newState,
             }),
@@ -68,7 +69,7 @@ export function TaskComponent({ task, taskListId }: TaskProps) {
     const deleteTask = () => {
         dispatch(
             actions.removeTask({
-                taskListId,
+                listId,
                 taskId: task.id,
             }),
         );
@@ -78,7 +79,7 @@ export function TaskComponent({ task, taskListId }: TaskProps) {
     const archiveTask = () => {
         dispatch(
             actions.archiveTask({
-                taskListId,
+                listId,
                 taskId: task.id,
             }),
         );
@@ -88,20 +89,25 @@ export function TaskComponent({ task, taskListId }: TaskProps) {
     //////////////////
     // HANDLE EDITION
 
-    // const [editMenuOpen, setEditMenuOpen] = React.useState(false);
+    const [editMenuOpen, setEditMenuOpen] = React.useState(false);
 
-    // const openEditMenu = () => {
-    //     setEditMenuOpen(true);
-    //     closeOptions();
-    // };
+    const openEditMenu = () => {
+        setEditMenuOpen(true);
+        closeOptions();
+    };
 
-    // const closeEditMenu = () => setEditMenuOpen(false);
+    const closeEditMenu = () => setEditMenuOpen(false);
 
-    // const editTask = (inputProps: TaskInputProps, id?: string) => {
-    //     closeEditMenu();
-    //     if (!id) return;
-    //     dispatch(actions.editTask({ id, props: inputProps }));
-    // };
+    const editTask = (editedTask: TaskInputProps) => {
+        closeEditMenu();
+        dispatch(
+            actions.editTask({
+                listId,
+                taskId: task.id,
+                taskProps: editedTask,
+            }),
+        );
+    };
 
     return (
         <>
@@ -160,10 +166,10 @@ export function TaskComponent({ task, taskListId }: TaskProps) {
                             horizontal: 'center',
                         }}
                     >
-                        {/* <MenuItem onClick={openEditMenu} style={{ color: '#4e58ee' }}>
+                        <MenuItem onClick={openEditMenu} style={{ color: '#4e58ee' }}>
                             <EditIcon />
                             &nbsp;&nbsp;Edit task
-                        </MenuItem> */}
+                        </MenuItem>
                         <MenuItem onClick={archiveTask} style={{ color: 'orange' }}>
                             <ArchiveIcon />
                             &nbsp;&nbsp;Archive task
@@ -175,14 +181,9 @@ export function TaskComponent({ task, taskListId }: TaskProps) {
                     </Menu>
                 </ListItemSecondaryAction>
             </ListItem>
-            {/* {editMenuOpen && (
-                <TaskMenu
-                    handleClose={closeEditMenu}
-                    handleSuccess={editTask}
-                    id={task.id}
-                    defaultTask={task}
-                />
-            )} */}
+            {editMenuOpen && (
+                <EditTaskMenu handleClose={closeEditMenu} handleSubmit={editTask} task={task} />
+            )}
         </>
     );
 }

@@ -16,17 +16,17 @@ import { mapObject } from 'utils';
 import { Id } from 'utils/types';
 
 export interface TasksPagePathParams {
-    taskListId: Id;
+    listId: Id;
 }
 
 export default function TasksPage() {
     const classes = useStyles();
 
-    let { taskListId } = useParams<TasksPagePathParams>();
-    if (taskListId === undefined) taskListId = DEFAULT_LIST_ID;
+    let { listId } = useParams<TasksPagePathParams>();
+    if (listId === undefined) listId = DEFAULT_LIST_ID;
 
-    const taskListBase = useSelector(state => selectTaskListBaseById(state, taskListId));
-    const tasks = useSelector(state => selectSmartTasksByListId(state, taskListId));
+    const taskListBase = useSelector(state => selectTaskListBaseById(state, listId));
+    const tasks = useSelector(state => selectSmartTasksByListId(state, listId));
 
     if (taskListBase === undefined || tasks === undefined) return <NotFoundPage />; // todo : fix this with error handling
 
@@ -49,7 +49,7 @@ export default function TasksPage() {
                         );
                 })}
                 <div style={{ margin: '1em auto' }}>
-                    <AddTaskMenu taskListId={taskListBase.id} />
+                    <AddTaskMenu listId={taskListBase.id} />
                 </div>
             </RewarderProvider>
         </BasePage>
