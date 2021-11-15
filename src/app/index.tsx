@@ -4,7 +4,7 @@ import TaskPage from 'app/pages/TasksPage/Loadable';
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-export function App() {
+export function App(): React.ReactElement {
     return (
         <BrowserRouter>
             <Switch>

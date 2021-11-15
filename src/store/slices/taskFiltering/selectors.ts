@@ -1,9 +1,10 @@
+import { FilteringSettings } from 'model/Task/Filter';
 import { createSelector } from 'reselect';
 import { RootState } from 'store/StoreRootState';
 
 import { initialState } from '.';
 
-const selectSlice = (state: RootState) => state?.taskFiltering || initialState;
+const selectSlice = (state: RootState): FilteringSettings => state?.taskFiltering || initialState;
 
 /**
  * selector for filtering

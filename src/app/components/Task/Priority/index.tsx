@@ -9,7 +9,7 @@ interface Props {
     priority: TaskPriority;
 }
 
-export function PriorityComponent({ priority }: Props) {
+export function PriorityComponent({ priority }: Props): React.ReactElement {
     const { actions } = usePreferencesSlice();
 
     const priorityPreferences = useSelector(selectPriorityPreferences);

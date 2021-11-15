@@ -19,7 +19,7 @@ export interface TasksPagePathParams {
     listId: Id;
 }
 
-export default function TasksPage() {
+export default function TasksPage(): React.ReactElement {
     const classes = useStyles();
 
     let { listId } = useParams<TasksPagePathParams>();

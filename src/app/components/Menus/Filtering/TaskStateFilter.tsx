@@ -14,7 +14,7 @@ const ITEMS: FilterItems<TaskState> = [
     [TASK_STATE_NAMES[TaskState.DONE], TaskState.DONE],
 ];
 
-export function TaskStateFilterComponent() {
+export function TaskStateFilterComponent(): React.ReactElement {
     const dispatch = useDispatch();
     const { actions } = useFilteringSlice();
 

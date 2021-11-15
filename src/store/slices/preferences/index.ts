@@ -41,6 +41,7 @@ const slice = createSlice({
     },
 });
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const usePreferencesSlice = () => {
     useInjectReducer({ key: slice.name, reducer: slice.reducer });
     return { actions: slice.actions };

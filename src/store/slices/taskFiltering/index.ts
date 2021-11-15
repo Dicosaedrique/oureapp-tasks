@@ -26,7 +26,7 @@ const slice = createSlice({
 
             for (const key in settingsToToggle) {
                 if (key in state) {
-                    const currentSettings: any[] = state[key];
+                    const currentSettings = state[key];
 
                     for (const setting of settingsToToggle[key]) {
                         const index = currentSettings.indexOf(setting);
@@ -46,6 +46,7 @@ const slice = createSlice({
     },
 });
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useFilteringSlice = () => {
     useInjectReducer({ key: slice.name, reducer: slice.reducer });
     return { actions: slice.actions };

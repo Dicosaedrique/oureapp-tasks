@@ -2,9 +2,10 @@ import { TaskState } from 'model/Task';
 import { TASKS_COMPARERS_ASC, TASKS_COMPARERS_DES, TaskStateComparers } from 'model/Task/Sort';
 import { createSelector } from 'reselect';
 import { initialState } from 'store/slices/taskSorting';
+import { SortingSliceState } from 'store/slices/taskSorting/types';
 import { RootState } from 'store/StoreRootState';
 
-const selectSlice = (state: RootState) => state?.taskSorting || initialState;
+const selectSlice = (state: RootState): SortingSliceState => state?.taskSorting || initialState;
 
 export const selectSorting = selectSlice;
 

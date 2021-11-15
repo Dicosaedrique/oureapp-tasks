@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 import { useInjectReducer as useReducer, useInjectSaga as useSaga } from 'redux-injectors';
 
 import { InjectReducerParams, InjectSagaParams, RootStateKeyType } from './injector-typings';

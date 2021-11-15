@@ -27,16 +27,10 @@ interface TaskProps {
     task: Task;
 }
 
-export function TaskComponent({ task, listId }: TaskProps) {
+export function TaskComponent({ task, listId }: TaskProps): React.ReactElement {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-    const openOptions = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const closeOptions = () => {
-        setAnchorEl(null);
-    };
+    const openOptions = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
+    const closeOptions = () => setAnchorEl(null);
 
     const rewarder = useRewarder();
 
@@ -68,7 +62,7 @@ export function TaskComponent({ task, listId }: TaskProps) {
 
     const deleteTask = () => {
         dispatch(
-            actions.removeTask({
+            actions.deleteTask({
                 listId,
                 taskId: task.id,
             }),

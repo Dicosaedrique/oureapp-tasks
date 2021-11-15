@@ -4,18 +4,18 @@ import { TaskPriority } from 'model/Task/Priority';
 import React from 'react';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 
-interface RewarderProps {}
-
 type CallbackSuccess = (success: boolean) => void;
 
 /**
  * Defines a basic component that uses "ReactCanvasConfetti" to display confetti on screen
  */
-export class Rewarder extends React.Component<RewarderProps, never> {
+export class Rewarder extends React.Component<never, never> {
     static MAX_PARTICLES = 1000;
 
     // defines the default general options for a confetti shot
-    readonly defaultOptions: Partial<ConfettiOptions> = {
+    readonly defaultOptions: Required<
+        Pick<ConfettiOptions, 'origin' | 'particleCount' | 'ticks'>
+    > = {
         origin: { y: 0.7 },
         particleCount: 100,
         ticks: 150,
@@ -25,24 +25,25 @@ export class Rewarder extends React.Component<RewarderProps, never> {
     currentFireOptions: Partial<ConfettiOptions> = {};
 
     confetti: ConfettiType | null = null;
-    running: boolean = false;
+    running = false;
 
     private getInstance = instance => {
         // saving the instance to an internal property
         this.confetti = instance;
     };
 
-    private makeShot(particleRatio: number, opts: Partial<ConfettiOptions>): Promise<null> {
+    private makeShot(particleRatio: number, opts: Partial<ConfettiOptions>): Promise<null> | null {
+        if (this.confetti === null) return null;
+
         // compute final particle count
         const finalParticleCount = Math.min(
             Rewarder.MAX_PARTICLES,
             Math.ceil(
                 this.currentFireOptions.particleCount ||
-                    this.defaultOptions.particleCount! * particleRatio,
+                    this.defaultOptions.particleCount * particleRatio,
             ),
         );
 
-        // @ts-ignore
         return this.confetti({
             ...this.defaultOptions,
             ...this.currentFireOptions,
@@ -55,8 +56,8 @@ export class Rewarder extends React.Component<RewarderProps, never> {
      * Fire the default confetti animation
      * @returns array of promises for every shot made
      */
-    private fire(): Promise<null>[] {
-        const promises: Promise<null>[] = [];
+    private fire(): (Promise<null> | null)[] {
+        const promises: (Promise<null> | null)[] = [];
 
         promises.push(
             this.makeShot(0.25, {
@@ -103,7 +104,7 @@ export class Rewarder extends React.Component<RewarderProps, never> {
      * @param options Optional options to parameter the current fire (confetti count, ...)
      * @param callback Optionnal callback that will be fired at the end of the fire
      */
-    handleFire = (options: Partial<ConfettiOptions> = {}, callback?: CallbackSuccess) => {
+    handleFire = (options: Partial<ConfettiOptions> = {}, callback?: CallbackSuccess): void => {
         this.currentFireOptions = options;
         if (this.confetti !== null && !this.running) {
             this.running = true;
@@ -116,7 +117,7 @@ export class Rewarder extends React.Component<RewarderProps, never> {
         }
     };
 
-    render() {
+    render(): React.ReactElement {
         return (
             <>
                 <ReactCanvasConfetti

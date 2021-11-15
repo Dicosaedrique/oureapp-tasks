@@ -58,7 +58,7 @@ export function createTask({
  * @param newState the new state of the task
  * @returns the updated task
  */
-export function setTaskState(task: Task, newState: TaskState) {
+export function setTaskState(task: Task, newState: TaskState): Task {
     if (task.state === newState) return task; // no change
 
     task.state = newState;

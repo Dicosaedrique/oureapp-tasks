@@ -32,7 +32,7 @@ export function range(value: number, min: number, max: number): number {
 
 export function mapObject<Type extends Object, ReturnType>(
     obj: Type,
-    mapFn: (value: Type[keyof Type], key: keyof Type) => any,
+    mapFn: (value: Type[keyof Type], key: keyof Type) => ReturnType,
 ): ReturnType[] {
     return Object.keys(obj).map(function (key) {
         return mapFn(obj[key], key as keyof Type);

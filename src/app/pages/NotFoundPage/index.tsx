@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components/macro';
 
-export function NotFoundPage() {
+export function NotFoundPage(): React.ReactElement {
     return (
         <>
             <Helmet>
