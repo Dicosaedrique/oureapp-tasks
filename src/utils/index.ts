@@ -30,7 +30,7 @@ export function range(value: number, min: number, max: number): number {
     return Math.min(Math.max(value, min), max);
 }
 
-export function mapObject<Type extends Object, ReturnType>(
+export function mapObject<Type extends Record<string, Type[keyof Type]>, ReturnType>(
     obj: Type,
     mapFn: (value: Type[keyof Type], key: keyof Type) => ReturnType,
 ): ReturnType[] {

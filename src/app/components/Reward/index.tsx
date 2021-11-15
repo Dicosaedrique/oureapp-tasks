@@ -9,7 +9,7 @@ type CallbackSuccess = (success: boolean) => void;
 /**
  * Defines a basic component that uses "ReactCanvasConfetti" to display confetti on screen
  */
-export class Rewarder extends React.Component<never, never> {
+export class Rewarder extends React.Component<unknown, never> {
     static MAX_PARTICLES = 1000;
 
     // defines the default general options for a confetti shot

@@ -10,7 +10,7 @@ export interface CreateTaskMenuProps {
     listId: Id;
 }
 
-export function CreateTaskMenu({ listId }: CreateTaskMenuProps) {
+export function CreateTaskMenu({ listId }: CreateTaskMenuProps): React.ReactElement {
     const [title, setTitle] = React.useState('');
 
     const { actions } = useTaskListsSlice();
