@@ -26,8 +26,8 @@ This is the frontend of my todo app based on the [React Boilerplate CRA Template
 -   ✔️ Filtering system
 -   ✔️ Reward message on task complete
 -   ✔️ Filtering and sorting menus
--   ❌ Create task
--   ❌ Edit task
+-   ✔️ Create task
+-   ✔️ Edit task
 -   ✔️ Delete task
 -   ❌ Create task list
 -   ❌ Edit task list
@@ -41,7 +41,7 @@ This is the frontend of my todo app based on the [React Boilerplate CRA Template
 -   ⌛ Add account and backend persistence
 -   ⌛ Setup complete i18n (en/fr)
 -   ⌛ Setup Light / Dark theme
--   ⌛ Update UIs
+-   ⌛ Update UIs (give some soul to this app)
 -   ⌛ Add [snackbars](https://github.com/iamhosseindhv/notistack) on actions
 -   ⌛ Undo/Redo actions
 
@@ -62,4 +62,4 @@ This is the frontend of my todo app based on the [React Boilerplate CRA Template
 -   import/export lists and tasks with json format
 -   add a list to favorite
 -   archive a task list
--
+-   make the task lists drawer resizable
