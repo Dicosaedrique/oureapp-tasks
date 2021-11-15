@@ -14,11 +14,15 @@ export default interface TaskList extends TaskListBase {
     archivedTasks: Task[];
 }
 
-export function createTaskList(title: string): TaskList {
+export interface TaskListInputProps {
+    title: string;
+}
+
+export function createTaskList(props: TaskListInputProps): TaskList {
     return {
         id: generateId(),
         creationDate: Date.now(),
-        title,
+        title: props.title,
         tasks: [],
         archivedTasks: [],
     };
@@ -30,6 +34,6 @@ export const DEFAULT_LIST_ID = 'DEFAULT_LIST';
  * Default task list for tasks that don't have a custom list
  */
 export const DEFAULT_LIST: TaskList = {
-    ...createTaskList('My tasks'),
+    ...createTaskList({ title: 'My tasks' }),
     id: DEFAULT_LIST_ID,
 };

@@ -4,12 +4,13 @@ import TaskList, { DEFAULT_LIST_ID, TaskListBase, TaskStateDictionnary } from 'm
 import { createSelector } from 'reselect';
 import { selectFilteringSettings } from 'store/slices/taskFiltering/selectors';
 import { initialState } from 'store/slices/taskLists';
+import { TaskListsSliceState } from 'store/slices/taskLists/types';
 import { selectTaskStateComparers } from 'store/slices/taskSorting/selectors';
 import { RootState } from 'store/StoreRootState';
 import { recordToArray } from 'utils';
 import { Id } from 'utils/types';
 
-const selectSlice = (state: RootState) => state?.taskLists || initialState;
+const selectSlice = (state: RootState): TaskListsSliceState => state?.taskLists || initialState;
 
 export const selectTaskLists = selectSlice;
 

@@ -11,11 +11,14 @@ import { Dictionary, Id } from 'utils/types';
 let taskIncrement = 1;
 const DAY_IN_MS = 86400000;
 
-const taskListTitle = { ...createTaskList('Test title sorting'), id: 'title' };
-const taskListPriority = { ...createTaskList('Test priority sorting'), id: 'priority' };
-const taskListLimitDate = { ...createTaskList('Test limit date sorting'), id: 'limit_date' };
+const taskListTitle = { ...createTaskList({ title: 'Test title sorting' }), id: 'title' };
+const taskListPriority = { ...createTaskList({ title: 'Test priority sorting' }), id: 'priority' };
+const taskListLimitDate = {
+    ...createTaskList({ title: 'Test limit date sorting' }),
+    id: 'limit_date',
+};
 const taskListCreationDate = {
-    ...createTaskList('Test creation date sorting'),
+    ...createTaskList({ title: 'Test creation date sorting' }),
     id: 'creation_date',
 };
 // const taskListStress = { ...createTaskList('Test HUGE task count'), id: 'stress_test' };
