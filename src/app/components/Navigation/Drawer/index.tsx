@@ -1,13 +1,15 @@
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import SettingsIcon from '@material-ui/icons/Settings';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import SettingsIcon from '@mui/icons-material/Settings';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import { Theme } from '@mui/material/styles';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 
 import { MemoTaskListsDrawerSection } from './TaskListsDrawerSection';
@@ -32,7 +34,7 @@ export function NavigationDrawer({ open, handleClose }: NavigationDrawerProps): 
                 }}
             >
                 <div className={classes.drawerHeader}>
-                    <IconButton onClick={handleClose}>
+                    <IconButton onClick={handleClose} size="large">
                         <ChevronLeftIcon />
                     </IconButton>
                 </div>

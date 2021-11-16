@@ -1,12 +1,12 @@
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import SortIcon from '@material-ui/icons/Sort';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import SortIcon from '@mui/icons-material/Sort';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import { SORT_MODE_NAMES, TaskSortMode } from 'model/Task/Sort';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,7 +42,7 @@ export function SortingMenu(): React.ReactElement {
     const toggleSortingOrder = () => dispatch(actions.toggleSortingOrder());
 
     return (
-        <Grid container spacing={2} justify="flex-end" alignItems="center">
+        <Grid container spacing={2} justifyContent="flex-end" alignItems="center">
             <Grid item>
                 <Button
                     aria-controls="sorting-menu-button"

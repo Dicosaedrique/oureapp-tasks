@@ -1,19 +1,20 @@
-import DateFnsUtils from '@date-io/date-fns';
-import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import { useTheme } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import DatePicker from '@mui/lab/DatePicker';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { useTheme } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { Task, TaskInputProps } from 'model/Task';
 import { DEFAULT_TASK_PRIORITIES_NAMES, TaskPriority } from 'model/Task/Priority';
 import React from 'react';
@@ -31,7 +32,7 @@ export function EditTaskMenu({
     handleSubmit,
 }: EditTaskMenuProps): React.ReactElement {
     const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     const formId = 'task-form-id';
     const dialogId = 'edit-task-dialog';
 
@@ -54,7 +55,7 @@ export function EditTaskMenu({
 
     const [priority, setPriority] = React.useState(task.priority);
 
-    const handlePriorityChange = (event: React.ChangeEvent<{ value: unknown }>, _) => {
+    const handlePriorityChange = (event: SelectChangeEvent<TaskPriority>, _: unknown) => {
         setPriority(event.target.value as TaskPriority);
     };
 
@@ -69,8 +70,8 @@ export function EditTaskMenu({
         setHasLimitDate(checked);
     };
 
-    const handleLimitDateChange = (date: Date | null) => {
-        if (date !== null) setLimitDate(date);
+    const handleLimitDateChange = (date: unknown, _: unknown) => {
+        if (date !== null) setLimitDate(date as Date);
     };
 
     ///////////////////////////////////////////////
@@ -163,19 +164,20 @@ export function EditTaskMenu({
                         />
                         {hasLimitDate && (
                             <div>
-                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                    <KeyboardDatePicker
-                                        id="limit-date-picker-dialog"
-                                        label="Limit Date"
+                                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                    <DatePicker
+                                        label=""
                                         value={limitDate}
                                         onChange={handleLimitDateChange}
-                                        format="MM/dd/yyyy"
-                                        placeholder="MM/dd/yyyy"
-                                        KeyboardButtonProps={{
-                                            'aria-label': 'change limit date',
-                                        }}
+                                        inputFormat="MM/dd/yyyy"
+                                        renderInput={props => (
+                                            <TextField
+                                                label="Limit Date"
+                                                placeholder="MM/dd/yyyy"
+                                            />
+                                        )}
                                     />
-                                </MuiPickersUtilsProvider>
+                                </LocalizationProvider>
                             </div>
                         )}
                     </FormSection>

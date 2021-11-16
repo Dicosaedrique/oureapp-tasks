@@ -1,15 +1,15 @@
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ArchiveIcon from '@material-ui/icons/Archive';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ArchiveIcon from '@mui/icons-material/Archive';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Checkbox from '@mui/material/Checkbox';
+import IconButton from '@mui/material/IconButton';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import ListItemText from '@mui/material/ListItemText';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import { EditTaskMenu } from 'app/components/Menus/Task/EditTaskMenu';
 import { getParticleCountFromTask } from 'app/components/Reward';
 import { useRewarder } from 'app/components/Reward/context';
@@ -144,6 +144,7 @@ export function TaskComponent({ task, listId }: TaskProps): React.ReactElement {
                         onClick={openOptions}
                         aria-label="Options"
                         title="Options"
+                        size="large"
                     >
                         <MoreVertIcon />
                     </IconButton>
@@ -154,7 +155,6 @@ export function TaskComponent({ task, listId }: TaskProps): React.ReactElement {
                         keepMounted
                         open={Boolean(anchorEl)}
                         onClose={closeOptions}
-                        getContentAnchorEl={null}
                         anchorOrigin={{
                             vertical: 'bottom',
                             horizontal: 'center',

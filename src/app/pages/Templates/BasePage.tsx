@@ -1,5 +1,7 @@
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { Theme } from '@mui/material/styles';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import { DRAWER_WIDTH, NavigationDrawer } from 'app/components/Navigation/Drawer';
 import { TopBar } from 'app/components/Navigation/Topbar';
 import clsx from 'clsx';

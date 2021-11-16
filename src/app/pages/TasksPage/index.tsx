@@ -1,4 +1,6 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import { FilteringMenu } from 'app/components/Menus/Filtering';
 import { SortingMenu } from 'app/components/Menus/Sorting';
 import { CreateTaskMenu } from 'app/components/Menus/Task/CreateTaskMenu';

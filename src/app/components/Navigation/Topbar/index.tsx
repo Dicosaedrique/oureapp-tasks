@@ -1,9 +1,11 @@
-import AppBar from '@material-ui/core/AppBar';
-import IconButton from '@material-ui/core/IconButton';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import AppBar from '@mui/material/AppBar';
+import IconButton from '@mui/material/IconButton';
+import { Theme } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import { DRAWER_WIDTH } from 'app/components/Navigation/Drawer';
 import clsx from 'clsx';
 import React from 'react';
@@ -31,6 +33,7 @@ export function TopBar({ title, drawerOpen, handleDrawerOpen }: TopBarProps): Re
                     onClick={handleDrawerOpen}
                     edge="start"
                     className={clsx(classes.menuButton, drawerOpen && classes.hide)}
+                    size="large"
                 >
                     <MenuIcon />
                 </IconButton>

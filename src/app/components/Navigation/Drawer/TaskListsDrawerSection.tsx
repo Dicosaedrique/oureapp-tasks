@@ -1,17 +1,17 @@
-import { MenuItem } from '@material-ui/core';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import Menu from '@material-ui/core/Menu';
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import ListIcon from '@material-ui/icons/List';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import ListIcon from '@mui/icons-material/List';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { MenuItem } from '@mui/material';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import ListItemText from '@mui/material/ListItemText';
+import Menu from '@mui/material/Menu';
 import { CreateListMenu } from 'app/components/Menus/List/CreateListMenu';
 import { EditListMenu } from 'app/components/Menus/List/EditListMenu';
 import { TasksPagePathParams } from 'app/pages/TasksPage';
@@ -96,6 +96,7 @@ export default function TaskListsDrawerSection(): React.ReactElement {
                             onClick={openOptionsCreator(defaultList)}
                             aria-label="Options"
                             title="Options"
+                            size="large"
                         >
                             <MoreVertIcon />
                         </IconButton>
@@ -121,6 +122,7 @@ export default function TaskListsDrawerSection(): React.ReactElement {
                                 onClick={openOptionsCreator(list)}
                                 aria-label="Options"
                                 title="Options"
+                                size="large"
                             >
                                 <MoreVertIcon />
                             </IconButton>
@@ -146,7 +148,6 @@ export default function TaskListsDrawerSection(): React.ReactElement {
                     keepMounted
                     open={Boolean(anchorEl)}
                     onClose={closeOptions}
-                    getContentAnchorEl={null}
                     anchorOrigin={{
                         vertical: 'bottom',
                         horizontal: 'center',

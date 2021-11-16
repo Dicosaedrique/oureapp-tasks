@@ -1,12 +1,12 @@
-import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
-import ListItemText from '@material-ui/core/ListItemText';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import FilterListIcon from '@material-ui/icons/FilterList';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import Grid from '@mui/material/Grid';
+import ListItemText from '@mui/material/ListItemText';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import React from 'react';
 
 import { TaskLimitDateFilterComponent } from './TaskLimitDateFilter';
@@ -18,7 +18,7 @@ import { TaskStateFilterComponent } from './TaskStateFilter';
  */
 export function FilteringMenu(): React.ReactElement {
     return (
-        <Grid container spacing={2} justify="flex-end" alignItems="center">
+        <Grid container spacing={2} justifyContent="flex-end" alignItems="center">
             <Grid item>
                 <TaskStateFilterComponent />
             </Grid>

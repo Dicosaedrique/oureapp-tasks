@@ -1,4 +1,4 @@
-import ScheduleIcon from '@material-ui/icons/Schedule';
+import ScheduleIcon from '@mui/icons-material/Schedule';
 import Badge from 'app/components/Utils/Badge';
 import { TaskState } from 'model/Task';
 import React from 'react';
