@@ -1,7 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import TASK_LISTS_DEMO from 'model/demo.data';
 import { createTask, setTaskState } from 'model/Task';
-import { createTaskList } from 'model/TaskList';
+import { createTaskList, DEFAULT_LIST_ID } from 'model/TaskList';
 import {
     PayloadArchiveTask,
     PayloadCreateList,
@@ -96,7 +96,7 @@ const slice = createSlice({
         },
 
         deleteList(state, { payload }: PayloadAction<PayloadDeleteList>) {
-            if (payload.id in state) {
+            if (payload.id in state && payload.id !== DEFAULT_LIST_ID) {
                 delete state[payload.id];
             }
         },
