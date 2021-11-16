@@ -1,11 +1,15 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import TASK_LISTS_DEMO from 'model/demo.data';
 import { createTask, setTaskState } from 'model/Task';
+import { createTaskList, DEFAULT_LIST_ID } from 'model/TaskList';
 import {
     PayloadArchiveTask,
+    PayloadCreateList,
     PayloadCreateTask,
+    PayloadDeleteList,
+    PayloadDeleteTask,
+    PayloadEditList,
     PayloadEditTask,
-    PayloadRemoveTask,
     PayloadUpdateTaskState,
     TaskListsSliceState,
 } from 'store/slices/taskLists/types';
@@ -40,7 +44,7 @@ const slice = createSlice({
             }
         },
 
-        removeTask(state, { payload }: PayloadAction<PayloadRemoveTask>) {
+        deleteTask(state, { payload }: PayloadAction<PayloadDeleteTask>) {
             const taskList = state[payload.listId];
 
             if (taskList !== undefined) {
@@ -74,9 +78,32 @@ const slice = createSlice({
                 }
             }
         },
+
+        createList(state, { payload }: PayloadAction<PayloadCreateList>) {
+            const newList = createTaskList(payload.listProps);
+
+            if (state[newList.id] === undefined) {
+                state[newList.id] = newList;
+            }
+        },
+
+        editList(state, { payload }: PayloadAction<PayloadEditList>) {
+            const list = state[payload.id];
+
+            if (list !== undefined) {
+                list.title = payload.listProps.title;
+            }
+        },
+
+        deleteList(state, { payload }: PayloadAction<PayloadDeleteList>) {
+            if (payload.id in state && payload.id !== DEFAULT_LIST_ID) {
+                delete state[payload.id];
+            }
+        },
     },
 });
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useTaskListsSlice = () => {
     useInjectReducer({ key: slice.name, reducer: slice.reducer });
     return { actions: slice.actions };

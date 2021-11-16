@@ -18,7 +18,13 @@ interface Props<Type> {
 /**
  * Defines a component that create a menu with radio groupe to choose a value
  */
-export function RadioMenuPicker<Type>({ id, title, value, onChange, values }: Props<Type>) {
+export function RadioMenuPicker<Type>({
+    id,
+    title,
+    value,
+    onChange,
+    values,
+}: Props<Type>): React.ReactElement {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const menuOpen = Boolean(anchorEl);
 

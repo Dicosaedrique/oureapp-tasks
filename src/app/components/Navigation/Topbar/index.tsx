@@ -14,7 +14,7 @@ export interface TopBarProps {
     handleDrawerOpen: () => void;
 }
 
-export function TopBar({ title, drawerOpen, handleDrawerOpen }: TopBarProps) {
+export function TopBar({ title, drawerOpen, handleDrawerOpen }: TopBarProps): React.ReactElement {
     const classes = useStyles();
 
     return (

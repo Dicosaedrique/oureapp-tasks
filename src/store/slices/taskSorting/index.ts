@@ -33,7 +33,7 @@ const slice = createSlice({
     },
 });
 
-// create the slice hook for component
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useSortingSlice = () => {
     useInjectReducer({ key: slice.name, reducer: slice.reducer });
     return { actions: slice.actions };

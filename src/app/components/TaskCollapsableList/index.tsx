@@ -17,7 +17,11 @@ export interface TaskCollapsableListProps {
     tasks: Task[];
 }
 
-export default function TaskCollapsableList({ listId, title, tasks }: TaskCollapsableListProps) {
+export default function TaskCollapsableList({
+    listId,
+    title,
+    tasks,
+}: TaskCollapsableListProps): React.ReactElement {
     const [open, setOpen] = React.useState(true);
 
     const toggleOpen = () => setOpen(!open);

@@ -14,7 +14,12 @@ interface Props {
     taskState: TaskState;
 }
 
-export function LimitDateComponent({ nowDate, startDate, limitDate, taskState }: Props) {
+export function LimitDateComponent({
+    nowDate,
+    startDate,
+    limitDate,
+    taskState,
+}: Props): React.ReactElement {
     // redux hooks
     const { actions } = usePreferencesSlice();
     const limitDatePreferences = useSelector(selectLimitDatePreferences);

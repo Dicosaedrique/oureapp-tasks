@@ -8,7 +8,7 @@ interface Props {
     children: React.ReactNode;
 }
 
-export function RewarderProvider({ children }: Props) {
+export function RewarderProvider({ children }: Props): React.ReactElement {
     const [rewarder, setRewarder] = React.useState<Rewarder | null>(null);
     const rewarderRef = React.useCallback((rewarderElem: Rewarder) => {
         setRewarder(rewarderElem);

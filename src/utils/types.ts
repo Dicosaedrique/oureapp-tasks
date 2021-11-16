@@ -14,3 +14,5 @@ export type EnumDictionnary<Enum extends string | number | symbol, Type> = { [ke
 export type Dictionary<KeyType extends string | number | symbol, ValueType> = Partial<
     Record<KeyType, ValueType>
 >;
+
+export type JSON = string | number | boolean | { [x: string]: JSON } | Array<JSON>;

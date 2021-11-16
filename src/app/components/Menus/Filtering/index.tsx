@@ -16,7 +16,7 @@ import { TaskStateFilterComponent } from './TaskStateFilter';
 /**
  * Defines the menu to change filtering preferences
  */
-export function FilteringMenu() {
+export function FilteringMenu(): React.ReactElement {
     return (
         <Grid container spacing={2} justify="flex-end" alignItems="center">
             <Grid item>
@@ -58,7 +58,7 @@ export function GenericFilterComponent<Type>({
     onItemClick,
     allTitle = 'All',
     onAllClick,
-}: GenericFilterProps<Type>) {
+}: GenericFilterProps<Type>): React.ReactElement {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const menuOpen = Boolean(anchorEl);
 

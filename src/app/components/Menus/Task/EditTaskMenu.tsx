@@ -25,10 +25,15 @@ export interface EditTaskMenuProps {
     handleSubmit: (taskProps: TaskInputProps) => void;
 }
 
-export function EditTaskMenu({ task, handleClose, handleSubmit }: EditTaskMenuProps) {
+export function EditTaskMenu({
+    task,
+    handleClose,
+    handleSubmit,
+}: EditTaskMenuProps): React.ReactElement {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const formId = 'task-form-id';
+    const dialogId = 'edit-task-dialog';
 
     ///////////////////////////////////////////////
     // TITLE
@@ -41,7 +46,7 @@ export function EditTaskMenu({ task, handleClose, handleSubmit }: EditTaskMenuPr
         setTitle(newTitle);
 
         // remove title error if title change and is not empty
-        if (titleError !== null && newTitle.length > 0) setTitleError(null);
+        if (titleError !== null && newTitle.trim().length > 0) setTitleError(null);
     };
 
     ///////////////////////////////////////////////
@@ -81,10 +86,13 @@ export function EditTaskMenu({ task, handleClose, handleSubmit }: EditTaskMenuPr
     ///////////////////////////////////////////////
     // SUBMIT CHANGES
 
-    const submit = () => {
-        if (title.length > 0) {
+    const submit = event => {
+        event.preventDefault();
+
+        const finalTitle = title.trim();
+        if (finalTitle.length > 0) {
             handleSubmit({
-                title,
+                title: finalTitle,
                 priority,
                 limitDate: hasLimitDate ? limitDate.getTime() : undefined,
             });
@@ -102,11 +110,9 @@ export function EditTaskMenu({ task, handleClose, handleSubmit }: EditTaskMenuPr
             fullWidth
             maxWidth="sm"
             onClose={handleClose}
-            aria-labelledby="create-edit-task-dialog"
+            aria-labelledby={dialogId}
         >
-            <DialogTitle id="create-edit-task-dialog">
-                {`Edit your task "${task.title}"`}
-            </DialogTitle>
+            <DialogTitle id={dialogId}>{`Edit your task "${task.title}"`}</DialogTitle>
             <DialogContent>
                 <form id={formId} onSubmit={submit} onReset={reset}>
                     {/* Task title */}

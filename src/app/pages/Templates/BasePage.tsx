@@ -12,7 +12,11 @@ export interface BasePageProps {
     children: React.ReactNode;
 }
 
-export default function BasePage({ title, description, children }: BasePageProps) {
+export default function BasePage({
+    title,
+    description,
+    children,
+}: BasePageProps): React.ReactElement {
     const classes = useStyles();
 
     const [drawerOpen, setDrawerOpen] = React.useState(true);

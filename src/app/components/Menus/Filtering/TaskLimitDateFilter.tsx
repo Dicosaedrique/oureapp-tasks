@@ -13,7 +13,7 @@ const ITEMS: FilterItems<boolean> = [
     ['Without limit date', false],
 ];
 
-export function TaskLimitDateFilterComponent() {
+export function TaskLimitDateFilterComponent(): React.ReactElement {
     const dispatch = useDispatch();
     const { actions } = useFilteringSlice();
 

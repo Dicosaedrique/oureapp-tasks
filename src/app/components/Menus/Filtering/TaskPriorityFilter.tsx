@@ -17,7 +17,7 @@ const ITEMS: FilterItems<TaskPriority> = [
     [DEFAULT_TASK_PRIORITIES_NAMES[TaskPriority.EXTREME], TaskPriority.EXTREME],
 ];
 
-export function TaskPriorityFilterComponent() {
+export function TaskPriorityFilterComponent(): React.ReactElement {
     const dispatch = useDispatch();
     const { actions } = useFilteringSlice();
 

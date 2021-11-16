@@ -17,7 +17,7 @@ import { mapObject } from 'utils';
 /**
  * Defines the menu to change sorting preferences
  */
-export function SortingMenu() {
+export function SortingMenu(): React.ReactElement {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const menuOpen = Boolean(anchorEl);
 

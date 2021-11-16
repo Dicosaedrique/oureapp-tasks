@@ -17,7 +17,7 @@ export interface NavigationDrawerProps {
     handleClose: () => void;
 }
 
-export function NavigationDrawer({ open, handleClose }: NavigationDrawerProps) {
+export function NavigationDrawer({ open, handleClose }: NavigationDrawerProps): React.ReactElement {
     const classes = useStyles();
 
     return (
