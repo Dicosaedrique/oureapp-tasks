@@ -90,6 +90,16 @@ export default function TaskListsDrawerSection(): React.ReactElement {
                         <ListIcon />
                     </ListItemIcon>
                     <ListItemText primary={defaultList.title} />
+                    <ListItemSecondaryAction>
+                        <IconButton
+                            edge="end"
+                            onClick={openOptionsCreator(defaultList)}
+                            aria-label="Options"
+                            title="Options"
+                        >
+                            <MoreVertIcon />
+                        </IconButton>
+                    </ListItemSecondaryAction>
                 </ListItem>
             </List>
             <Divider />
@@ -146,10 +156,12 @@ export default function TaskListsDrawerSection(): React.ReactElement {
                         <EditIcon />
                         &nbsp;&nbsp;Edit List
                     </MenuItem>
-                    <MenuItem onClick={deleteList} style={{ color: 'red' }}>
-                        <DeleteIcon />
-                        &nbsp;&nbsp;Delete list
-                    </MenuItem>
+                    {selectedList?.id !== DEFAULT_LIST_ID && (
+                        <MenuItem onClick={deleteList} style={{ color: 'red' }}>
+                            <DeleteIcon />
+                            &nbsp;&nbsp;Delete list
+                        </MenuItem>
+                    )}
                 </Menu>
             )}
         </>
