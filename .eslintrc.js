@@ -6,7 +6,7 @@ const path = require('path');
 const prettierOptions = JSON.parse(fs.readFileSync(path.resolve(__dirname, '.prettierrc'), 'utf8'));
 
 module.exports = {
-    extends: ['react-app', 'prettier', 'prettier/react', 'plugin:@typescript-eslint/recommended'],
+    extends: ['react-app', 'prettier', 'plugin:@typescript-eslint/recommended'],
     plugins: ['simple-import-sort', 'prettier'],
     rules: {
         'prettier/prettier': ['warn', prettierOptions],

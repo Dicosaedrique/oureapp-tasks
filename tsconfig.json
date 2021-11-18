@@ -15,8 +15,11 @@
         "isolatedModules": true,
         "noEmit": true,
         "noFallthroughCasesInSwitch": true,
-        "jsx": "react",
+        "jsx": "react-jsx",
         "baseUrl": "./src"
     },
-    "include": ["src"]
+    "include": ["src"],
+    "paths": {
+        "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
+    }
 }

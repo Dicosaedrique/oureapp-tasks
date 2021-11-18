@@ -16,12 +16,10 @@
         "extract-messages": "i18next-scanner --config=internals/extractMessages/i18next-scanner.config.js"
     },
     "dependencies": {
-        "@emotion/react": "^11.6.0",
-        "@emotion/styled": "^11.6.0",
         "@mui/icons-material": "^5.1.0",
         "@mui/lab": "^5.0.0-alpha.54",
         "@mui/material": "^5.1.0",
-        "@mui/styles": "^5.1.0",
+        "@mui/styled-engine-sc": "^5.1.0",
         "@reduxjs/toolkit": "^1.6.2",
         "@types/lodash": "^4.14.177",
         "@types/node": "^16.11.7",
@@ -36,6 +34,7 @@
         "@types/webpack-env": "^1.16.3",
         "chalk": "^4.1.2",
         "cross-env": "^7.0.3",
+        "date-fns": "^2.25.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-import": "^2.25.3",
         "eslint-plugin-prettier": "^4.0.0",
