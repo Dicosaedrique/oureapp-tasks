@@ -18,8 +18,5 @@
         "jsx": "react-jsx",
         "baseUrl": "./src"
     },
-    "include": ["src"],
-    "paths": {
-        "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
-    }
+    "include": ["src"]
 }
