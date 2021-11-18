@@ -14,11 +14,10 @@ import ListItemText from '@mui/material/ListItemText';
 import Menu from '@mui/material/Menu';
 import { CreateListMenu } from 'app/components/Menus/List/CreateListMenu';
 import { EditListMenu } from 'app/components/Menus/List/EditListMenu';
-import { TasksPagePathParams } from 'app/pages/TasksPage';
 import { DEFAULT_LIST_ID, TaskListBase } from 'model/TaskList';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTaskListsSlice } from 'store/slices/taskLists';
 import {
     selectDefaultTaskListBase,
@@ -27,7 +26,7 @@ import {
 import { Id } from 'utils/types';
 
 export default function TaskListsDrawerSection(): React.ReactElement {
-    let current = useParams<TasksPagePathParams>().listId;
+    let current = useParams().listId;
     if (current === undefined) current = DEFAULT_LIST_ID;
 
     const { actions } = useTaskListsSlice();
@@ -39,9 +38,9 @@ export default function TaskListsDrawerSection(): React.ReactElement {
         list => list.id !== DEFAULT_LIST_ID,
     );
 
-    const history = useHistory();
-    const createTaskListNavigationHandler = (id: Id) => () => history.push(`/tasks/${id}`);
-    const defaultTaskListNavigationHandler = () => history.push(`/tasks`);
+    const navigate = useNavigate();
+    const createTaskListNavigationHandler = (id: Id) => () => navigate(`/tasks/${id}`);
+    const defaultTaskListNavigationHandler = () => navigate('/tasks');
 
     const [selectedList, setSelectedList] = React.useState<TaskListBase | null>(null);
 

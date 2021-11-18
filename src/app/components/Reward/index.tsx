@@ -13,13 +13,12 @@ export class Rewarder extends React.Component<unknown, never> {
     static MAX_PARTICLES = 1000;
 
     // defines the default general options for a confetti shot
-    readonly defaultOptions: Required<
-        Pick<ConfettiOptions, 'origin' | 'particleCount' | 'ticks'>
-    > = {
-        origin: { y: 0.7 },
-        particleCount: 100,
-        ticks: 150,
-    };
+    readonly defaultOptions: Required<Pick<ConfettiOptions, 'origin' | 'particleCount' | 'ticks'>> =
+        {
+            origin: { y: 0.7 },
+            particleCount: 100,
+            ticks: 150,
+        };
 
     // options for the current fire
     currentFireOptions: Partial<ConfettiOptions> = {};

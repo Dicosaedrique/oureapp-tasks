@@ -18,17 +18,17 @@ import { mapObject } from 'utils';
 import { Id } from 'utils/types';
 
 export interface TasksPagePathParams {
-    listId: Id;
+    listId?: Id;
 }
 
 export default function TasksPage(): React.ReactElement {
     const classes = useStyles();
 
-    let { listId } = useParams<TasksPagePathParams>();
+    let { listId } = useParams() as TasksPagePathParams;
     if (listId === undefined) listId = DEFAULT_LIST_ID;
 
-    const taskListBase = useSelector(state => selectTaskListBaseById(state, listId));
-    const tasks = useSelector(state => selectSmartTasksByListId(state, listId));
+    const taskListBase = useSelector(state => selectTaskListBaseById(state, listId!));
+    const tasks = useSelector(state => selectSmartTasksByListId(state, listId!));
 
     if (taskListBase === undefined || tasks === undefined) return <NotFoundPage />; // todo : fix this with error handling
 
