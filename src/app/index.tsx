@@ -10,17 +10,14 @@ export function App(): React.ReactElement {
         <StyledEngineProvider injectFirst>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/">
-                        <HomePage />
+                    <Route index element={<HomePage />} />
+                    <Route path="list">
+                        <Route path=":id" element={<TaskPage />} />
                     </Route>
-                    <Route path="/tasks/:listId?">
-                        <TaskPage />
-                    </Route>
-                    <Route>
-                        <NotFoundPage />
-                    </Route>
+                    <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </BrowserRouter>
         </StyledEngineProvider>
     );
 }
+// rename tasks en list ?

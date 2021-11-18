@@ -28,7 +28,7 @@ export function createTaskList(props: TaskListInputProps): TaskList {
     };
 }
 
-export const DEFAULT_LIST_ID = 'DEFAULT_LIST';
+export const DEFAULT_LIST_ID = 'default';
 
 /**
  * Default task list for tasks that don't have a custom list

@@ -14,6 +14,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Menu from '@mui/material/Menu';
 import { CreateListMenu } from 'app/components/Menus/List/CreateListMenu';
 import { EditListMenu } from 'app/components/Menus/List/EditListMenu';
+import { TasksPagePathParams } from 'app/pages/TasksPage';
 import { DEFAULT_LIST_ID, TaskListBase } from 'model/TaskList';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,8 +27,7 @@ import {
 import { Id } from 'utils/types';
 
 export default function TaskListsDrawerSection(): React.ReactElement {
-    let current = useParams().listId;
-    if (current === undefined) current = DEFAULT_LIST_ID;
+    const params = useParams() as TasksPagePathParams;
 
     const { actions } = useTaskListsSlice();
     const dispatch = useDispatch();
@@ -39,8 +39,8 @@ export default function TaskListsDrawerSection(): React.ReactElement {
     );
 
     const navigate = useNavigate();
-    const createTaskListNavigationHandler = (id: Id) => () => navigate(`/tasks/${id}`);
-    const defaultTaskListNavigationHandler = () => navigate('/tasks');
+    const createTaskListNavigationHandler = (id: Id) => () => navigate(`/list/${id}`);
+    const defaultTaskListNavigationHandler = createTaskListNavigationHandler(DEFAULT_LIST_ID);
 
     const [selectedList, setSelectedList] = React.useState<TaskListBase | null>(null);
 
@@ -62,7 +62,7 @@ export default function TaskListsDrawerSection(): React.ReactElement {
         if (selectedList == null) return;
         dispatch(actions.deleteList({ id: selectedList.id }));
         setAnchorEl(null);
-        if (current === selectedList.id) defaultTaskListNavigationHandler();
+        if (params.id === selectedList.id) defaultTaskListNavigationHandler();
     };
 
     // options menu
@@ -82,7 +82,7 @@ export default function TaskListsDrawerSection(): React.ReactElement {
             <List>
                 <ListItem
                     button
-                    selected={current === defaultList.id}
+                    selected={params.id === defaultList.id}
                     onClick={defaultTaskListNavigationHandler}
                 >
                     <ListItemIcon>
@@ -107,7 +107,7 @@ export default function TaskListsDrawerSection(): React.ReactElement {
                 {lists.map(list => (
                     <ListItem
                         button
-                        selected={current === list.id}
+                        selected={params.id === list.id}
                         onClick={createTaskListNavigationHandler(list.id)}
                         key={list.id}
                     >
