@@ -1,6 +1,3 @@
-import { Theme } from '@mui/material/styles';
-import createStyles from '@mui/styles/createStyles';
-import makeStyles from '@mui/styles/makeStyles';
 import { FilteringMenu } from 'app/components/Menus/Filtering';
 import { SortingMenu } from 'app/components/Menus/Sorting';
 import { CreateTaskMenu } from 'app/components/Menus/Task/CreateTaskMenu';
@@ -21,8 +18,6 @@ export interface TasksPagePathParams {
 }
 
 export default function TasksPage(): React.ReactElement {
-    const classes = useStyles();
-
     const params = useParams() as TasksPagePathParams;
 
     const taskListBase = useSelector(state => selectTaskListBaseById(state, params.id));
@@ -33,7 +28,6 @@ export default function TasksPage(): React.ReactElement {
     return (
         <BasePage title={taskListBase.title}>
             <RewarderProvider>
-                <div className={classes.toolbar} />
                 <FilteringMenu />
                 <SortingMenu />
                 {mapObject(tasks, (tasks, taskState) => {
@@ -55,11 +49,3 @@ export default function TasksPage(): React.ReactElement {
         </BasePage>
     );
 }
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        toolbar: {
-            ...theme.mixins.toolbar,
-        },
-    }),
-);
