@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DatePicker from '@mui/lab/DatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -18,7 +19,6 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Task, TaskInputProps } from 'model/Task';
 import { DEFAULT_TASK_PRIORITIES_NAMES, TaskPriority } from 'model/Task/Priority';
 import React from 'react';
-import styled from 'styled-components/macro';
 
 export interface EditTaskMenuProps {
     task: Task;

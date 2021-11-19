@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import Collapse from '@mui/material/Collapse';
@@ -6,7 +7,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { Task, TaskState } from 'model/Task';
 import React from 'react';
-import styled from 'styled-components/macro';
 import { Id } from 'utils/types';
 
 import { MemoTaskComponent } from '../Task';

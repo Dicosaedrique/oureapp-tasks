@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled';
 
 const Badge = styled.span`
     border-radius: 0.5em;
