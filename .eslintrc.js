@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 const fs = require('fs');
 const path = require('path');
 
@@ -14,4 +12,5 @@ module.exports = {
         'simple-import-sort/exports': 'error',
         '@typescript-eslint/no-non-null-assertion': 0,
     },
+    ignorePatterns: ['internals/**', '.eslintrc.js'],
 };
