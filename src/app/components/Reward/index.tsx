@@ -144,7 +144,7 @@ export class Rewarder extends React.Component<unknown, never> {
  * @returns the particle count for this task (based on priority, time to complete, ...)
  */
 export function getParticleCountFromTask(task: Task): number {
-    const ratio = task.priority / TaskPriority.EXTREME;
+    const ratio = task.priority / TaskPriority.HIGH;
     const count = ratio * (MAX_PARTICLES - MIN_PARTICLES) + MIN_PARTICLES;
     return count;
 }

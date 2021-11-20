@@ -19,6 +19,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Task, TaskInputProps } from 'model/Task';
 import { DEFAULT_TASK_PRIORITIES_NAMES, TaskPriority } from 'model/Task/Priority';
 import React from 'react';
+import { getNowDate } from 'utils';
 
 export interface EditTaskMenuProps {
     task: Task;
@@ -70,8 +71,8 @@ export function EditTaskMenu({
         setHasLimitDate(checked);
     };
 
-    const handleLimitDateChange = (date: unknown, _: unknown) => {
-        if (date !== null) setLimitDate(date as Date);
+    const handleLimitDateChange = (date: Date | null) => {
+        if (date !== null) setLimitDate(date);
     };
 
     ///////////////////////////////////////////////
@@ -113,16 +114,16 @@ export function EditTaskMenu({
             onClose={handleClose}
             aria-labelledby={dialogId}
         >
-            <DialogTitle id={dialogId}>{`Edit your task "${task.title}"`}</DialogTitle>
+            <DialogTitle id={dialogId}>{`Edit the task '${task.title}'`}</DialogTitle>
             <DialogContent>
                 <form id={formId} onSubmit={submit} onReset={reset}>
                     {/* Task title */}
                     <FormSection>
                         <TextField
-                            id="task-title"
                             label="Title"
                             placeholder="Be happy !"
                             fullWidth
+                            margin="dense"
                             value={title}
                             onChange={handleTitleChange}
                             autoFocus
@@ -135,11 +136,12 @@ export function EditTaskMenu({
                     {/* Task priority */}
                     <FormSection>
                         <FormControl>
-                            <InputLabel id="priority-picker">Priority</InputLabel>
+                            <InputLabel id="priority-picker-label">Priority</InputLabel>
                             <Select
                                 labelId="priority-picker-label"
                                 id="priority-picker"
                                 value={priority}
+                                label="Priority"
                                 onChange={handlePriorityChange}
                             >
                                 {PRIORITIES.map(([name, value]) => (
@@ -166,15 +168,12 @@ export function EditTaskMenu({
                             <div>
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <DatePicker
-                                        label=""
+                                        label="Limit Date"
                                         value={limitDate}
+                                        minDate={getNowDate()}
                                         onChange={handleLimitDateChange}
-                                        inputFormat="MM/dd/yyyy"
                                         renderInput={props => (
-                                            <TextField
-                                                label="Limit Date"
-                                                placeholder="MM/dd/yyyy"
-                                            />
+                                            <TextField margin="dense" {...props} />
                                         )}
                                     />
                                 </LocalizationProvider>
@@ -210,7 +209,6 @@ const PRIORITIES: [name: string, value: TaskPriority][] = [
     [DEFAULT_TASK_PRIORITIES_NAMES[TaskPriority.LOW], TaskPriority.LOW],
     [DEFAULT_TASK_PRIORITIES_NAMES[TaskPriority.MEDIUM], TaskPriority.MEDIUM],
     [DEFAULT_TASK_PRIORITIES_NAMES[TaskPriority.HIGH], TaskPriority.HIGH],
-    [DEFAULT_TASK_PRIORITIES_NAMES[TaskPriority.EXTREME], TaskPriority.EXTREME],
 ];
 
 const FormSection = styled.div`

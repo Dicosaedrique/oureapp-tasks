@@ -4,7 +4,6 @@ export interface PreferencesSliceState {
     priority: {
         displayPriorityFullName: boolean;
         prioritiesNames: Record<TaskPriority, string>;
-        prioritiesColors: Record<TaskPriority, string>;
     };
     limitDate: {
         displayRelativeTime: boolean;

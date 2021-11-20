@@ -35,7 +35,7 @@ export function DeleteListDialog({
             handleSuccess={deleteList}
             handleClose={handleClose}
             title={`Are you sure you want to delete the task list '${list.title}' ?`}
-            description={`If you delete this list, the tasks in it will be deleted too and you won't be able to retrieve them. There is ${list.taskCount} tasks in this list (including ${list.taskToDoCount} to do)`}
+            description={`If you delete this list, the tasks in it will be deleted too and you won't be able to retrieve them. There is ${list.taskCount} tasks in this list (including ${list.taskToDoCount} to do).`}
             confirmButton="Delete"
             closeButton="Cancel"
         />

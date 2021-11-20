@@ -39,10 +39,14 @@ taskListTitle.tasks.push(
 // test priority sorting
 taskListPriority.tasks.push(
     createTestTask({ priority: TaskPriority.NONE }),
+    createTestTask({ priority: TaskPriority.NONE }),
+    createTestTask({ priority: TaskPriority.LOW }),
     createTestTask({ priority: TaskPriority.LOW }),
     createTestTask({ priority: TaskPriority.MEDIUM }),
+    createTestTask({ priority: TaskPriority.MEDIUM }),
     createTestTask({ priority: TaskPriority.HIGH }),
-    createTestTask({ priority: TaskPriority.EXTREME }),
+    createTestTask({ priority: TaskPriority.HIGH }),
+    createTestTask({ priority: TaskPriority.HIGH }),
 );
 
 // test limit date sorting

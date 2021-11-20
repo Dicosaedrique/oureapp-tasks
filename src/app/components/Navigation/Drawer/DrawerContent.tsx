@@ -1,9 +1,4 @@
-import SettingsIcon from '@mui/icons-material/Settings';
 import Divider from '@mui/material/Divider';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import React from 'react';
 
@@ -20,14 +15,6 @@ export function DrawerContent({ handleMobileToggle }: DrawerContentProps): React
             <Divider />
             <MemoListDrawerSection handleMobileToggle={handleMobileToggle} />
             <Divider />
-            <List>
-                <ListItem button onClick={handleMobileToggle}>
-                    <ListItemIcon>
-                        <SettingsIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Settings" />
-                </ListItem>
-            </List>
         </>
     );
 }

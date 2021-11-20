@@ -1,4 +1,4 @@
-import { DEFAULT_TASK_PRIORITIES_COLORS, DEFAULT_TASK_PRIORITIES_NAMES } from 'model/Task/Priority';
+import { DEFAULT_TASK_PRIORITIES_NAMES } from 'model/Task/Priority';
 import { useInjectReducer } from 'utils/redux-injectors';
 import { createSlice } from 'utils/redux-toolkit';
 
@@ -11,7 +11,6 @@ export const initialState: PreferencesSliceState = {
     priority: {
         displayPriorityFullName: true,
         prioritiesNames: DEFAULT_TASK_PRIORITIES_NAMES,
-        prioritiesColors: DEFAULT_TASK_PRIORITIES_COLORS,
     },
     limitDate: {
         displayRelativeTime: false,

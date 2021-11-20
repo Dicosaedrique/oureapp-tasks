@@ -69,7 +69,7 @@ export function ListMenu({
                         id="list-title"
                         label="Title"
                         margin="dense"
-                        placeholder="Be happy !"
+                        placeholder="Such a list!"
                         fullWidth
                         value={title}
                         onChange={handleTitleChange}
