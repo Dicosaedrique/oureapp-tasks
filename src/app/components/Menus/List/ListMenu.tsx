@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -66,20 +65,19 @@ export function ListMenu({
             <DialogTitle id={dialogId}>{dialogTitle}</DialogTitle>
             <DialogContent>
                 <form id={formId} onSubmit={submit}>
-                    <FormSection>
-                        <TextField
-                            id="list-title"
-                            label="Title"
-                            placeholder="Be happy !"
-                            fullWidth
-                            value={title}
-                            onChange={handleTitleChange}
-                            autoFocus
-                            error={titleError !== null}
-                            helperText={titleError !== null && titleError}
-                            required
-                        />
-                    </FormSection>
+                    <TextField
+                        id="list-title"
+                        label="Title"
+                        margin="dense"
+                        placeholder="Be happy !"
+                        fullWidth
+                        value={title}
+                        onChange={handleTitleChange}
+                        autoFocus
+                        error={titleError !== null}
+                        helperText={titleError !== null && titleError}
+                        required
+                    />
                 </form>
             </DialogContent>
             <DialogActions>
@@ -97,7 +95,3 @@ export function ListMenu({
         </Dialog>
     );
 }
-
-const FormSection = styled.div`
-    margin: 0 0 1em 0;
-`;

@@ -1,12 +1,12 @@
 import { ListMenu } from 'app/components/Menus/List/ListMenu';
-import { TaskListBase, TaskListInputProps } from 'model/TaskList';
+import { TaskListInputProps, TaskListStats } from 'model/TaskList';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useTaskListsSlice } from 'store/slices/taskLists';
 
 export interface EditListMenuProps {
     open: boolean;
-    list: TaskListBase | null;
+    list: TaskListStats | null;
     handleClose: () => void;
 }
 
