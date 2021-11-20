@@ -3,29 +3,34 @@ import AppBar from '@mui/material/AppBar';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { Breakpoint } from '@mui/system';
 import React from 'react';
 
 export interface TopBarProps {
     title: string;
-    drawerOpen: boolean;
-    handleDrawerOpen: () => void;
+    drawerBreakpoint: Breakpoint;
+    handleDrawerToggle: () => void;
 }
 
-export function TopBar({ title, drawerOpen, handleDrawerOpen }: TopBarProps): React.ReactElement {
+export function TopBar({
+    title,
+    drawerBreakpoint,
+    handleDrawerToggle,
+}: TopBarProps): React.ReactElement {
     return (
-        <AppBar position="fixed">
+        <AppBar position="fixed" sx={{ zIndex: theme => theme.zIndex.drawer + 1 }}>
             <Toolbar>
                 <IconButton
                     color="inherit"
                     aria-label="open drawer"
-                    onClick={handleDrawerOpen}
                     edge="start"
-                    size="large"
+                    onClick={handleDrawerToggle}
+                    sx={{ mr: 2, display: { [drawerBreakpoint]: 'none' } }}
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography variant="h6" noWrap>
-                    What do I have to do ?
+                <Typography variant="h6" noWrap component="div">
+                    {title}
                 </Typography>
             </Toolbar>
         </AppBar>

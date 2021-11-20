@@ -26,7 +26,13 @@ import {
 } from 'store/slices/taskLists/selectors';
 import { Id } from 'utils/types';
 
-export default function TaskListsDrawerSection(): React.ReactElement {
+interface ListsDrawerSectionProps {
+    handleMobileToggle: () => void;
+}
+
+export function ListsDrawerSection({
+    handleMobileToggle,
+}: ListsDrawerSectionProps): React.ReactElement {
     const params = useParams() as TasksPagePathParams;
 
     const { actions } = useTaskListsSlice();
@@ -39,7 +45,10 @@ export default function TaskListsDrawerSection(): React.ReactElement {
     );
 
     const navigate = useNavigate();
-    const createTaskListNavigationHandler = (id: Id) => () => navigate(`/list/${id}`);
+    const createTaskListNavigationHandler = (id: Id) => () => {
+        navigate(`/list/${id}`);
+        handleMobileToggle(); // close drawer on navigate
+    };
     const defaultTaskListNavigationHandler = createTaskListNavigationHandler(DEFAULT_LIST_ID);
 
     const [selectedList, setSelectedList] = React.useState<TaskListBase | null>(null);
@@ -168,4 +177,4 @@ export default function TaskListsDrawerSection(): React.ReactElement {
     );
 }
 
-export const MemoTaskListsDrawerSection = React.memo(TaskListsDrawerSection);
+export const MemoListsDrawerSection = React.memo(ListsDrawerSection);
