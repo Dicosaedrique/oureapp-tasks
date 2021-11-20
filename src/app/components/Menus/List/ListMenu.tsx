@@ -11,6 +11,7 @@ import { TaskListInputProps } from 'model/TaskList';
 import React from 'react';
 
 export interface ListMenuProps {
+    open: boolean;
     dialogTitle: string;
     handleClose: () => void;
     handleSubmit: (listProps: TaskListInputProps) => void;
@@ -19,6 +20,7 @@ export interface ListMenuProps {
 }
 
 export function ListMenu({
+    open,
     dialogTitle,
     defaultListProps,
     handleClose,
@@ -55,7 +57,7 @@ export function ListMenu({
     return (
         <Dialog
             fullScreen={fullScreen}
-            open
+            open={open}
             fullWidth
             maxWidth="sm"
             onClose={handleClose}

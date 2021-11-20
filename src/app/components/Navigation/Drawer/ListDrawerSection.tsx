@@ -30,7 +30,7 @@ interface ListsDrawerSectionProps {
     handleMobileToggle: () => void;
 }
 
-export function ListsDrawerSection({
+export function ListDrawerSection({
     handleMobileToggle,
 }: ListsDrawerSectionProps): React.ReactElement {
     const params = useParams() as TasksPagePathParams;
@@ -47,7 +47,7 @@ export function ListsDrawerSection({
     const navigate = useNavigate();
     const createTaskListNavigationHandler = (id: Id) => () => {
         navigate(`/list/${id}`);
-        handleMobileToggle(); // close drawer on navigate
+        handleMobileToggle(); // close drawer on navigate (on mobile)
     };
     const defaultTaskListNavigationHandler = createTaskListNavigationHandler(DEFAULT_LIST_ID);
 
@@ -75,7 +75,7 @@ export function ListsDrawerSection({
     };
 
     // options menu
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = React.useState<null | Element>(null);
     const openOptionsCreator = (list: TaskListBase) => (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
         setSelectedList(list);
@@ -84,7 +84,6 @@ export function ListsDrawerSection({
         setAnchorEl(null);
         setSelectedList(null);
     };
-    const isOptionsMenuOpen = Boolean(anchorEl);
 
     return (
         <>
@@ -110,15 +109,13 @@ export function ListsDrawerSection({
                         </IconButton>
                     </ListItemSecondaryAction>
                 </ListItem>
-            </List>
-            <Divider />
-            <List>
+                <Divider sx={{ marginY: '0.5em' }} />
                 {lists.map(list => (
                     <ListItem
+                        key={list.id}
                         button
                         selected={params.id === list.id}
                         onClick={createTaskListNavigationHandler(list.id)}
-                        key={list.id}
                     >
                         <ListItemIcon>
                             <ListIcon />
@@ -144,37 +141,58 @@ export function ListsDrawerSection({
                     <ListItemText primary="Add list" />
                 </ListItem>
             </List>
-            {createMenuOpen && <CreateListMenu handleClose={closeCreateMenu} />}
-            {editMenuOpen && selectedList !== null && (
-                <EditListMenu handleClose={closeEditListMenu} list={selectedList} />
-            )}
-            {isOptionsMenuOpen && (
-                <Menu
-                    id="list-options-menu"
-                    aria-haspopup="true"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={closeOptions}
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'center',
-                    }}
-                >
-                    <MenuItem onClick={openEditListMenu} style={{ color: '#4e58ee' }}>
-                        <EditIcon />
-                        &nbsp;&nbsp;Edit List
-                    </MenuItem>
-                    {selectedList?.id !== DEFAULT_LIST_ID && (
-                        <MenuItem onClick={deleteList} style={{ color: 'red' }}>
-                            <DeleteIcon />
-                            &nbsp;&nbsp;Delete list
-                        </MenuItem>
-                    )}
-                </Menu>
-            )}
+            <CreateListMenu open={createMenuOpen} handleClose={closeCreateMenu} />
+            <EditListMenu open={editMenuOpen} handleClose={closeEditListMenu} list={selectedList} />
+            <ListOptionsMenu
+                anchorEl={anchorEl}
+                disableDelete={selectedList?.id === DEFAULT_LIST_ID}
+                handleClose={closeOptions}
+                handleOpenEditMenu={openEditListMenu}
+                handleDeleteList={deleteList}
+            />
         </>
     );
 }
 
-export const MemoListsDrawerSection = React.memo(ListsDrawerSection);
+export const MemoListDrawerSection = React.memo(ListDrawerSection);
+
+interface ListOptionsMenuProps {
+    anchorEl: Element | null;
+    handleClose: () => void;
+    handleOpenEditMenu: () => void;
+    handleDeleteList: () => void;
+    disableDelete?: boolean;
+}
+
+function ListOptionsMenu({
+    anchorEl,
+    handleClose,
+    handleOpenEditMenu,
+    handleDeleteList,
+    disableDelete = false,
+}: ListOptionsMenuProps): React.ReactElement | null {
+    const open = Boolean(anchorEl);
+
+    if (!open) return null;
+
+    return (
+        <Menu
+            anchorEl={anchorEl}
+            keepMounted
+            open
+            onClose={handleClose}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+            <MenuItem onClick={handleOpenEditMenu} style={{ color: '#4e58ee' }}>
+                <EditIcon />
+                &nbsp;&nbsp;Edit List
+            </MenuItem>
+            {!disableDelete && (
+                <MenuItem onClick={handleDeleteList} style={{ color: 'red' }}>
+                    <DeleteIcon />
+                    &nbsp;&nbsp;Delete list
+                </MenuItem>
+            )}
+        </Menu>
+    );
+}

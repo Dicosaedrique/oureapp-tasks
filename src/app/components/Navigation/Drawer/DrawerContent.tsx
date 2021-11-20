@@ -7,7 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import React from 'react';
 
-import { MemoListsDrawerSection } from './ListsDrawerSection';
+import { MemoListDrawerSection } from './ListDrawerSection';
 
 interface DrawerContentProps {
     handleMobileToggle: () => void;
@@ -18,7 +18,7 @@ export function DrawerContent({ handleMobileToggle }: DrawerContentProps): React
         <>
             <Toolbar />
             <Divider />
-            <MemoListsDrawerSection handleMobileToggle={handleMobileToggle} />
+            <MemoListDrawerSection handleMobileToggle={handleMobileToggle} />
             <Divider />
             <List>
                 <ListItem button onClick={handleMobileToggle}>
