@@ -148,33 +148,15 @@ export function TaskComponent({ task, listId }: TaskProps): React.ReactElement {
                     >
                         <MoreVertIcon />
                     </IconButton>
-                    <Menu
-                        id="task-options-menu"
-                        aria-haspopup="true"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={closeOptions}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'center',
-                        }}
-                    >
-                        <MenuItem onClick={openEditMenu} style={{ color: '#4e58ee' }}>
-                            <EditIcon />
-                            &nbsp;&nbsp;Edit task
-                        </MenuItem>
-                        <MenuItem onClick={archiveTask} style={{ color: 'orange' }}>
-                            <ArchiveIcon />
-                            &nbsp;&nbsp;Archive task
-                        </MenuItem>
-                        <MenuItem onClick={deleteTask} style={{ color: 'red' }}>
-                            <DeleteIcon />
-                            &nbsp;&nbsp;Delete task
-                        </MenuItem>
-                    </Menu>
                 </ListItemSecondaryAction>
             </ListItem>
+            <TaskOptionsMenu
+                anchorEl={anchorEl}
+                onEditTask={openEditMenu}
+                onArchiveTask={archiveTask}
+                onDeleteTask={deleteTask}
+                onCloseMenu={closeOptions}
+            />
             {editMenuOpen && (
                 <EditTaskMenu handleClose={closeEditMenu} handleSubmit={editTask} task={task} />
             )}
@@ -182,4 +164,50 @@ export function TaskComponent({ task, listId }: TaskProps): React.ReactElement {
     );
 }
 
-export const MemoTaskComponent = React.memo(TaskComponent);
+export const MemoTask = React.memo(TaskComponent);
+
+interface TaskOptionsMenuProps {
+    anchorEl: Element | null;
+    onEditTask: () => void;
+    onArchiveTask: () => void;
+    onDeleteTask: () => void;
+    onCloseMenu: () => void;
+}
+
+function TaskOptionsMenu({
+    anchorEl,
+    onEditTask,
+    onArchiveTask,
+    onDeleteTask,
+    onCloseMenu,
+}: TaskOptionsMenuProps) {
+    const open = Boolean(anchorEl);
+
+    return (
+        <Menu
+            id="task-options-menu"
+            aria-haspopup="true"
+            anchorEl={anchorEl}
+            keepMounted
+            open={open}
+            onClose={onCloseMenu}
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+            }}
+        >
+            <MenuItem onClick={onEditTask} style={{ color: '#4e58ee' }}>
+                <EditIcon />
+                &nbsp;&nbsp;Edit task
+            </MenuItem>
+            <MenuItem onClick={onArchiveTask} style={{ color: 'orange' }}>
+                <ArchiveIcon />
+                &nbsp;&nbsp;Archive task
+            </MenuItem>
+            <MenuItem onClick={onDeleteTask} style={{ color: 'red' }}>
+                <DeleteIcon />
+                &nbsp;&nbsp;Delete task
+            </MenuItem>
+        </Menu>
+    );
+}
