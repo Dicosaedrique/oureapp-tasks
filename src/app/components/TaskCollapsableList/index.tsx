@@ -5,29 +5,26 @@ import Collapse from '@mui/material/Collapse';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import { Task, TaskState } from 'model/Task';
+import { MemoTask } from 'app/components/Task';
+import { Task } from 'model/Task';
 import React from 'react';
 import { Id } from 'utils/types';
-
-import { MemoTaskComponent } from '../Task';
 
 export interface TaskCollapsableListProps {
     listId: Id;
     title: string;
     tasks: Task[];
+    defaultOpen: boolean;
 }
 
 export default function TaskCollapsableList({
     listId,
     title,
     tasks,
+    defaultOpen,
 }: TaskCollapsableListProps): React.ReactElement {
-    const [open, setOpen] = React.useState(true);
-
+    const [open, setOpen] = React.useState(defaultOpen);
     const toggleOpen = () => setOpen(!open);
-
-    // count tasks to be done (to display it next to the task list title)
-    const remainingTasks = tasks.filter(task => task.state === TaskState.TODO).length;
 
     return (
         <>
@@ -36,7 +33,7 @@ export default function TaskCollapsableList({
                     primary={
                         <span>
                             <TaskListTitle>{title}</TaskListTitle>
-                            {remainingTasks > 0 && ` (${remainingTasks} remaining tasks)`}
+                            {tasks.length > 0 && ` (${tasks.length} tasks)`}
                         </span>
                     }
                 />
@@ -45,7 +42,7 @@ export default function TaskCollapsableList({
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     {tasks.map(task => (
-                        <MemoTaskComponent key={task.id} listId={listId} task={task} />
+                        <MemoTask key={task.id} listId={listId} task={task} />
                     ))}
                 </List>
             </Collapse>
@@ -56,7 +53,7 @@ export default function TaskCollapsableList({
 const TaskListTitle = styled.span`
     font-weight: bold;
     font-size: 1.1em;
-    margin-right: 0.4em;
+    margin-right: 0.5em;
 `;
 
 export const MemoTaskCollapsableList = React.memo(TaskCollapsableList);

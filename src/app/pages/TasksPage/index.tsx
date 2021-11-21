@@ -5,7 +5,7 @@ import { RewarderProvider } from 'app/components/Reward/context';
 import { MemoTaskCollapsableList } from 'app/components/TaskCollapsableList';
 import NotFoundPage from 'app/pages/NotFoundPage/Loadable';
 import BasePage from 'app/pages/Templates/BasePage';
-import { TASK_STATE_NAMES } from 'model/Task';
+import { TASK_STATE_NAMES, TaskState } from 'model/Task';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -33,8 +33,10 @@ export default function TasksPage(): React.ReactElement {
     return (
         <BasePage title={taskListBase.title}>
             <RewarderProvider>
-                <FilteringMenu />
-                <SortingMenu />
+                <div style={{ margin: 'auto 0.5em 1.5em auto' }}>
+                    <FilteringMenu />
+                    <SortingMenu />
+                </div>
                 {mapObject(tasks, (tasks, taskState) => {
                     if (tasks.length === 0) return null;
                     else
@@ -44,10 +46,11 @@ export default function TasksPage(): React.ReactElement {
                                 listId={taskListBase.id}
                                 title={TASK_STATE_NAMES[taskState]}
                                 tasks={tasks}
+                                defaultOpen={taskState.toString() === TaskState.TODO.toString()}
                             />
                         );
                 })}
-                <div style={{ margin: '1em auto' }}>
+                <div style={{ margin: '1.5em auto auto auto' }}>
                     <CreateTaskMenu listId={taskListBase.id} />
                 </div>
             </RewarderProvider>
