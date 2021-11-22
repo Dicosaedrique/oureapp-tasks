@@ -84,9 +84,14 @@ function getLimitDateColor(
 
         default:
         case TaskState.TODO:
-            if (progress < thresholdWarning) return 'success';
-            else if (progress >= thresholdWarning && progress < thresholdDanger) return 'warning';
-            else return 'error';
+            if (remainingDays >= 0) {
+                if (progress < thresholdWarning) return 'success';
+                else if (progress >= thresholdWarning && progress < thresholdDanger)
+                    return 'warning';
+                else return 'error';
+            } else {
+                return 'error';
+            }
     }
 }
 
@@ -97,7 +102,11 @@ function getRelativeTimeText(
 ): string {
     switch (taskState) {
         case TaskState.TODO:
-            return `${remainingDays} remaining days (${progress}%)`;
+            if (remainingDays < 0) {
+                return `${Math.abs(remainingDays)} days late!`;
+            } else {
+                return `${remainingDays} remaining days (${progress}%)`;
+            }
 
         case TaskState.DONE:
             return `Finished ${Math.abs(remainingDays)} days ${
@@ -108,22 +117,3 @@ function getRelativeTimeText(
             return '???';
     }
 }
-
-// import styled from '@emotion/styled';
-
-// const Badge = styled.span`
-//     border-radius: 0.5em;
-//     color: #ffffff;
-//     padding: 0.15em 0.65em;
-//     font-size: 0.8em;
-//     cursor: pointer;
-//     user-select: none;
-//     margin: 0 0.3em;
-//     white-space: pre;
-
-//     &:hover {
-//         opacity: 0.9;
-//     }
-// `;
-
-// export default Badge;
