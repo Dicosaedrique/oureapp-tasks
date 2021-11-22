@@ -6,6 +6,7 @@
 
 [![CodeFactor](https://www.codefactor.io/repository/github/dicosaedrique/todo-app-frontend/badge)](https://www.codefactor.io/repository/github/dicosaedrique/todo-app-frontend)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/abc10da270a24b23a195b7466e50faba)](https://www.codacy.com/gh/Dicosaedrique/todo-app-frontend/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Dicosaedrique/todo-app-frontend&utm_campaign=Badge_Grade)
+[![Code linted](https://github.com/Dicosaedrique/todo-app-frontend/actions/workflows/linting-push.yml/badge.svg)](https://github.com/Dicosaedrique/todo-app-frontend/actions/workflows/linting-push.yml)
 
 ## Pipelines
 
@@ -32,13 +33,14 @@ This is the frontend of my todo app based on the [React Boilerplate CRA Template
 -   ✔️ Create task list
 -   ✔️ Edit task list
 -   ✔️ Delete task list
--   ❌ Update UIs (give some soul to this app) -> switch to MUI & unify style across the app
+-   ✔️ Update UIs (give some soul to this app) -> switch to MUI & unify style across the app
+-   ❌ Add a logo & update manifest & robots
+-   ❌ Add archivment system
 
 ## Version 2 (Beta - MVP) ⏰
 
 -   ⌛ Create login page
 -   ⌛ Create home page
--   ⌛ Add archivment system
 -   ⌛ Add account and backend persistence
 -   ⌛ Setup complete i18n (en/fr)
 -   ⌛ Setup Light / Dark theme
@@ -54,14 +56,15 @@ This is the frontend of my todo app based on the [React Boilerplate CRA Template
 -   ⌛ Put a open all / collapse all categories button
 -   ⌛ Add task that can repeat every interval of time
 -   ⌛ Add planning system (I want to do this task this day and see my planning)
+-   ⌛ Add a recycle bin system so we can restore deleted element
 
 ## Other ideas
 
--   move a task from a list to another
--   create a custom order for task list and tasks with drag'n drop
+-   move a task from a list to another (check @dnd-kit)
+-   create a custom order for task list and tasks with drag'n drop (check @dnd-kit)
+-   virtualize lists (will be done as well as implementing drag'n drop)
 -   import/export lists and tasks with json format
--   add a list to favorite
--   archive a task list
 -   make the task lists drawer resizable
--   more confirmation dialogs
--   put deleted element in a recycle bin
+-   add tooltips on button
+-   custom prioritys
+-   add squelettons & loading things to prevent freeze
