@@ -47,6 +47,7 @@ export default function TasksPage(): React.ReactElement {
                                 title={TASK_STATE_NAMES[taskState]}
                                 tasks={tasks}
                                 defaultOpen={taskState.toString() === TaskState.TODO.toString()}
+                                style={{ marginBottom: '1em' }}
                             />
                         );
                 })}
