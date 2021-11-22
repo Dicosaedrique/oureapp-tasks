@@ -16,3 +16,12 @@ export type Dictionary<KeyType extends string | number | symbol, ValueType> = Pa
 >;
 
 export type JSON = string | number | boolean | { [x: string]: JSON } | Array<JSON>;
+
+export type MuiPaletteColors =
+    | 'default'
+    | 'primary'
+    | 'secondary'
+    | 'error'
+    | 'info'
+    | 'success'
+    | 'warning';

@@ -5,10 +5,11 @@ import { useDispatch } from 'react-redux';
 import { useTaskListsSlice } from 'store/slices/taskLists';
 
 export interface CreateListMenuProps {
+    open: boolean;
     handleClose: () => void;
 }
 
-export function CreateListMenu({ handleClose }: CreateListMenuProps): React.ReactElement {
+export function CreateListMenu({ open, handleClose }: CreateListMenuProps): React.ReactElement {
     const dispatch = useDispatch();
     const { actions } = useTaskListsSlice();
 
@@ -19,6 +20,7 @@ export function CreateListMenu({ handleClose }: CreateListMenuProps): React.Reac
 
     return (
         <ListMenu
+            open={open}
             dialogTitle="Create task list"
             handleClose={handleClose}
             handleSubmit={handleCreateList}

@@ -4,14 +4,18 @@ import { EnumDictionnary } from 'utils/types';
 
 export type TaskStateDictionnary<Type> = EnumDictionnary<TaskState, Type>;
 
-export interface TaskListBase extends IElementId {
+export default interface TaskList extends IElementId {
     title: string;
     readonly creationDate: number;
-}
-
-export default interface TaskList extends TaskListBase {
     tasks: Task[];
     archivedTasks: Task[];
+}
+
+export interface TaskListStats extends IElementId {
+    title: string;
+    readonly creationDate: number;
+    taskCount: number;
+    taskToDoCount: number;
 }
 
 export interface TaskListInputProps {
@@ -28,7 +32,7 @@ export function createTaskList(props: TaskListInputProps): TaskList {
     };
 }
 
-export const DEFAULT_LIST_ID = 'DEFAULT_LIST';
+export const DEFAULT_LIST_ID = 'default';
 
 /**
  * Default task list for tasks that don't have a custom list
@@ -37,3 +41,13 @@ export const DEFAULT_LIST: TaskList = {
     ...createTaskList({ title: 'My tasks' }),
     id: DEFAULT_LIST_ID,
 };
+
+export function mapListToListStats(list: TaskList): TaskListStats {
+    return {
+        id: list.id,
+        title: list.title,
+        creationDate: list.creationDate,
+        taskCount: list.tasks.length,
+        taskToDoCount: list.tasks.filter(task => task.state === TaskState.TODO).length,
+    };
+}

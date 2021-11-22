@@ -44,3 +44,10 @@ export function recordToArray<Key extends string | number | symbol, Type>(
 ): Type[] {
     return Object.values(obj);
 }
+
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+export function idle(): void {}
+
+export function getNowDate(): Date {
+    return new Date(Date.now());
+}

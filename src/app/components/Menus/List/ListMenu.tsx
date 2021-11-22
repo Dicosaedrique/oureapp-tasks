@@ -1,16 +1,16 @@
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import { useTheme } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import { useTheme } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { TaskListInputProps } from 'model/TaskList';
 import React from 'react';
-import styled from 'styled-components/macro';
 
 export interface ListMenuProps {
+    open: boolean;
     dialogTitle: string;
     handleClose: () => void;
     handleSubmit: (listProps: TaskListInputProps) => void;
@@ -19,6 +19,7 @@ export interface ListMenuProps {
 }
 
 export function ListMenu({
+    open,
     dialogTitle,
     defaultListProps,
     handleClose,
@@ -55,7 +56,7 @@ export function ListMenu({
     return (
         <Dialog
             fullScreen={fullScreen}
-            open
+            open={open}
             fullWidth
             maxWidth="sm"
             onClose={handleClose}
@@ -64,20 +65,19 @@ export function ListMenu({
             <DialogTitle id={dialogId}>{dialogTitle}</DialogTitle>
             <DialogContent>
                 <form id={formId} onSubmit={submit}>
-                    <FormSection>
-                        <TextField
-                            id="list-title"
-                            label="Title"
-                            placeholder="Be happy !"
-                            fullWidth
-                            value={title}
-                            onChange={handleTitleChange}
-                            autoFocus
-                            error={titleError !== null}
-                            helperText={titleError !== null && titleError}
-                            required
-                        />
-                    </FormSection>
+                    <TextField
+                        id="list-title"
+                        label="Title"
+                        margin="dense"
+                        placeholder="Such a list!"
+                        fullWidth
+                        value={title}
+                        onChange={handleTitleChange}
+                        autoFocus
+                        error={titleError !== null}
+                        helperText={titleError !== null && titleError}
+                        required
+                    />
                 </form>
             </DialogContent>
             <DialogActions>
@@ -95,7 +95,3 @@ export function ListMenu({
         </Dialog>
     );
 }
-
-const FormSection = styled.div`
-    margin: 0 0 1em 0;
-`;

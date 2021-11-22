@@ -1,23 +1,25 @@
-import DateFnsUtils from '@date-io/date-fns';
-import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import { useTheme } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import styled from '@emotion/styled';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import DatePicker from '@mui/lab/DatePicker';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { useTheme } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { Task, TaskInputProps } from 'model/Task';
 import { DEFAULT_TASK_PRIORITIES_NAMES, TaskPriority } from 'model/Task/Priority';
 import React from 'react';
-import styled from 'styled-components/macro';
+import { getNowDate } from 'utils';
 
 export interface EditTaskMenuProps {
     task: Task;
@@ -31,7 +33,7 @@ export function EditTaskMenu({
     handleSubmit,
 }: EditTaskMenuProps): React.ReactElement {
     const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     const formId = 'task-form-id';
     const dialogId = 'edit-task-dialog';
 
@@ -54,7 +56,7 @@ export function EditTaskMenu({
 
     const [priority, setPriority] = React.useState(task.priority);
 
-    const handlePriorityChange = (event: React.ChangeEvent<{ value: unknown }>, _) => {
+    const handlePriorityChange = (event: SelectChangeEvent<TaskPriority>, _: unknown) => {
         setPriority(event.target.value as TaskPriority);
     };
 
@@ -112,16 +114,16 @@ export function EditTaskMenu({
             onClose={handleClose}
             aria-labelledby={dialogId}
         >
-            <DialogTitle id={dialogId}>{`Edit your task "${task.title}"`}</DialogTitle>
+            <DialogTitle id={dialogId}>{`Edit the task '${task.title}'`}</DialogTitle>
             <DialogContent>
                 <form id={formId} onSubmit={submit} onReset={reset}>
                     {/* Task title */}
                     <FormSection>
                         <TextField
-                            id="task-title"
                             label="Title"
                             placeholder="Be happy !"
                             fullWidth
+                            margin="dense"
                             value={title}
                             onChange={handleTitleChange}
                             autoFocus
@@ -134,11 +136,12 @@ export function EditTaskMenu({
                     {/* Task priority */}
                     <FormSection>
                         <FormControl>
-                            <InputLabel id="priority-picker">Priority</InputLabel>
+                            <InputLabel id="priority-picker-label">Priority</InputLabel>
                             <Select
                                 labelId="priority-picker-label"
                                 id="priority-picker"
                                 value={priority}
+                                label="Priority"
                                 onChange={handlePriorityChange}
                             >
                                 {PRIORITIES.map(([name, value]) => (
@@ -163,19 +166,17 @@ export function EditTaskMenu({
                         />
                         {hasLimitDate && (
                             <div>
-                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                    <KeyboardDatePicker
-                                        id="limit-date-picker-dialog"
+                                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                    <DatePicker
                                         label="Limit Date"
                                         value={limitDate}
+                                        minDate={getNowDate()}
                                         onChange={handleLimitDateChange}
-                                        format="MM/dd/yyyy"
-                                        placeholder="MM/dd/yyyy"
-                                        KeyboardButtonProps={{
-                                            'aria-label': 'change limit date',
-                                        }}
+                                        renderInput={props => (
+                                            <TextField margin="dense" {...props} />
+                                        )}
                                     />
-                                </MuiPickersUtilsProvider>
+                                </LocalizationProvider>
                             </div>
                         )}
                     </FormSection>
@@ -208,7 +209,6 @@ const PRIORITIES: [name: string, value: TaskPriority][] = [
     [DEFAULT_TASK_PRIORITIES_NAMES[TaskPriority.LOW], TaskPriority.LOW],
     [DEFAULT_TASK_PRIORITIES_NAMES[TaskPriority.MEDIUM], TaskPriority.MEDIUM],
     [DEFAULT_TASK_PRIORITIES_NAMES[TaskPriority.HIGH], TaskPriority.HIGH],
-    [DEFAULT_TASK_PRIORITIES_NAMES[TaskPriority.EXTREME], TaskPriority.EXTREME],
 ];
 
 const FormSection = styled.div`

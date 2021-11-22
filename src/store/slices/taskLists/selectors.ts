@@ -1,6 +1,10 @@
 import { Task, TaskState } from 'model/Task';
 import { getFilterFromSettings } from 'model/Task/Filter';
-import TaskList, { DEFAULT_LIST_ID, TaskListBase, TaskStateDictionnary } from 'model/TaskList';
+import TaskList, {
+    DEFAULT_LIST_ID,
+    mapListToListStats,
+    TaskStateDictionnary,
+} from 'model/TaskList';
 import { createSelector } from 'reselect';
 import { selectFilteringSettings } from 'store/slices/taskFiltering/selectors';
 import { initialState } from 'store/slices/taskLists';
@@ -14,30 +18,30 @@ const selectSlice = (state: RootState): TaskListsSliceState => state?.taskLists 
 
 export const selectTaskLists = selectSlice;
 
-export const selectTaskListsBaseOrderedByCreationDate = createSelector(
-    selectTaskLists,
-    taskLists =>
-        recordToArray(taskLists as Record<Id, TaskList>).sort((a, b) => {
+export const selectTaskListsBaseOrderedByCreationDate = createSelector(selectTaskLists, taskLists =>
+    recordToArray(taskLists as Record<Id, TaskList>)
+        .sort((a, b) => {
             if (a.creationDate < b.creationDate) return -1;
             if (a.creationDate > b.creationDate) return 1;
             return 0;
-        }) as TaskListBase[],
+        })
+        .map(mapListToListStats),
 );
 
-export const selectDefaultTaskListBase = createSelector(
-    selectTaskLists,
-    taskLists => taskLists[DEFAULT_LIST_ID] as TaskListBase,
+export const selectDefaultTaskListBase = createSelector(selectTaskLists, taskLists =>
+    mapListToListStats(taskLists[DEFAULT_LIST_ID]!),
 );
 
 export const selectTaskListBaseById = createSelector(
     selectTaskLists,
-    (_, id: Id) => id,
-    (taskLists, id) => taskLists[id] as TaskListBase,
+    (_: TaskListsSliceState, id: Id) => id,
+    (taskLists, id) =>
+        taskLists[id] !== undefined ? mapListToListStats(taskLists[id]!) : undefined,
 );
 
 export const selectTaskListById = createSelector(
     selectTaskLists,
-    (_, id: Id) => id,
+    (_: TaskListsSliceState, id: Id) => id,
     (taskLists, id) => taskLists[id],
 );
 

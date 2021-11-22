@@ -13,13 +13,12 @@ export class Rewarder extends React.Component<unknown, never> {
     static MAX_PARTICLES = 1000;
 
     // defines the default general options for a confetti shot
-    readonly defaultOptions: Required<
-        Pick<ConfettiOptions, 'origin' | 'particleCount' | 'ticks'>
-    > = {
-        origin: { y: 0.7 },
-        particleCount: 100,
-        ticks: 150,
-    };
+    readonly defaultOptions: Required<Pick<ConfettiOptions, 'origin' | 'particleCount' | 'ticks'>> =
+        {
+            origin: { y: 0.7 },
+            particleCount: 100,
+            ticks: 150,
+        };
 
     // options for the current fire
     currentFireOptions: Partial<ConfettiOptions> = {};
@@ -145,10 +144,12 @@ export class Rewarder extends React.Component<unknown, never> {
  * @returns the particle count for this task (based on priority, time to complete, ...)
  */
 export function getParticleCountFromTask(task: Task): number {
-    const ratio = task.priority / TaskPriority.EXTREME;
-    const count = ratio * (MAX_PARTICLES - MIN_PARTICLES) + MIN_PARTICLES;
-    return count;
+    return TASK_PRIORITY_PARTICLES[task.priority];
 }
 
-const MIN_PARTICLES = 40;
-const MAX_PARTICLES = 200;
+const TASK_PRIORITY_PARTICLES: Record<TaskPriority, number> = {
+    [TaskPriority.NONE]: 40,
+    [TaskPriority.LOW]: 80,
+    [TaskPriority.MEDIUM]: 120,
+    [TaskPriority.HIGH]: 160,
+};

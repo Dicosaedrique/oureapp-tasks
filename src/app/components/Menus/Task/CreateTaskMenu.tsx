@@ -1,6 +1,6 @@
-import IconButton from '@material-ui/core/IconButton';
-import TextField from '@material-ui/core/TextField';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
 import React, { ChangeEvent, KeyboardEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTaskListsSlice } from 'store/slices/taskLists';
@@ -57,6 +57,7 @@ export function CreateTaskMenu({ listId }: CreateTaskMenuProps): React.ReactElem
                                   aria-label="Add task"
                                   component="span"
                                   onClick={createTask}
+                                  size="large"
                               >
                                   <AddCircleIcon />
                               </IconButton>

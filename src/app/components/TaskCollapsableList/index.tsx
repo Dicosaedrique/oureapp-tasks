@@ -1,42 +1,41 @@
-import Collapse from '@material-ui/core/Collapse';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import { Task, TaskState } from 'model/Task';
+import styled from '@emotion/styled';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import Collapse from '@mui/material/Collapse';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import { MemoTask } from 'app/components/Task';
+import { Task } from 'model/Task';
 import React from 'react';
-import styled from 'styled-components/macro';
 import { Id } from 'utils/types';
-
-import { MemoTaskComponent } from '../Task';
 
 export interface TaskCollapsableListProps {
     listId: Id;
     title: string;
     tasks: Task[];
+    defaultOpen: boolean;
+    style?: React.CSSProperties;
 }
 
 export default function TaskCollapsableList({
     listId,
     title,
     tasks,
+    defaultOpen,
+    style,
 }: TaskCollapsableListProps): React.ReactElement {
-    const [open, setOpen] = React.useState(true);
-
+    const [open, setOpen] = React.useState(defaultOpen);
     const toggleOpen = () => setOpen(!open);
 
-    // count tasks to be done (to display it next to the task list title)
-    const remainingTasks = tasks.filter(task => task.state === TaskState.TODO).length;
-
     return (
-        <>
+        <div style={style}>
             <ListItem button onClick={toggleOpen} selected={open}>
                 <ListItemText
                     primary={
                         <span>
                             <TaskListTitle>{title}</TaskListTitle>
-                            {remainingTasks > 0 && ` (${remainingTasks} remaining tasks)`}
+                            {tasks.length > 0 && ` (${tasks.length} tasks)`}
                         </span>
                     }
                 />
@@ -45,18 +44,18 @@ export default function TaskCollapsableList({
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     {tasks.map(task => (
-                        <MemoTaskComponent key={task.id} listId={listId} task={task} />
+                        <MemoTask key={task.id} listId={listId} task={task} />
                     ))}
                 </List>
             </Collapse>
-        </>
+        </div>
     );
 }
 
 const TaskListTitle = styled.span`
     font-weight: bold;
     font-size: 1.1em;
-    margin-right: 0.4em;
+    margin-right: 0.5em;
 `;
 
 export const MemoTaskCollapsableList = React.memo(TaskCollapsableList);

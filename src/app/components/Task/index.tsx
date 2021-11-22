@@ -1,15 +1,15 @@
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ArchiveIcon from '@material-ui/icons/Archive';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ArchiveIcon from '@mui/icons-material/Archive';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Checkbox from '@mui/material/Checkbox';
+import IconButton from '@mui/material/IconButton';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import ListItemText from '@mui/material/ListItemText';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import { EditTaskMenu } from 'app/components/Menus/Task/EditTaskMenu';
 import { getParticleCountFromTask } from 'app/components/Reward';
 import { useRewarder } from 'app/components/Reward/context';
@@ -121,7 +121,10 @@ export function TaskComponent({ task, listId }: TaskProps): React.ReactElement {
                         <>
                             <span style={{ marginRight: '1em' }}>{task.title}</span>
                             {task.priority !== TaskPriority.NONE && (
-                                <MemoPriorityComponent priority={task.priority} />
+                                <MemoPriorityComponent
+                                    priority={task.priority}
+                                    sx={{ marginRight: 2 }}
+                                />
                             )}
                             {task.limitDate !== undefined && (
                                 <MemoLimitDateComponent
@@ -144,37 +147,19 @@ export function TaskComponent({ task, listId }: TaskProps): React.ReactElement {
                         onClick={openOptions}
                         aria-label="Options"
                         title="Options"
+                        size="large"
                     >
                         <MoreVertIcon />
                     </IconButton>
-                    <Menu
-                        id="task-options-menu"
-                        aria-haspopup="true"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={closeOptions}
-                        getContentAnchorEl={null}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'center',
-                        }}
-                    >
-                        <MenuItem onClick={openEditMenu} style={{ color: '#4e58ee' }}>
-                            <EditIcon />
-                            &nbsp;&nbsp;Edit task
-                        </MenuItem>
-                        <MenuItem onClick={archiveTask} style={{ color: 'orange' }}>
-                            <ArchiveIcon />
-                            &nbsp;&nbsp;Archive task
-                        </MenuItem>
-                        <MenuItem onClick={deleteTask} style={{ color: 'red' }}>
-                            <DeleteIcon />
-                            &nbsp;&nbsp;Delete task
-                        </MenuItem>
-                    </Menu>
                 </ListItemSecondaryAction>
             </ListItem>
+            <TaskOptionsMenu
+                anchorEl={anchorEl}
+                onEditTask={openEditMenu}
+                onArchiveTask={archiveTask}
+                onDeleteTask={deleteTask}
+                onCloseMenu={closeOptions}
+            />
             {editMenuOpen && (
                 <EditTaskMenu handleClose={closeEditMenu} handleSubmit={editTask} task={task} />
             )}
@@ -182,4 +167,50 @@ export function TaskComponent({ task, listId }: TaskProps): React.ReactElement {
     );
 }
 
-export const MemoTaskComponent = React.memo(TaskComponent);
+export const MemoTask = React.memo(TaskComponent);
+
+interface TaskOptionsMenuProps {
+    anchorEl: Element | null;
+    onEditTask: () => void;
+    onArchiveTask: () => void;
+    onDeleteTask: () => void;
+    onCloseMenu: () => void;
+}
+
+function TaskOptionsMenu({
+    anchorEl,
+    onEditTask,
+    onArchiveTask,
+    onDeleteTask,
+    onCloseMenu,
+}: TaskOptionsMenuProps) {
+    const open = Boolean(anchorEl);
+
+    return (
+        <Menu
+            id="task-options-menu"
+            aria-haspopup="true"
+            anchorEl={anchorEl}
+            keepMounted
+            open={open}
+            onClose={onCloseMenu}
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+            }}
+        >
+            <MenuItem onClick={onEditTask} style={{ color: '#4e58ee' }}>
+                <EditIcon />
+                &nbsp;&nbsp;Edit task
+            </MenuItem>
+            <MenuItem onClick={onArchiveTask} style={{ color: 'orange' }}>
+                <ArchiveIcon />
+                &nbsp;&nbsp;Archive task
+            </MenuItem>
+            <MenuItem onClick={onDeleteTask} style={{ color: 'red' }}>
+                <DeleteIcon />
+                &nbsp;&nbsp;Delete task
+            </MenuItem>
+        </Menu>
+    );
+}

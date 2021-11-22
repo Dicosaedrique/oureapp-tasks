@@ -1,68 +1,38 @@
-import AppBar from '@material-ui/core/AppBar';
-import IconButton from '@material-ui/core/IconButton';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import MenuIcon from '@material-ui/icons/Menu';
-import { DRAWER_WIDTH } from 'app/components/Navigation/Drawer';
-import clsx from 'clsx';
+import MenuIcon from '@mui/icons-material/Menu';
+import AppBar from '@mui/material/AppBar';
+import IconButton from '@mui/material/IconButton';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { Breakpoint } from '@mui/system';
 import React from 'react';
 
 export interface TopBarProps {
     title: string;
-    drawerOpen: boolean;
-    handleDrawerOpen: () => void;
+    drawerBreakpoint: Breakpoint;
+    handleDrawerToggle: () => void;
 }
 
-export function TopBar({ title, drawerOpen, handleDrawerOpen }: TopBarProps): React.ReactElement {
-    const classes = useStyles();
-
+export function TopBar({
+    title,
+    drawerBreakpoint,
+    handleDrawerToggle,
+}: TopBarProps): React.ReactElement {
     return (
-        <AppBar
-            position="fixed"
-            className={clsx(classes.appBar, {
-                [classes.appBarShift]: drawerOpen,
-            })}
-        >
+        <AppBar position="fixed" sx={{ zIndex: theme => theme.zIndex.drawer + 1 }}>
             <Toolbar>
                 <IconButton
                     color="inherit"
                     aria-label="open drawer"
-                    onClick={handleDrawerOpen}
                     edge="start"
-                    className={clsx(classes.menuButton, drawerOpen && classes.hide)}
+                    onClick={handleDrawerToggle}
+                    sx={{ mr: 2, display: { [drawerBreakpoint]: 'none' } }}
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography variant="h6" noWrap>
-                    What do I have to do ?
+                <Typography variant="h6" noWrap component="div">
+                    {title}
                 </Typography>
             </Toolbar>
         </AppBar>
     );
 }
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        appBar: {
-            transition: theme.transitions.create(['margin', 'width'], {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.leavingScreen,
-            }),
-        },
-        appBarShift: {
-            width: `calc(100% - ${DRAWER_WIDTH}px)`,
-            marginLeft: DRAWER_WIDTH,
-            transition: theme.transitions.create(['margin', 'width'], {
-                easing: theme.transitions.easing.easeOut,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-        },
-        menuButton: {
-            marginRight: theme.spacing(2),
-        },
-        hide: {
-            display: 'none',
-        },
-    }),
-);
