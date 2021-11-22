@@ -56,6 +56,8 @@ taskListLimitDate.tasks.push(
     createTodoTaskWithLimitDateTest({}, 50),
     createTodoTaskWithLimitDateTest({}, 70),
     createTodoTaskWithLimitDateTest({}, 90),
+    createTodoTaskWithLimitDateTest({}, 90),
+    createTestTask({ limitDate: dateDays(-5) }),
 );
 
 // test creation date sorting
