@@ -1,4 +1,6 @@
 import Chip from '@mui/material/Chip';
+import { SxProps } from '@mui/system';
+import { Theme } from 'app';
 import { TaskPriority } from 'model/Task/Priority';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,9 +10,10 @@ import { MuiPaletteColors } from 'utils/types';
 
 interface Props {
     priority: TaskPriority;
+    sx?: SxProps<Theme>;
 }
 
-export function PriorityComponent({ priority }: Props): React.ReactElement {
+export function PriorityComponent({ priority, sx }: Props): React.ReactElement {
     const { actions } = usePreferencesSlice();
 
     const priorityPreferences = useSelector(selectPriorityPreferences);
@@ -34,6 +37,7 @@ export function PriorityComponent({ priority }: Props): React.ReactElement {
             // icon={<ScheduleIcon />}
             color={chipColor}
             onClick={toggleNames}
+            sx={sx}
         />
     );
 }

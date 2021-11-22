@@ -121,7 +121,10 @@ export function TaskComponent({ task, listId }: TaskProps): React.ReactElement {
                         <>
                             <span style={{ marginRight: '1em' }}>{task.title}</span>
                             {task.priority !== TaskPriority.NONE && (
-                                <MemoPriorityComponent priority={task.priority} />
+                                <MemoPriorityComponent
+                                    priority={task.priority}
+                                    sx={{ marginRight: 2 }}
+                                />
                             )}
                             {task.limitDate !== undefined && (
                                 <MemoLimitDateComponent
