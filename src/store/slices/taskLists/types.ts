@@ -36,3 +36,5 @@ export interface PayloadEditList extends PayloadCreateList {
 export interface PayloadDeleteList {
     id: Id;
 }
+
+export type PayloadArchiveList = PayloadDeleteList;

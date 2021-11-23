@@ -1,4 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
+import ArchiveIcon from '@mui/icons-material/Archive';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ListIcon from '@mui/icons-material/List';
@@ -13,6 +14,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import ListItemText from '@mui/material/ListItemText';
 import Menu from '@mui/material/Menu';
+import { ArchiveListDialog } from 'app/components/Menus/List/ArchiveListMenu';
 import { CreateListMenu } from 'app/components/Menus/List/CreateListMenu';
 import { DeleteListDialog } from 'app/components/Menus/List/DeleteListDialog';
 import { EditListMenu } from 'app/components/Menus/List/EditListMenu';
@@ -73,6 +75,14 @@ export function ListDrawerSection({
     };
     const closeDeleteDialog = () => setDeleteDialogOpen(false);
 
+    // archive list dialog
+    const [archiveDialogOpen, setArchiveDialogOpen] = React.useState(false);
+    const openArchiveDialog = () => {
+        setArchiveDialogOpen(true);
+        setAnchorEl(null);
+    };
+    const closeArchiveDialog = () => setArchiveDialogOpen(false);
+
     // options menu
     const [anchorEl, setAnchorEl] = React.useState<null | Element>(null);
     const openOptionsCreator = (list: TaskListStats) => (event: React.MouseEvent<HTMLElement>) => {
@@ -83,6 +93,9 @@ export function ListDrawerSection({
         setAnchorEl(null);
         setSelectedList(null);
     };
+
+    const isSelfSelected = params.id === selectedList?.id;
+    const isDefaultListSelected = selectedList?.id === DEFAULT_LIST_ID;
 
     return (
         <>
@@ -114,22 +127,33 @@ export function ListDrawerSection({
             </List>
 
             <CreateListMenu open={createMenuOpen} handleClose={closeCreateMenu} />
+
             <EditListMenu open={editMenuOpen} handleClose={closeEditListMenu} list={selectedList} />
+
             <DeleteListDialog
                 open={deleteDialogOpen}
                 handleClose={closeDeleteDialog}
                 list={selectedList}
                 handleSelfDelete={() => {
-                    if (params.id === selectedList?.id) defaultTaskListNavigationHandler();
+                    if (isSelfSelected) defaultTaskListNavigationHandler();
+                }}
+            />
+
+            <ArchiveListDialog
+                open={archiveDialogOpen}
+                handleClose={closeArchiveDialog}
+                list={selectedList}
+                handleSelfArchive={() => {
+                    if (isSelfSelected) defaultTaskListNavigationHandler();
                 }}
             />
 
             <ListOptionsMenu
                 anchorEl={anchorEl}
-                disableDelete={selectedList?.id === DEFAULT_LIST_ID}
                 handleClose={closeOptions}
                 handleOpenEditMenu={openEditListMenu}
-                handleDeleteList={openDeleteDialog}
+                handleDeleteList={!isDefaultListSelected ? openDeleteDialog : undefined}
+                handleArchiveList={!isDefaultListSelected ? openArchiveDialog : undefined}
             />
         </>
     );
@@ -182,8 +206,8 @@ interface ListOptionsMenuProps {
     anchorEl: Element | null;
     handleClose: () => void;
     handleOpenEditMenu: () => void;
-    handleDeleteList: () => void;
-    disableDelete?: boolean;
+    handleDeleteList?: () => void;
+    handleArchiveList?: () => void;
 }
 
 function ListOptionsMenu({
@@ -191,7 +215,7 @@ function ListOptionsMenu({
     handleClose,
     handleOpenEditMenu,
     handleDeleteList,
-    disableDelete = false,
+    handleArchiveList,
 }: ListOptionsMenuProps): React.ReactElement | null {
     const open = Boolean(anchorEl);
 
@@ -209,7 +233,13 @@ function ListOptionsMenu({
                 <EditIcon />
                 &nbsp;&nbsp;Edit List
             </MenuItem>
-            {!disableDelete && (
+            {handleArchiveList && (
+                <MenuItem onClick={handleArchiveList} style={{ color: 'orange' }}>
+                    <ArchiveIcon />
+                    &nbsp;&nbsp;Archive list
+                </MenuItem>
+            )}
+            {handleDeleteList && (
                 <MenuItem onClick={handleDeleteList} style={{ color: 'red' }}>
                     <DeleteIcon />
                     &nbsp;&nbsp;Delete list

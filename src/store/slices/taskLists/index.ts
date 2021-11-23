@@ -3,6 +3,7 @@ import TASK_LISTS_DEMO from 'model/demo.data';
 import { createTask, setTaskState } from 'model/Task';
 import { createTaskList, DEFAULT_LIST_ID } from 'model/TaskList';
 import {
+    PayloadArchiveList,
     PayloadArchiveTask,
     PayloadCreateList,
     PayloadCreateTask,
@@ -98,6 +99,16 @@ const slice = createSlice({
         deleteList(state, { payload }: PayloadAction<PayloadDeleteList>) {
             if (payload.id in state && payload.id !== DEFAULT_LIST_ID) {
                 delete state[payload.id];
+            }
+        },
+
+        archiveList(state, { payload }: PayloadAction<PayloadArchiveList>) {
+            const list = state[payload.id];
+
+            if (list !== undefined && payload.id !== DEFAULT_LIST_ID) {
+                list.archivedTasks.push(...list.tasks);
+                list.tasks = [];
+                list.isArchived = true;
             }
         },
     },
