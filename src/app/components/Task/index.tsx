@@ -1,6 +1,3 @@
-import ArchiveIcon from '@mui/icons-material/Archive';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
@@ -8,13 +5,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import ListItemText from '@mui/material/ListItemText';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import { useArchive } from 'app/components/Archive/context';
 import { EditTaskMenu } from 'app/components/Menus/Task/EditTaskMenu';
 import { getParticleCountFromTask } from 'app/components/Reward';
 import { useRewarder } from 'app/components/Reward/context';
 import { MemoLimitDateComponent } from 'app/components/Task/LimitDate';
 import { MemoPriorityComponent } from 'app/components/Task/Priority';
+import { TaskOptionsMenu } from 'app/components/Task/TaskOptionsMenu';
 import { Task, TaskInputProps, TaskState } from 'model/Task';
 import { TaskPriority } from 'model/Task/Priority';
 import React from 'react';
@@ -31,6 +28,7 @@ export function TaskComponent({ task, listId }: TaskProps): React.ReactElement {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const openOptions = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
     const closeOptions = () => setAnchorEl(null);
+    const archive = useArchive();
 
     const rewarder = useRewarder();
 
@@ -61,22 +59,32 @@ export function TaskComponent({ task, listId }: TaskProps): React.ReactElement {
     };
 
     const deleteTask = () => {
-        dispatch(
-            actions.deleteTask({
-                listId,
-                taskId: task.id,
-            }),
-        );
+        const payload = {
+            listId,
+            taskId: task.id,
+        };
+
+        if (archive) {
+            dispatch(actions.deleteArchivedTask(payload));
+        } else {
+            dispatch(actions.deleteTask(payload));
+        }
+
         closeOptions();
     };
 
     const archiveTask = () => {
-        dispatch(
-            actions.archiveTask({
-                listId,
-                taskId: task.id,
-            }),
-        );
+        const payload = {
+            listId,
+            taskId: task.id,
+        };
+
+        if (archive) {
+            dispatch(actions.unarchiveTask(payload));
+        } else {
+            dispatch(actions.archiveTask(payload));
+        }
+
         closeOptions();
     };
 
@@ -105,7 +113,13 @@ export function TaskComponent({ task, listId }: TaskProps): React.ReactElement {
 
     return (
         <>
-            <ListItem button onClick={toggleTask} disableRipple disableTouchRipple>
+            <ListItem
+                button
+                onClick={toggleTask}
+                disableRipple
+                disableTouchRipple
+                disabled={archive}
+            >
                 <ListItemIcon>
                     <Checkbox
                         edge="start"
@@ -159,6 +173,7 @@ export function TaskComponent({ task, listId }: TaskProps): React.ReactElement {
                 onArchiveTask={archiveTask}
                 onDeleteTask={deleteTask}
                 onCloseMenu={closeOptions}
+                archive={archive}
             />
             {editMenuOpen && (
                 <EditTaskMenu handleClose={closeEditMenu} handleSubmit={editTask} task={task} />
@@ -168,49 +183,3 @@ export function TaskComponent({ task, listId }: TaskProps): React.ReactElement {
 }
 
 export const MemoTask = React.memo(TaskComponent);
-
-interface TaskOptionsMenuProps {
-    anchorEl: Element | null;
-    onEditTask: () => void;
-    onArchiveTask: () => void;
-    onDeleteTask: () => void;
-    onCloseMenu: () => void;
-}
-
-function TaskOptionsMenu({
-    anchorEl,
-    onEditTask,
-    onArchiveTask,
-    onDeleteTask,
-    onCloseMenu,
-}: TaskOptionsMenuProps) {
-    const open = Boolean(anchorEl);
-
-    return (
-        <Menu
-            id="task-options-menu"
-            aria-haspopup="true"
-            anchorEl={anchorEl}
-            keepMounted
-            open={open}
-            onClose={onCloseMenu}
-            anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center',
-            }}
-        >
-            <MenuItem onClick={onEditTask} style={{ color: '#4e58ee' }}>
-                <EditIcon />
-                &nbsp;&nbsp;Edit task
-            </MenuItem>
-            <MenuItem onClick={onArchiveTask} style={{ color: 'orange' }}>
-                <ArchiveIcon />
-                &nbsp;&nbsp;Archive task
-            </MenuItem>
-            <MenuItem onClick={onDeleteTask} style={{ color: 'red' }}>
-                <DeleteIcon />
-                &nbsp;&nbsp;Delete task
-            </MenuItem>
-        </Menu>
-    );
-}

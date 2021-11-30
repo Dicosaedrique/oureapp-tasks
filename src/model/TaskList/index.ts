@@ -9,13 +9,16 @@ export default interface TaskList extends IElementId {
     readonly creationDate: number;
     tasks: Task[];
     archivedTasks: Task[];
+    isArchived: boolean;
 }
 
 export interface TaskListStats extends IElementId {
     title: string;
     readonly creationDate: number;
     taskCount: number;
+    archiveTaskCount: number;
     taskToDoCount: number;
+    isArchived: boolean;
 }
 
 export interface TaskListInputProps {
@@ -29,6 +32,7 @@ export function createTaskList(props: TaskListInputProps): TaskList {
         title: props.title,
         tasks: [],
         archivedTasks: [],
+        isArchived: false,
     };
 }
 
@@ -48,6 +52,14 @@ export function mapListToListStats(list: TaskList): TaskListStats {
         title: list.title,
         creationDate: list.creationDate,
         taskCount: list.tasks.length,
+        archiveTaskCount: list.archivedTasks.length,
         taskToDoCount: list.tasks.filter(task => task.state === TaskState.TODO).length,
+        isArchived: list.isArchived,
     };
+}
+
+export function listCreationDateComparer(a: TaskList, b: TaskList): number {
+    if (a.creationDate < b.creationDate) return -1;
+    if (a.creationDate > b.creationDate) return 1;
+    return 0;
 }

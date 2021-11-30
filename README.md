@@ -34,8 +34,8 @@ This is the frontend of my todo app based on the [React Boilerplate CRA Template
 -   ✔️ Edit task list
 -   ✔️ Delete task list
 -   ✔️ Update UIs (give some soul to this app) -> switch to MUI & unify style across the app
--   ❌ Add a logo & update manifest & robots
 -   ❌ Add archivment system
+-   ❌ Add a logo & update manifest & robots
 
 ## Version 2 (Beta - MVP) ⏰
 
@@ -68,3 +68,4 @@ This is the frontend of my todo app based on the [React Boilerplate CRA Template
 -   add tooltips on button
 -   custom prioritys
 -   add squelettons & loading things to prevent freeze
+-   add an option to disable confetti

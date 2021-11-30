@@ -19,7 +19,13 @@ export function App(): React.ReactElement {
                 <Routes>
                     <Route index element={<HomePage />} />
                     <Route path="list">
+                        <Route index element={<TaskPage index />} />
                         <Route path=":id" element={<TaskPage />} />
+
+                        <Route path="archive">
+                            <Route index element={<TaskPage index archive />} />
+                            <Route path=":id" element={<TaskPage archive />} />
+                        </Route>
                     </Route>
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>

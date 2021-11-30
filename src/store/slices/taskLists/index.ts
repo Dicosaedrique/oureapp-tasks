@@ -1,15 +1,20 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import TASK_LISTS_DEMO from 'model/demo.data';
-import { createTask, setTaskState } from 'model/Task';
+import { createTask, setTaskState, TaskState } from 'model/Task';
 import { createTaskList, DEFAULT_LIST_ID } from 'model/TaskList';
 import {
+    PayloadArchiveList,
+    PayloadArchiveListDoneTasks,
     PayloadArchiveTask,
     PayloadCreateList,
     PayloadCreateTask,
+    PayloadDeleteArchivedTask,
     PayloadDeleteList,
     PayloadDeleteTask,
     PayloadEditList,
     PayloadEditTask,
+    PayloadUnarchiveList,
+    PayloadUnarchiveTask,
     PayloadUpdateTaskState,
     TaskListsSliceState,
 } from 'store/slices/taskLists/types';
@@ -53,6 +58,17 @@ const slice = createSlice({
             }
         },
 
+        deleteArchivedTask(state, { payload }: PayloadAction<PayloadDeleteArchivedTask>) {
+            const taskList = state[payload.listId];
+
+            if (taskList !== undefined) {
+                const taskIndex = taskList.archivedTasks.findIndex(
+                    task => task.id === payload.taskId,
+                );
+                if (taskIndex !== -1) taskList.archivedTasks.splice(taskIndex, 1);
+            }
+        },
+
         setTaskState(state, { payload }: PayloadAction<PayloadUpdateTaskState>) {
             const taskList = state[payload.listId];
 
@@ -79,6 +95,33 @@ const slice = createSlice({
             }
         },
 
+        unarchiveTask(state, { payload }: PayloadAction<PayloadUnarchiveTask>) {
+            const taskList = state[payload.listId];
+
+            if (taskList !== undefined) {
+                const taskIndex = taskList.archivedTasks.findIndex(
+                    task => task.id === payload.taskId,
+                );
+                if (taskIndex !== -1) {
+                    const [taskToUnarchive] = taskList.archivedTasks.splice(taskIndex, 1);
+                    taskList.tasks.push(taskToUnarchive);
+                    taskList.isArchived = false;
+                }
+            }
+        },
+
+        archiveListDoneTasks(state, { payload }: PayloadAction<PayloadArchiveListDoneTasks>) {
+            const list = state[payload.id];
+
+            if (list !== undefined) {
+                const tasksDone = list.tasks.filter(task => task.state === TaskState.DONE);
+                const tasksNotDone = list.tasks.filter(task => task.state !== TaskState.DONE);
+
+                list.tasks = tasksNotDone;
+                list.archivedTasks.push(...tasksDone);
+            }
+        },
+
         createList(state, { payload }: PayloadAction<PayloadCreateList>) {
             const newList = createTaskList(payload.listProps);
 
@@ -99,6 +142,27 @@ const slice = createSlice({
             if (payload.id in state && payload.id !== DEFAULT_LIST_ID) {
                 delete state[payload.id];
             }
+        },
+
+        archiveList(state, { payload }: PayloadAction<PayloadArchiveList>) {
+            const list = state[payload.id];
+
+            if (list !== undefined && payload.id !== DEFAULT_LIST_ID) {
+                list.archivedTasks.push(...list.tasks);
+                list.tasks = [];
+                list.isArchived = true;
+            }
+        },
+
+        unarchiveList(state, { payload }: PayloadAction<PayloadUnarchiveList>) {
+            const list = state[payload.id];
+
+            if (list !== undefined && payload.id !== DEFAULT_LIST_ID) {
+                list.tasks.push(...list.archivedTasks);
+                list.archivedTasks = [];
+                list.isArchived = false;
+            }
+            console.log('ALLO !!!');
         },
     },
 });
