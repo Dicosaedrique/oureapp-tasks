@@ -11,17 +11,27 @@ import { Dictionary, Id } from 'utils/types';
 let taskIncrement = 1;
 const DAY_IN_MS = 86400000;
 
-const taskListTitle = { ...createTaskList({ title: 'Test title sorting' }), id: 'title' };
-const taskListPriority = { ...createTaskList({ title: 'Test priority sorting' }), id: 'priority' };
-const taskListLimitDate = {
+const taskListTitle: TaskList = { ...createTaskList({ title: 'Test title sorting' }), id: 'title' };
+const taskListPriority: TaskList = {
+    ...createTaskList({ title: 'Test priority sorting' }),
+    id: 'priority',
+};
+const taskListLimitDate: TaskList = {
     ...createTaskList({ title: 'Test limit date sorting' }),
     id: 'limit_date',
 };
-const taskListCreationDate = {
+const taskListCreationDate: TaskList = {
     ...createTaskList({ title: 'Test creation date sorting' }),
     id: 'creation_date',
 };
-// const taskListStress = { ...createTaskList('Test HUGE task count'), id: 'stress_test' };
+
+const taskListArchived: TaskList = {
+    ...createTaskList({ title: 'Test archived list' }),
+    id: 'archived_list',
+    isArchived: true,
+};
+
+// const taskListStress: TaskList = { ...createTaskList('Test HUGE task count'), id: 'stress_test' };
 
 /**
  * Generate tasks for each task list
@@ -59,6 +69,7 @@ taskListLimitDate.tasks.push(
     createTodoTaskWithLimitDateTest({}, 90),
     createTestTask({ limitDate: dateDays(-5) }),
 );
+taskListLimitDate.archivedTasks.push(createTodoTaskWithLimitDateTest({}, 10));
 
 // test creation date sorting
 taskListCreationDate.tasks.push(
@@ -68,6 +79,9 @@ taskListCreationDate.tasks.push(
     createTestTask({ creationDate: dateDays(-4) }),
     createTestTask({ creationDate: dateDays(-2) }),
 );
+
+// test archived list
+taskListArchived.archivedTasks.push(createTestTask({ creationDate: dateDays(-10) }));
 
 // add default list tasks
 DEFAULT_LIST.tasks.push(
@@ -89,10 +103,11 @@ DEFAULT_LIST.tasks.push(
  */
 const TASK_LISTS_DEMO: Dictionary<Id, TaskList> = {
     [DEFAULT_LIST_ID]: DEFAULT_LIST,
-    title: taskListTitle,
-    priority: taskListPriority,
-    limit_date: taskListLimitDate,
-    creation_date: taskListCreationDate,
+    [taskListTitle.id]: taskListTitle,
+    [taskListPriority.id]: taskListPriority,
+    [taskListLimitDate.id]: taskListLimitDate,
+    [taskListCreationDate.id]: taskListCreationDate,
+    [taskListArchived.id]: taskListArchived,
     // stress_test: taskListStress,
 };
 

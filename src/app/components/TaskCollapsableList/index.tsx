@@ -23,13 +23,14 @@ export default function TaskCollapsableList({
     title,
     tasks,
     defaultOpen,
-    style,
-}: TaskCollapsableListProps): React.ReactElement {
+}: TaskCollapsableListProps): React.ReactElement | null {
     const [open, setOpen] = React.useState(defaultOpen);
     const toggleOpen = () => setOpen(!open);
 
+    if (tasks.length === 0) return null;
+
     return (
-        <div style={style}>
+        <>
             <ListItem button onClick={toggleOpen} selected={open}>
                 <ListItemText
                     primary={
@@ -48,7 +49,7 @@ export default function TaskCollapsableList({
                     ))}
                 </List>
             </Collapse>
-        </div>
+        </>
     );
 }
 

@@ -17,3 +17,5 @@ export function ArchiveContextProvider({
 export function useArchive(): boolean {
     return React.useContext(ArchiveContext);
 }
+
+export const ARCHIVE_COLOR = '#f5982e';

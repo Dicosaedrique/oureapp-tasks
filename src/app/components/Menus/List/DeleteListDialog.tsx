@@ -35,9 +35,20 @@ export function DeleteListDialog({
             handleSuccess={deleteList}
             handleClose={handleClose}
             title={`Are you sure you want to delete the task list '${list.title}' ?`}
-            description={`If you delete this list, the tasks in it will be deleted too and you won't be able to retrieve them. There is ${list.taskCount} tasks in this list (including ${list.taskToDoCount} to do).`}
+            description={generateDeleteDialogTest(list)}
             confirmButton="Delete"
             closeButton="Cancel"
         />
     );
+}
+
+function generateDeleteDialogTest(list: TaskListStats): string {
+    const sum = list.taskCount + list.archiveTaskCount;
+
+    if (sum === 0) {
+        return '';
+    } else {
+        const doneTaskCount = list.taskCount - list.taskToDoCount;
+        return `If you delete this list, the tasks in it will be deleted too and you won't be able to retrieve them (${list.taskToDoCount} tasks to do, ${doneTaskCount} tasks done and ${list.archiveTaskCount} tasks archived).`;
+    }
 }

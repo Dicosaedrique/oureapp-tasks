@@ -10,15 +10,21 @@ export interface TopBarProps {
     title: string;
     drawerBreakpoint: Breakpoint;
     handleDrawerToggle: () => void;
+    color?: string;
 }
 
 export function TopBar({
     title,
     drawerBreakpoint,
     handleDrawerToggle,
+    color = 'default',
 }: TopBarProps): React.ReactElement {
     return (
-        <AppBar position="fixed" sx={{ zIndex: theme => theme.zIndex.drawer + 1 }}>
+        <AppBar
+            position="fixed"
+            sx={{ zIndex: theme => theme.zIndex.drawer + 1, bgcolor: color }}
+            enableColorOnDark
+        >
             <Toolbar>
                 <IconButton
                     color="inherit"

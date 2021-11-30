@@ -1,32 +1,22 @@
 import AddIcon from '@mui/icons-material/Add';
-import ArchiveIcon from '@mui/icons-material/Archive';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import ListIcon from '@mui/icons-material/List';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { MenuItem } from '@mui/material';
-import Badge from '@mui/material/Badge';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import MuiListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import ListItemText from '@mui/material/ListItemText';
-import Menu from '@mui/material/Menu';
+import { useArchive } from 'app/components/Archive/context';
 import { ArchiveListDialog } from 'app/components/Menus/List/ArchiveListMenu';
 import { CreateListMenu } from 'app/components/Menus/List/CreateListMenu';
 import { DeleteListDialog } from 'app/components/Menus/List/DeleteListDialog';
 import { EditListMenu } from 'app/components/Menus/List/EditListMenu';
+import { ListItem } from 'app/components/Navigation/Drawer/Lists/ListItem';
+import { ListOptionsMenu } from 'app/components/Navigation/Drawer/Lists/ListOptionsMenu';
 import { TasksPagePathParams } from 'app/pages/TasksPage';
 import { DEFAULT_LIST_ID, TaskListStats } from 'model/TaskList';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-    selectDefaultTaskListBase,
-    selectTaskListsBaseOrderedByCreationDate,
-} from 'store/slices/taskLists/selectors';
+import { selectDefaultListStat, useSmartListsSelector } from 'store/slices/taskLists/selectors';
 import { Id } from 'utils/types';
 
 interface ListsDrawerSectionProps {
@@ -37,17 +27,16 @@ export function ListDrawerSection({
     handleMobileToggle,
 }: ListsDrawerSectionProps): React.ReactElement {
     const params = useParams() as TasksPagePathParams;
+    const archive = useArchive();
 
-    const defaultList = useSelector(selectDefaultTaskListBase);
+    const defaultList = useSelector(selectDefaultListStat);
 
-    const lists = useSelector(selectTaskListsBaseOrderedByCreationDate).filter(
-        list => list.id !== DEFAULT_LIST_ID,
-    );
+    const lists = useSmartListsSelector(archive).filter(list => list.id !== DEFAULT_LIST_ID);
 
     // navigation
     const navigate = useNavigate();
     const createTaskListNavigationHandler = (id: Id) => () => {
-        navigate(`/list/${id}`);
+        navigate(`/list/${archive ? 'archive/' : ''}${id}`);
         handleMobileToggle(); // close drawer on navigate (on mobile)
     };
     const defaultTaskListNavigationHandler = createTaskListNavigationHandler(DEFAULT_LIST_ID);
@@ -102,28 +91,33 @@ export function ListDrawerSection({
             <List>
                 <ListItem
                     list={defaultList}
+                    archive={archive}
                     selected={params.id === defaultList.id}
                     onNavigate={defaultTaskListNavigationHandler}
                     onOptions={openOptionsCreator(defaultList)}
+                    enableOptions={false}
                 />
 
-                <Divider sx={{ marginY: '0.5em' }} />
+                {lists.length > 0 && <Divider sx={{ marginY: '0.5em' }} />}
 
                 {lists.map(list => (
                     <ListItem
                         key={list.id}
                         list={list}
+                        archive={archive}
                         selected={params.id === list.id}
                         onNavigate={createTaskListNavigationHandler(list.id)}
                         onOptions={openOptionsCreator(list)}
                     />
                 ))}
-                <MuiListItem button onClick={openCreateMenu}>
-                    <ListItemIcon>
-                        <AddIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Add list" />
-                </MuiListItem>
+                {!archive && (
+                    <MuiListItem button onClick={openCreateMenu}>
+                        <ListItemIcon>
+                            <AddIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Add list" />
+                    </MuiListItem>
+                )}
             </List>
 
             <CreateListMenu open={createMenuOpen} handleClose={closeCreateMenu} />
@@ -146,9 +140,11 @@ export function ListDrawerSection({
                 handleSelfArchive={() => {
                     if (isSelfSelected) defaultTaskListNavigationHandler();
                 }}
+                archive={archive}
             />
 
             <ListOptionsMenu
+                archive={archive}
                 anchorEl={anchorEl}
                 handleClose={closeOptions}
                 handleOpenEditMenu={openEditListMenu}
@@ -160,91 +156,3 @@ export function ListDrawerSection({
 }
 
 export const MemoListDrawerSection = React.memo(ListDrawerSection);
-
-interface ListItemProps {
-    list: TaskListStats;
-    selected: boolean;
-    onNavigate: () => void;
-    onOptions: (event: React.MouseEvent<HTMLElement>) => void;
-}
-
-function ListItem({ list, selected, onNavigate, onOptions }: ListItemProps) {
-    return (
-        <MuiListItem button selected={selected} onClick={onNavigate}>
-            <ListItemIcon>
-                <ListIcon />
-            </ListItemIcon>
-            <ListItemText
-                primary={
-                    <span>
-                        {list.title}{' '}
-                        <Badge
-                            badgeContent={list.taskToDoCount}
-                            sx={{ ml: 2, '& .MuiBadge-badge': { bgcolor: 'text.disabled' } }}
-                            color="primary"
-                        />
-                    </span>
-                }
-            />
-
-            <ListItemSecondaryAction>
-                <IconButton
-                    edge="end"
-                    onClick={onOptions}
-                    aria-label="Options"
-                    title="Options"
-                    size="large"
-                >
-                    <MoreVertIcon />
-                </IconButton>
-            </ListItemSecondaryAction>
-        </MuiListItem>
-    );
-}
-
-interface ListOptionsMenuProps {
-    anchorEl: Element | null;
-    handleClose: () => void;
-    handleOpenEditMenu: () => void;
-    handleDeleteList?: () => void;
-    handleArchiveList?: () => void;
-}
-
-function ListOptionsMenu({
-    anchorEl,
-    handleClose,
-    handleOpenEditMenu,
-    handleDeleteList,
-    handleArchiveList,
-}: ListOptionsMenuProps): React.ReactElement | null {
-    const open = Boolean(anchorEl);
-
-    if (!open) return null;
-
-    return (
-        <Menu
-            anchorEl={anchorEl}
-            keepMounted
-            open
-            onClose={handleClose}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        >
-            <MenuItem onClick={handleOpenEditMenu} style={{ color: '#4e58ee' }}>
-                <EditIcon />
-                &nbsp;&nbsp;Edit List
-            </MenuItem>
-            {handleArchiveList && (
-                <MenuItem onClick={handleArchiveList} style={{ color: 'orange' }}>
-                    <ArchiveIcon />
-                    &nbsp;&nbsp;Archive list
-                </MenuItem>
-            )}
-            {handleDeleteList && (
-                <MenuItem onClick={handleDeleteList} style={{ color: 'red' }}>
-                    <DeleteIcon />
-                    &nbsp;&nbsp;Delete list
-                </MenuItem>
-            )}
-        </Menu>
-    );
-}

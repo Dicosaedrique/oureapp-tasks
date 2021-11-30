@@ -19,7 +19,9 @@ export interface PayloadEditTask extends PayloadTaskList {
 }
 
 export type PayloadDeleteTask = PayloadTaskList;
+export type PayloadDeleteArchivedTask = PayloadTaskList;
 export type PayloadArchiveTask = PayloadTaskList;
+export type PayloadUnarchiveTask = PayloadTaskList;
 
 export interface PayloadUpdateTaskState extends PayloadTaskList {
     newTaskState: TaskState;
@@ -33,8 +35,11 @@ export interface PayloadEditList extends PayloadCreateList {
     id: Id;
 }
 
-export interface PayloadDeleteList {
+interface PayloadListId {
     id: Id;
 }
 
-export type PayloadArchiveList = PayloadDeleteList;
+export type PayloadDeleteList = PayloadListId;
+export type PayloadArchiveList = PayloadListId;
+export type PayloadUnarchiveList = PayloadListId;
+export type PayloadArchiveListDoneTasks = PayloadListId;

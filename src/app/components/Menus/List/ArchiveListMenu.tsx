@@ -9,6 +9,7 @@ interface ArchiveListDialogProps {
     list: TaskListStats | null;
     handleClose: () => void;
     handleSelfArchive: () => void;
+    archive?: boolean;
 }
 
 export function ArchiveListDialog({
@@ -16,15 +17,25 @@ export function ArchiveListDialog({
     list,
     handleClose,
     handleSelfArchive,
+    archive = false,
 }: ArchiveListDialogProps): React.ReactElement | null {
     const { actions } = useTaskListsSlice();
     const dispatch = useDispatch();
 
     const archiveList = () => {
         if (list === null) return;
-        dispatch(actions.archiveList({ id: list.id }));
+
+        const payload = { id: list.id };
+
+        if (archive) {
+            dispatch(actions.unarchiveList(payload));
+            handleSelfArchive();
+        } else {
+            dispatch(actions.archiveList(payload));
+            handleSelfArchive();
+        }
+
         handleClose();
-        handleSelfArchive();
     };
 
     if (!open || list == null) return null;
@@ -34,9 +45,15 @@ export function ArchiveListDialog({
             open
             handleSuccess={archiveList}
             handleClose={handleClose}
-            title={`Are you sure you want to archive the task list '${list.title}' ?`}
-            description={`If you archive this list, you won't see it anymore in your list drawer and all the tasks in it will be archived too. You can unarchive a list or a task from the archive.`}
-            confirmButton="Archive"
+            title={`Are you sure you want to ${archive ? 'unarchive' : 'archive'} the task list '${
+                list.title
+            }' ?`}
+            description={
+                archive
+                    ? 'If you unarchive this list, every archived task will be unarchived.'
+                    : `If you archive this list, you won't see it anymore in your list drawer and all the tasks in it will be archived too. You can unarchive a list or a task from the archive.`
+            }
+            confirmButton={archive ? 'Unarchive' : 'Archive'}
             closeButton="Cancel"
         />
     );
