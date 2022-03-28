@@ -6,7 +6,7 @@ on:
 jobs:
   delete_qa:
     name: Delete Firebase Hosting preview (QA)
-    runs-on: 'ubuntu-latest'
+    runs-on: "ubuntu-latest"
     steps:
       - name: Checkout branch
         uses: actions/checkout@v2
@@ -14,10 +14,10 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
-          
+          node-version: "16"
+
       - name: Delete Firebase Hosting channel
+        working-directory: frontend
         run: |
           npm install -g firebase-tools
           firebase hosting:channel:delete 'pull-request-${{ github.event.pull_request.number }}' -f --token '${{ secrets.FIREBASE_CI_TOKEN }}'
-        
