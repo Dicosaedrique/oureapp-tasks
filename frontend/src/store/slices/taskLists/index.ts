@@ -162,7 +162,6 @@ const slice = createSlice({
                 list.archivedTasks = [];
                 list.isArchived = false;
             }
-            console.log('ALLO !!!');
         },
     },
 });

@@ -34,8 +34,9 @@ This is the frontend of my todo app based on the [React Boilerplate CRA Template
 -   ✔️ Edit task list
 -   ✔️ Delete task list
 -   ✔️ Update UIs (give some soul to this app) -> switch to MUI & unify style across the app
--   ❌ Add archivment system
+-   ✔️ Add archivment system
 -   ❌ Add a logo & update manifest & robots
+-   ❌ Add testing
 
 ## Version 2 (Beta - MVP) ⏰
 

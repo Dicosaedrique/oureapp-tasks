@@ -40,6 +40,7 @@ export function ListDrawerSection({
         handleMobileToggle(); // close drawer on navigate (on mobile)
     };
     const defaultTaskListNavigationHandler = createTaskListNavigationHandler(DEFAULT_LIST_ID);
+    const navigateRoot = () => navigate(`/list/${archive ? 'archive/' : ''}`);
 
     const [selectedList, setSelectedList] = React.useState<TaskListStats | null>(null);
 
@@ -129,7 +130,7 @@ export function ListDrawerSection({
                 handleClose={closeDeleteDialog}
                 list={selectedList}
                 handleSelfDelete={() => {
-                    if (isSelfSelected) defaultTaskListNavigationHandler();
+                    if (isSelfSelected) navigateRoot();
                 }}
             />
 
@@ -138,7 +139,7 @@ export function ListDrawerSection({
                 handleClose={closeArchiveDialog}
                 list={selectedList}
                 handleSelfArchive={() => {
-                    if (isSelfSelected) defaultTaskListNavigationHandler();
+                    if (isSelfSelected) navigateRoot();
                 }}
                 archive={archive}
             />
