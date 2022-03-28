@@ -47,6 +47,7 @@ This is the frontend of my todo app based on the [React Boilerplate CRA Template
 -   ⌛ Setup Light / Dark theme
 -   ⌛ Add [snackbars](https://github.com/iamhosseindhv/notistack) on actions
 -   ⌛ Undo/Redo actions
+-   ⌛ Add Eisenhower matrix
 
 ## Version 3 ⏰
 
